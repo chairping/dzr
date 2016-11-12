@@ -7,6 +7,7 @@ namespace Admin\Controller;
 class PublicController extends \Think\Controller {
 
     public function index() {
+
         var_dump(11);
     }
     /*
