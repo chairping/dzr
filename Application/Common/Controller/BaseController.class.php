@@ -34,12 +34,11 @@ class BaseController extends \Think\Controller {
 // <ul class="pagination pull-right"> <li>'.$this->_pageNumberWidget($size, C('SEARCH_DEFAULT_PAGE_ASSEMBLAGE')).'</li> <li><i>条/页</i></li> <li><i>(%HEADER%)</i></li> </ul> </div>');
 //                        break;
                     default:
-//                        <div class="col-sm-6">
-//        <div class="dataTables_info" id="sample-table_info" role="status" aria-live="polite">%TOTAL_ROW%</div>
-//    </div>
                         $theme = <<<EOF
 <div class="row">
- 
+    <div class="col-sm-6">
+        <div class="dataTables_info" id="sample-table_info" role="status" aria-live="polite">%1TOTAL_ROW%</div>
+    </div>
     <div class="col-sm-6">
         <div class="dataTables_paginate paging_bootstrap" id="sample-table_paginate">
             <ul class="pagination">
