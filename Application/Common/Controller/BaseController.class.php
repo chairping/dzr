@@ -37,7 +37,7 @@ class BaseController extends \Think\Controller {
                         $theme = <<<EOF
 <div class="row">
     <div class="col-sm-6">
-        <div class="dataTables_info" id="sample-table_info" role="status" aria-live="polite">%1TOTAL_ROW%</div>
+        <div class="dataTables_info" id="sample-table_info" role="status" aria-live="polite"></div>
     </div>
     <div class="col-sm-6">
         <div class="dataTables_paginate paging_bootstrap" id="sample-table_paginate">
