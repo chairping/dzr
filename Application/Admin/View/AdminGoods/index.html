@@ -17,59 +17,80 @@
                     <th width="50px">ID</th>
                     <th width="100px">产品名称</th>
                     <th width="50px">价格</th>
-                    <th width="350px">状态</th>
                     <th width="180px">加入时间</th>
                     <th width="70px">状态</th>
                     <th width="250px">操作</th>
                 </tr>
                 </thead>
                 <tbody>
+                <?php foreach($goods_list as $goods): ?>
                 <tr>
                     <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-                    <td>1</td>
-                    <td>幻灯片</td>
-                    <td>5</td>
-                    <td>首页顶部广告轮播图，大图区别于其他图片</td>
-                    <td>2016-6-29 12:34</td>
-                    <td class="td-status"><span class="label label-success radius">显示</span></td>
+                    <td><?= $goods['id'] ?></td>
+                    <td><?= $goods['title'] ?></td>
+                    <td><?= $goods['price'] ?></td>
+                    <td><?= date("Y-m-d H:i:s", $goods['update_time']); ?> </td>
+                    <td class="td-status"><span class="label label-success radius">
+                        <?php if ($goods['sale_status'] == 1): ?>
+                            上架
+                        <?php else: ?>
+                            下架
+                        <?php endif; ?>
+                        </span></td>
                     <td class="td-manage">
                         <!--<a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>-->
-                        <a title="编辑"  href="javascript:;"  class="btn goods-edit btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a>
-                        <a title="删除" href="javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
+                        <a title="编辑"  href="javascript:;"  data-id="<?= $goods['id'] ?>" class="btn goods-edit btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a>
+                        <a title="删除" href="javascript:;"   class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
                         <!--<a href="javascript:ovid()" name="Ads_list.html" class="btn btn-xs btn-pink ads_link" onclick="AdlistOrders('561');" title="幻灯片广告列表"><i class="fa  fa-bars  bigger-120"></i></a>-->
                     </td>
                 </tr>
+                <?php endforeach; ?>
                 </tbody>
             </table>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="dataTables_info" id="sample-table_info" role="status" aria-live="polite">第 1 到 1 条记录，共 1 条</div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="dataTables_paginate paging_bootstrap" id="sample-table_paginate">
+                        <ul class="pagination">
+                            <li class="prev disabled"><a href="#">上一页</a></li>
+                            <li class="active"><a href="#">1</a></li>
+                            <li class="next disabled"><a href="#">下一页</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
 
 
 
-<!--添加分类-->
+<!--添加商品-->
 <div class="sort_style_add margin" id="sort_style_add" style="display:none">
+    <form id="goods-add" method="post" action="{:U('add')}">
     <div class="">
         <ul>
             <li>
                 <label class="label_name">标题</label>
                 <div class="col-sm-9">
-                    <input name="分类名称" type="text" id="form-field-1" placeholder="" class="col-xs-10 col-sm-5">
+                    <input name="title" type="text" id="form-field-1" placeholder="" class="col-xs-10 col-sm-5">
                 </div>
             </li>
 
             <li>
                 <label class="label_name">价格</label>
                 <div class="col-sm-9">
-                    <input name="分类名称" type="text" id="form-field-1" placeholder="" class="col-xs-10 col-sm-5">
+                    <input name="price" type="text" id="form-field-1" placeholder="" class="col-xs-10 col-sm-5">
                 </div>
             </li>
 
 
             <li>
                 <label class="label_name">介绍文</label><div class="col-sm-9">
-                <textarea name="分类说明" class="form-control" id="form-field-8" placeholder="" onkeyup="checkLength(this);">
-                </textarea>
+                <textarea name="description" class="form-control" id="form-field-8" placeholder="" onkeyup="checkLength(this);"> </textarea>
                 <span class="wordage">剩余字数：<span id="sy" style="color:Red;">200</span>字</span></div>
             </li>
 
@@ -77,20 +98,24 @@
             <li>
                 <label class="label_name">封面图片</label>
                 <div class="col-sm-9">
-                    <input name="分类名称" type="text" id="form-field-1" placeholder="" class="col-xs-10 col-sm-5">
+                    <input name="cover_img_addr" type="text" id="form-field-1" placeholder="" class="col-xs-10 col-sm-5">
                 </div>
             </li>
 
             <li>
-                <label class="label_name">分类状态</label>
+                <label class="label_name">状态</label>
                 <span class="add_content"> &nbsp;&nbsp;<label>
-                    <input name="form-field-radio1" type="radio" checked="checked" class="ace">
-                    <span class="lbl">显示</span></label>&nbsp;&nbsp;&nbsp;
-                    <label><input name="form-field-radio1" type="radio" class="ace"><span class="lbl">隐藏</span></label>
+                    <input name="sale_status" type="radio" checked="checked" value="1" class="ace">
+                    <span class="lbl">上架</span></label>&nbsp;&nbsp;&nbsp;
+                    <label><input name="sale_status" type="radio" class="ace" value="2">
+                        <span class="lbl">下架</span></label>
                 </span>
             </li>
         </ul>
     </div>
+    </form>
+
+    <?= $my_page; ?>
 </div>
 
 
@@ -105,7 +130,7 @@
 //    onclick="member_edit('编辑','{:U(\"\")}','4','','510')"
     $('.goods-edit').on('click', function() {
         var id = $(this).data('id');
-         member_edit('编辑', '{:U("AdminGoods/edit", array("id"=> '+ id+'))}');
+         member_edit('编辑', "{:U('AdminGoods/edit', array('id'=> "%s"))}".replace('%25s', id));
     });
 
     $('#sort_add').on('click', function(){
@@ -132,13 +157,17 @@
                         return false;
                     }
                 });
+num = 0;
                 if(num>0){  return false;}
                 else{
-                    layer.alert('添加成功！',{
-                        title: '提示框',
-                        icon:1,
-                    });
-                    layer.close(index);
+                    ajax_form($("#goods-add"), function () {
+                        layer.alert('添加成功！',{
+                            title: '提示框',
+                             icon:1,
+                        }, function() {
+                            location.reload();
+                        });
+                    })
                 }
             }
         });
@@ -163,37 +192,6 @@
         }
     };
 
-    /*产品-编辑*/
-    function member_edit(title,url,id,w,h){
-        layer_show(title,url,w,h);
-    }
-
-
-//    /*广告图片-停用*/
-//    function member_stop(obj,id){
-//        layer.confirm('确认要关闭吗？',{icon:0,},function(index){
-//            $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,id)" href="javascript:;" title="显示"><i class="fa fa-close bigger-120"></i></a>');
-//            $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已关闭</span>');
-//            $(obj).remove();
-//            layer.msg('关闭!',{icon: 5,time:1000});
-//        });
-//    }
-//    /*广告图片-启用*/
-//    function member_start(obj,id){
-//        layer.confirm('确认要显示吗？',{icon:0,},function(index){
-//            $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs btn-success" onClick="member_stop(this,id)" href="javascript:;" title="关闭"><i class="fa fa-check  bigger-120"></i></a>');
-//            $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">显示</span>');
-//            $(obj).remove();
-//            layer.msg('显示!',{icon: 6,time:1000});
-//        });
-//    }
-    /*广告图片-删除*/
-    function member_del(obj,id){
-        layer.confirm('确认要删除吗？',{icon:0,},function(index){
-            $(obj).parents("tr").remove();
-            layer.msg('已删除!',{icon:1,time:1000});
-        });
-    }
     //面包屑返回值
     var index = parent.layer.getFrameIndex(window.name);
     parent.layer.iframeAuto(index);
