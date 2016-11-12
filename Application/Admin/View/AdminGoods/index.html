@@ -47,20 +47,8 @@
                 <?php endforeach; ?>
                 </tbody>
             </table>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="dataTables_info" id="sample-table_info" role="status" aria-live="polite">第 1 到 1 条记录，共 1 条</div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="dataTables_paginate paging_bootstrap" id="sample-table_paginate">
-                        <ul class="pagination">
-                            <li class="prev disabled"><a href="#">上一页</a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li class="next disabled"><a href="#">下一页</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+
+            <?= $my_page; ?>
 
         </div>
     </div>
@@ -115,7 +103,7 @@
     </div>
     </form>
 
-    <?= $my_page; ?>
+
 </div>
 
 

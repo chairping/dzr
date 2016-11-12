@@ -16,6 +16,7 @@ class BaseModel extends \Think\Model
             $pageIndex= intval($count/$pageSize) + (($count % $pageSize > 0) ? 1 : 0);
         }
 
+
         $data=$this->where($where)
             ->page($pageIndex,$pageSize)
             ->order($order)
