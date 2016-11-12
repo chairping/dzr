@@ -11,13 +11,13 @@ namespace Admin\Controller;
 
 use Common\Controller\AdminController;
 
-class AdminGoodsController extends AdminController
+class AdminScenicController extends AdminController
 {
 
-    public $goodsModel;
+    public $ScenicModel;
 
     public function _initialize() {
-        $this->goodsModel= D('Goods');
+        $this->ScenicModel= D('ScenicSpots');
     }
 
     public function index() {
@@ -25,7 +25,7 @@ class AdminGoodsController extends AdminController
         $page = I('p', 0, 'intval');
         $pageSize = 10;
 
-        $data = $this->goodsModel->getListWithCount([], $page, $pageSize, 'update_time desc');
+        $data = $this->ScenicModel->getListWithCount([], $page, $pageSize, 'update_time desc');
 
         $goodsList = $data['data'];
         $count = $data['count'];
@@ -41,7 +41,7 @@ class AdminGoodsController extends AdminController
         $data = I('post.');
         $data['update_time'] = time();
 
-        if($this->goodsModel->add($data)) {
+        if($this->ScenicModel->add($data)) {
             $this->ajaxReturn(['code' => 1, 'message' => '商品添加成功']);
         } else {
             $this->ajaxReturn(['code' => 0, 'message' => '商品添加失败']);

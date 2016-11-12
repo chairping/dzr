@@ -2,7 +2,7 @@
     
 namespace Admin\Model;
 
-class GoodsModel extends \Common\Model\BaseModel  {
+class ScenicSpotsModel extends \Common\Model\BaseModel  {
 
     public function edit($id, $data) {
 

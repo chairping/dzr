@@ -28,8 +28,12 @@ class MenuServices {
                 'icon' => '',
                 'sub_menu' => [
                     [
-                        'name' => '公众号信息管理',
-                        'url' => 'Weixin/Gzh/index',
+                        'name' => '代理点列表',
+                        'url' => U('AdminScenic/agentList'),
+                    ],
+                    [
+                        'name' => '景区管理',
+                        'url' => U('AdminScenic/index'),
                     ],
                 ]
             ],
