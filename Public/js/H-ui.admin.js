@@ -24,15 +24,15 @@ function Huiasidedisplay(){
 		$(".Hui-aside").show()
 	} 
 }
-function getskincookie(){
-	var v = getCookie("Huiskin");
-	if(v==null||v==""){
-		v="default";
-	}
-	$("#skin").attr("href","skin/"+v+"/skin.css");
-}
+// function getskincookie(){
+// 	var v = getCookie("Huiskin");
+// 	if(v==null||v==""){
+// 		v="default";
+// 	}
+// 	$("#skin").attr("href","skin/"+v+"/skin.css");
+// }
 $(function(){
-	getskincookie();
+	// getskincookie();
 	//layer.config({extend: 'extend/layer.ext.js'});
 	Huiasidedisplay();
 	var resizeID;
@@ -52,7 +52,7 @@ $(function(){
 		}
 	});
 	/*左侧菜单*/
-	$.Huifold(".menu_dropdown dl dt",".menu_dropdown dl dd","fast",1,"click");
+	// $.Huifold(".menu_dropdown dl dt",".menu_dropdown dl dd","fast",1,"click");
 	/*选项卡导航*/
 	
 	$(".Hui-aside").on("click",".menu_dropdown a",function(){

@@ -26,13 +26,13 @@
 							系统后台登录
 						</h4>
 
-						<div class="login_icon"><img src="images/login.png" /></div>
+						<div class="login_icon"><img src="__IMG__/login.png" /></div>
 
-						<form class="">
+						<form class="" style="width: 100%">
 							<fieldset>
 								<ul>
-									<li class="frame_style form_error"><label class="user_icon"></label><input name="用户名" type="text"  id="username"/><i>用户名</i></li>
-									<li class="frame_style form_error"><label class="password_icon"></label><input name="密码" type="password"   id="userpwd"/><i>密码</i></li>
+									<li class="frame_style form_error"><label class="user_icon"></label><input name="账号" type="text"  id="username" placeholder="账号"/></li>
+									<li class="frame_style form_error"><label class="password_icon"></label><input name="密码" type="password"   id="password" placeholder="密码"/></li>
 									<!--<li class="frame_style form_error"><label class="Codes_icon"></label><input name="验证码" type="text"   id="Codes_text"/><i>验证码</i><div class="Codes_region"></div></li>-->
 
 								</ul>
@@ -76,6 +76,7 @@
 <!--<div class="loginbm">版权所有  2016  <a href="">南京思美软件系统有限公司</a> </div><strong></strong>-->
 </body>
 </html>
+<script charset="utf-8" src="__JS__/md5.js"></script>
 <script>
 $('#login_btn').on('click', function(){
 	     var num=0;
@@ -92,36 +93,63 @@ $('#login_btn').on('click', function(){
             return false;            
           } 
 		 });
-		  if(num>0){  return false;}	 	
+		  if(num>0){  return false;}
           else{
-			  layer.alert('登陆成功！',{
-               title: '提示框',				
-			   icon:1,		
-			  });
-	          location.href="index.html";
-			   layer.close(index);	
+
+			  $("#login_btn").attr("disabled", true);
+			  var username = $('#username').val();
+			  var password = $('#password').val();
+
+			  $.post(  '__APP__/admin.php/Public/login', { username: username, password: hex_md5( password ) },
+					  function(data){
+						  if(data.statusCode=="success"){
+							  layer.alert(data.message,{
+								  title: '提示框',
+								  icon:1,
+							  });
+							  setTimeout(function(){
+								  window.location.href=data.url
+							  },1000);
+//							  location.href="index.html";
+							  layer.close(index);
+						  }else{
+
+							  layer.alert(data.message,{
+								  title: '提示框',
+								  icon:0,
+							  });
+
+							  $("#login_btn").attr("disabled", false);
+							  return false;
+						  }
+					  });
+
+
+
+
+
 		  }		  		     						
 		
 	});
-  $(document).ready(function(){
-	 $("input[type='text'],input[type='password']").blur(function(){
-        var $el = $(this);
-        var $parent = $el.parent();
-        $parent.attr('class','frame_style').removeClass(' form_error');
-        if($el.val()==''){
-            $parent.attr('class','frame_style').addClass(' form_error');
-        }
-    });
-	$("input[type='text'],input[type='password']").focus(function(){		
-		var $el = $(this);
-        var $parent = $el.parent();
-        $parent.attr('class','frame_style').removeClass(' form_errors');
-        if($el.val()==''){
-            $parent.attr('class','frame_style').addClass(' form_errors');
-        } else{
-			 $parent.attr('class','frame_style').removeClass(' form_errors');
-		}
-		});
-	  })
+//  $(document).ready(function(){
+//	 $("input[type='text'],input[type='password']").blur(function(){
+//        var $el = $(this);
+//        var $parent = $el.parent();
+//        $parent.attr('class','frame_style').removeClass(' form_error');
+//        if($el.val()==''){
+//            $parent.attr('class','frame_style').addClass(' form_error');
+//        }
+//    });
+//	$("input[type='text'],input[type='password']").focus(function(){
+//		var $el = $(this);
+//        var $parent = $el.parent();
+//        $parent.attr('class','frame_style').removeClass(' form_errors');
+//        if($el.val()==''){
+//            $parent.attr('class','frame_style').addClass(' form_errors');
+//        } else{
+//			 $parent.attr('class','frame_style').removeClass(' form_errors');
+//		}
+//		});
+//	  })
 
 </script>

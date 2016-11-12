@@ -17,20 +17,24 @@ class PublicController extends \Think\Controller {
     public function login() {
         if (IS_POST) {
             $post = I('post.');
-            $email = $post['username'];
+            $username = $post['username'];
             $pwd = $post['password'];
 
-            if (!D('UserInfo')->is_exist_email($email)) {
-                $this->ajaxReturn(array("statusCode" => C('ERROR_CODE'), "mark" => 'email', "message" => L('Error_no_email')));
+            if (!D('AdminInfo')->is_exist_username($username)) {
+                $this->ajaxReturn(array("statusCode" => C('ERROR_CODE'), "message" => L('Error_no_username')));
             }
 
-            $is = D('UserInfo')->is_exist($email, $pwd);
-            if (!$is) {
-                $this->ajaxReturn(array("statusCode" => C('ERROR_CODE'), "mark" => 'pwd', "message" => L('Error_pwd')));
-            }
+            $is = D('AdminInfo')->is_exist($username, $pwd);
+            if ($is !== false) {
+                $this->ajaxReturn(
+                    array(
+                        "statusCode" => C( 'SUC_CODE' ),
+                        "message" => L('Success'),
+                        'url' => __ROOT__.'/admin.php/Index/index') );
+                }
+            $this->ajaxReturn(array("statusCode" => C('ERROR_CODE'),  "message" => L('Error_pwd')));
 
-
-            $this->ajaxReturn( array( "statusCode" => C( 'SUC_CODE' ), 'url' => __ROOT__.'/admin.php/Index/index') );
+         
         } else {
             if (!session('id')) {
                 $this->display('Public/login');
@@ -38,6 +42,15 @@ class PublicController extends \Think\Controller {
                 $this->display('Index/index');
             }
         }
+    }
+
+    /*
+   * @author 曹梦瑶
+   * 登出
+   */
+    public function logout() {
+        session_destroy();
+        $this->display('Public/login');
     }
 
 }
