@@ -37,7 +37,7 @@ class AdminInfoModel extends Model {
             'status' => 1
         ))
             ->find();
-        dd($this->getLastSql());
+//        dd($this->getLastSql());
         $is && $return = true;
         return $return;
     }
@@ -59,15 +59,15 @@ class AdminInfoModel extends Model {
      * 判断d登录信息是否存在
      */
     public function is_exist($username, $pwd) {
-        $return  = false;
+//        $return  = false;
 //        $user_id = $this->where(array('email'=>$email))->getField('id');
         $is = $this->where(array(
             'username' => $username,
-            'password' => md5($pwd)
+            'password' => sha1($pwd)
         ))
             ->find();
-        $is && $return = true;
-        return $return;
+//        $is && $return = true;
+        return $is;
     }
 
 
@@ -186,14 +186,20 @@ class AdminInfoModel extends Model {
 //        }
 //    }
 //
-//    public function getAllInfo() {
-//        $list = array();
-//        $list = $this->where(array(
-//            'status' => 1
-//        ))
-//            ->select();
-//        return $list;
-//    }
+    /*
+     * @author 曹梦瑶
+     * 获取用户信息
+     */
+    public function getInfo($id) {
+        $list = array();
+        $list = $this->where(array(
+            'id' => $id,
+            'status' => 1
+        ))
+            ->find();
+//        dd($this->getLastSql());
+        return $list;
+    }
 //
 //    public function getNoAllInfo() {
 //        $list = array();
