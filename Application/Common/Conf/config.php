@@ -85,6 +85,7 @@ return array(
         '__Fonts__' => __ROOT__.'/Public/fonts',
         '__Uploads__' => __ROOT__.'/Uploads',
         '__Public__' => __ROOT__.'/Public',
+        '__UPLOADIMG__' => __ROOT__.'/Public/uploadimg',
 
     ),
 

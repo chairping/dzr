@@ -20,7 +20,8 @@ class MenuServices {
                     'sub_menu' => [
                         [
                             'name' => '业绩列表',
-                            'url' => U('AgentAchievement/index'),
+//                            'url' => U('AgentAchievement/index'),
+                            'url' => __APP__.'/admin.php/AgentAchievement/index',
                         ],
                     ]
                 ],
@@ -31,7 +32,8 @@ class MenuServices {
                     'sub_menu' => [
                         [
                             'name' => '信息管理',
-                            'url' => U('AgentInfo/index'),
+//                            'url' => U('AgentInfo/index'),
+                            'url' => __APP__.'/admin.php/AgentInfo/index'
                         ],
                     ]
                 ],
@@ -80,4 +82,5 @@ class MenuServices {
             ];
         }
 
+    }
 }
