@@ -44,7 +44,7 @@
               <div class="col-sm-8"><input style="background:#FFF;width: 100%;" type="text" name="支付宝账号" id="alipay_acount" value="{$user_info.alipay_acount}" class="col-xs-7 text_info" disabled="disabled"></div>
               </div>
               <div class="form-group"><label class="col-sm-4 control-label no-padding-right" for="bank_name">银行名称： </label>
-              <div class="col-sm-8"><input style="background:#FFF;width: 100%;" type="text" name="电子邮箱" id="bank_name" value="{$user_info.bank_name}" class="col-xs-7 text_info" disabled="disabled"></div>
+              <div class="col-sm-8"><input style="background:#FFF;width: 100%;" type="text" name="银行名称" id="bank_name" value="{$user_info.bank_name}" class="col-xs-7 text_info" disabled="disabled"></div>
               </div>
               <div class="form-group"><label class="col-sm-4 control-label no-padding-right" for="bank_user_name">银行卡姓名： </label>
               <div class="col-sm-8"><input style="background:#FFF;width: 100%;" type="text" name="银行卡姓名" id="bank_user_name" value="{$user_info.bank_user_name}" class="col-xs-7 text_info" disabled="disabled"> </div>
@@ -175,22 +175,6 @@ function modify(){
 	  $('#Personal').find('.btn-success').css({'display':'block'});
 	};
 function save_info(){
-//	    var num=0;
-//		 var str="";
-//     $(".xinxi input[type$='text']").each(function(n){
-//          if($(this).val()=="")
-//          {
-//
-//			   layer.alert(str+=""+$(this).attr("name")+"不能为空！\r\n",{
-//                title: '提示框',
-//				icon:0,
-//          });
-//		    num++;
-//            return false;
-//          }
-//		 });
-//		  if(num>0){  return false;}
-//          else{
     var username = $('#username').val();
     if("" == username) {
         layer.alert('账号不能为空',{
