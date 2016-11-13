@@ -30,13 +30,23 @@ class AdminInfoModel extends Model {
      * @author 曹梦瑶
      * 判断账户是否存在
      */
-    public function is_exist_username($username) {
+    public function is_exist_username($username, $id='') {
         $return  = false;
-        $is = $this->where(array(
-            'username' => $username,
-            'status' => 1
-        ))
-            ->find();
+        if($id == '') {
+            $is = $this->where(array(
+                'username' => $username,
+                'status' => 1
+            ))
+                ->find();
+        } else {
+            $is = $this->where(array(
+                'username' => $username,
+                'status' => 1,
+                'id' => array('neq', $id),
+            ))
+                ->find();
+        }
+
 //        dd($this->getLastSql());
         $is && $return = true;
         return $return;
@@ -56,17 +66,27 @@ class AdminInfoModel extends Model {
 
     /*
      * @author 曹梦瑶
+     * 判断原密码是否正确
+     */
+    public function is_exist_id($id, $pwd) {
+        $is = $this->where(array(
+            'id' => $id,
+            'password' => makePwd($pwd)
+        ))
+            ->find();
+        return $is;
+    }
+
+   /*
+     * @author 曹梦瑶
      * 判断d登录信息是否存在
      */
     public function is_exist($username, $pwd) {
-//        $return  = false;
-//        $user_id = $this->where(array('email'=>$email))->getField('id');
         $is = $this->where(array(
             'username' => $username,
-            'password' => sha1($pwd)
+            'password' => makePwd($pwd)
         ))
             ->find();
-//        $is && $return = true;
         return $is;
     }
 
@@ -164,27 +184,25 @@ class AdminInfoModel extends Model {
 //
 //
 //
-//    /*
-//     * @author 曹梦瑶
-//     * 重置密码
-//     */
-//    public function resetPwd($tel_num, $pwd) {
-//        $where = array(
-//            'tel_num' => $tel_num
-//        );
-//        $id = $this->where( $where )->getField( 'id');
-//        $is = $this->where($where)
-//            ->save(array(
-//                'pwd' => makePwd($id, $pwd),
-//                'update_time' => time()
-//            ));
-//
-//        if($is !== false) {
-//            return 1;
-//        } else {
-//            return 0;
-//        }
-//    }
+    /*
+     * @author 曹梦瑶
+     * 重置密码
+     */
+    public function resetPwd($id, $pwd) {
+        $is = $this->where(array(
+            'id' => $id
+        ))
+            ->save(array(
+                'password' => makePwd($pwd),
+                'update_time' => time()
+            ));
+//dd($this->getLastSql(),$pwd);
+        if($is !== false) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 //
     /*
      * @author 曹梦瑶
@@ -210,21 +228,31 @@ class AdminInfoModel extends Model {
 //        return $list;
 //    }
 //
-//    public function saveInfoById($id, $data) {
-//        $data['update_time'] = time();
-////        $data['login_time'] = time();
-//        $is = $this->where(array(
-//            'id' => $id
-//        ))
-//            ->save($data);
+    /*
+     * @author 曹梦瑶
+     * 根据id保存用户信息
+     */
+    public function saveInfoById($id, $data) {
+        $data['update_time'] = time();
+//        $data['login_time'] = time();
+        $is = $this->where(array(
+            'id' => $id
+        ))
+            ->save($data);
+
+        if($is !== false) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+//    /*
+//     * @author 曹梦瑶
+//     * 判断账号是否存在
+//     */
+//    public function is_exist_username() {
 //
-//        if($is !== false) {
-//            addApiLog('操作用户权限', 2);
-//
-//            return true;
-//        } else {
-//            return false;
-//        }
 //    }
 
 }

@@ -32,7 +32,7 @@
       <div class="xinxi">
         <div class="form-group"><label class="col-sm-4 control-label no-padding-right" for="username">账号： </label>
           <div class="col-sm-8"><input type="text" name="账号" id="username" value="{$user_info.username}" class="col-xs-7 text_info" disabled="disabled">
-          &nbsp;&nbsp;&nbsp;<a href="javascript:ovid()" onclick="change_Password()" class="btn btn-warning btn-xs">修改密码</a></div>
+          &nbsp;&nbsp;&nbsp;<a href="javascript:;" onclick="change_Password()" id='change_pwd' class="btn btn-warning btn-xs">修改密码</a></div>
           
           </div>
 
@@ -56,44 +56,100 @@
               <div class="col-sm-8"><input  style="background:#FFF;width: 100%;" type="text" name="开户行网点" id="bank_branches" value="{$user_info.bank_branches}" class="col-xs-7 text_info" disabled="disabled"> </div>
               </div>
             <php>}</php>
-           <div class="Button_operation clearfix"> 
-				<button onclick="modify();" class="btn btn-danger radius" type="submit">修改信息</button>				
-				<button onclick="save_info();" class="btn btn-success radius" type="button">保存修改</button>              
+           <div class="Button_operation clearfix">
+               <input type="hidden" id="id" value="{$user_info.id}"/>
+               <input type="hidden" id="type" value="{$user_info.type}"/>
+				<button onclick="modify();" class="btn btn-danger radius" type="submit">修改信息</button>
+				<button onclick="save_info();" class="btn btn-success radius" id='save_change' type="button">保存修改</button>
 			</div>
             </div>
     </div>
-    <div class="recording_style">
-    <div class="type_title">账户登录记录 </div>
-    <div class="recording_list">
-     <table class="table table-border table-bordered table-bg table-hover table-sort" id="sample-table">
-    <thead>
-      <tr class="text-c">
-        <th width="25"><label><input type="checkbox" class="ace"><span class="lbl"></span></label></th>
-        <th width="80">ID</th>
+    <!--<div class="recording_style">-->
+    <!--<div class="type_title">账户登录记录 </div>-->
+    <!--<div class="recording_list">-->
+     <!--<table class="table table-border table-bordered table-bg table-hover table-sort" id="sample-table">-->
+    <!--<thead>-->
+      <!--<tr class="text-c">-->
+        <!--<th width="25"><label><input type="checkbox" class="ace"><span class="lbl"></span></label></th>-->
+        <!--<th width="80">ID</th>-->
 
-        <th>内容</th>
+        <!--<th>内容</th>-->
 
-        <th width="10%">用户名</th>
-        <th width="120">客户端IP</th>
-        <th width="150">时间</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-        <td>15686</td>
+        <!--<th width="10%">用户名</th>-->
+        <!--<th width="120">客户端IP</th>-->
+        <!--<th width="150">时间</th>-->
+      <!--</tr>-->
+    <!--</thead>-->
+    <!--<tbody>-->
+      <!--<tr>-->
+        <!--<td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>-->
+        <!--<td>15686</td>-->
 
-        <td>登录成功!</td>
+        <!--<td>登录成功!</td>-->
 
-        <td>admin</td>
-        <td>61.233.7.80</td>
-        <td>2014-6-11 11:11:42</td>      
-      </tr>
+        <!--<td>admin</td>-->
+        <!--<td>61.233.7.80</td>-->
+        <!--<td>2014-6-11 11:11:42</td>      -->
+      <!--</tr>-->
+ <!--<tr>-->
+        <!--<td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>-->
+        <!--<td>15686</td>-->
 
-    </tbody>
-  </table>
-    </div>
-    </div>
+        <!--<td>登录成功!</td>-->
+
+        <!--<td>admin</td>-->
+        <!--<td>61.233.7.80</td>-->
+        <!--<td>2014-6-11 11:11:42</td>-->
+      <!--</tr>-->
+ <!--<tr>-->
+        <!--<td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>-->
+        <!--<td>15686</td>-->
+
+        <!--<td>登录成功!</td>-->
+
+        <!--<td>admin</td>-->
+        <!--<td>61.233.7.80</td>-->
+        <!--<td>2014-6-11 11:11:42</td>-->
+      <!--</tr>-->
+
+    <!--</tbody>-->
+  <!--</table>-->
+    <!--</div>-->
+    <!--</div>-->
+     <div class="recording_style">
+         <div class="type_title">账户登录记录 </div>
+         <div class="recording_list">
+             <table class="table table-border table-bordered table-bg table-hover table-sort" id="sample-table">
+                 <thead>
+                 <tr class="text-c">
+                     <th width="5%"><label><input type="checkbox" class="ace"><span class="lbl"></span></label></th>
+                     <th width="10%">ID</th>
+                     <th width="5%">账号</th>
+                     <th width="15%">内容</th>
+                     <th width="10%">客户端IP</th>
+                     <th width="5%">操作类型</th>
+                     <th width="30%">URL地址</th>
+                     <th width="20%">操作时间</th>
+                 </tr>
+                 </thead>
+                 <tbody>
+                 <php>foreach($log_history as $K => $v) {</php>
+                     <tr>
+                         <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
+                         <td>{$v.id}</td>
+                         <td>{$v.username}</td>
+                         <td>{$v.opr_name}</td>
+                         <td>{$v.ip}</td>
+                         <td>{$v.type}</td>
+                         <td>{$v.url}</td>
+                         <td><php>echo date('Y-m-d H:i:s', $v['time']);</php></td>
+                     </tr>
+                 <php>}</php>
+
+                 </tbody>
+             </table>
+         </div>
+     </div>
  </div>
 </div>
  <!--修改密码样式-->
@@ -108,6 +164,7 @@
          </div>
 </body>
 </html>
+<script charset="utf-8" src="__JS__/md5.js"></script>
 <script>
 
  //按钮点击事件
@@ -118,33 +175,123 @@ function modify(){
 	  $('#Personal').find('.btn-success').css({'display':'block'});
 	};
 function save_info(){
-	    var num=0;
-		 var str="";
-     $(".xinxi input[type$='text']").each(function(n){
-          if($(this).val()=="")
-          {
-               
-			   layer.alert(str+=""+$(this).attr("name")+"不能为空！\r\n",{
-                title: '提示框',				
-				icon:0,								
-          }); 
-		    num++;
-            return false;            
-          } 
-		 });
-		  if(num>0){  return false;}	 	
-          else{
-			  
-			   layer.alert('修改成功！',{
-               title: '提示框',				
-			   icon:1,			   		
-			  });
-			  $('#Personal').find('.xinxi').removeClass("hover");
-			  $('#Personal').find('.text_info').removeClass("add").attr("disabled", true);
-			  $('#Personal').find('.btn-success').css({'display':'none'});
-			   layer.close(index);
-			
-		  }		  		
+//	    var num=0;
+//		 var str="";
+//     $(".xinxi input[type$='text']").each(function(n){
+//          if($(this).val()=="")
+//          {
+//
+//			   layer.alert(str+=""+$(this).attr("name")+"不能为空！\r\n",{
+//                title: '提示框',
+//				icon:0,
+//          });
+//		    num++;
+//            return false;
+//          }
+//		 });
+//		  if(num>0){  return false;}
+//          else{
+    var username = $('#username').val();
+    if("" == username) {
+        layer.alert('账号不能为空',{
+            title: '提示框',
+            icon:0,
+        });
+        return false;
+    } else {
+
+        $("#save_change").attr("disabled", true);
+        var id = $('#id').val();
+//        var username = $('#username').val();
+        var type = $('#type').val();
+
+        if(type != 2) {
+            var weixin_account = $('#weixin_account').val();
+            var alipay_acount = $('#alipay_acount').val();
+            var bank_name = $('#bank_name').val();
+            var bank_user_name = $('#bank_user_name').val();
+            var bank_account = $('#bank_account').val();
+            var bank_branches = $('#bank_branches').val();
+
+            $.post(  '__APP__/admin.php/Public/saveChange', {
+                        id: id,
+//                        type: type,
+                        username: username,
+                        weixin_account: weixin_account,
+                        alipay_acount: alipay_acount,
+                        bank_name: bank_name,
+                        bank_user_name: bank_user_name,
+                        bank_account: bank_account,
+                        bank_branches: bank_branches,
+                    },
+                    function(data){
+                        if(data.statusCode=="success"){
+                            layer.alert(data.message,{
+                                title: '提示框',
+                                icon:1,
+                            });
+                            $("#save_change").attr("disabled", false);
+
+//                            layer.close(index);
+                        }else{
+
+                            layer.alert(data.message,{
+                                title: '提示框',
+                                icon:0,
+                            });
+                            $('.text_info').attr("disabled", false);
+                            $('.text_info').addClass("add");
+                            $('#Personal').find('.xinxi').addClass("hover");
+                            $('#Personal').find('.btn-success').css({'display':'block'});
+
+                            $("#save_change").attr("disabled", false);
+                            return false;
+                        }
+                    });
+        } else {
+
+            $.post(  '__APP__/admin.php/Public/saveChange', {
+                        id: id,
+//                        type: type,
+                        username: username,
+
+                    },
+                    function(data){
+                        if(data.statusCode=="success"){
+                            layer.alert(data.message,{
+                                title: '提示框',
+                                icon:1,
+                            });
+                            $("#save_change").attr("disabled", false);
+//                            layer.close(index);
+                        }else{
+
+                            layer.alert(data.message,{
+                                title: '提示框',
+                                icon:0,
+                            });
+                            $('.text_info').attr("disabled", false);
+                            $('.text_info').addClass("add");
+                            $('#Personal').find('.xinxi').addClass("hover");
+                            $('#Personal').find('.btn-success').css({'display':'block'});
+
+                            $("#save_change").attr("disabled", false);
+                            return false;
+                        }
+                    });
+        }
+
+
+        layer.alert('修改成功！',{
+            title: '提示框',
+            icon:1,
+        });
+        $('#Personal').find('.xinxi').removeClass("hover");
+        $('#Personal').find('.text_info').removeClass("add").attr("disabled", true);
+        $('#Personal').find('.btn-success').css({'display':'none'});
+    }
+
+//		  }
 	};	
  //初始化宽度、高度    
     $(".admin_modify_style").height($(window).height()); 
@@ -179,7 +326,7 @@ function save_info(){
 			    
 			 });
 			return false;
-          } 
+          }
 		   
 		  if ($("#c_mew_pas").val()==""){
 			  layer.alert('确认新密码不能为空!',{
@@ -191,42 +338,48 @@ function save_info(){
           }
 		    if(!$("#c_mew_pas").val || $("#c_mew_pas").val() != $("#Nes_pas").val() )
         {
-            layer.alert('密码不一致!',{
+            layer.alert('新密码两次输入不一致!',{
               title: '提示框',				
 				icon:0,
 			    
 			 });
 			 return false;
-        }   
-		 else{			  
-			  layer.alert('修改成功！',{
-               title: '提示框',				
-			icon:1,		
-			  }); 
-			  layer.close(index);      
+        } else{
+                $("#change_pwd").attr("disabled", true);
+            var id = $('#id').val();
+            var password = $('#password').val();
+            var passwordr =  $("#Nes_pas").val();
+
+            $.post(  '__APP__/admin.php/Public/change_pwd', { id: id, password: hex_md5( password ), passwordr: hex_md5( passwordr )  },
+                    function(data){
+                        if(data.statusCode=="success"){
+                            layer.alert(data.message,{
+                                title: '提示框',
+                                icon:1,
+                            });
+//                            setTimeout(function(){
+//                                window.location.href=data.url
+//                            },1000);
+//							  location.href="index.html";
+//                            layer.close(index);
+                        }else{
+
+                            layer.alert(data.message,{
+                                title: '提示框',
+                                icon:0,
+                            });
+
+                            $("#change_pwd").attr("disabled", false);
+                            return false;
+                        }
+                    });
+
+
 		  }	 
 	}
+
     });
+
 	  }
 </script>
-<script>
-jQuery(function($) {
-		var oTable1 = $('#sample-table').dataTable( {
-		"aaSorting": [[ 1, "desc" ]],//默认第几个排序
-		"bStateSave": true,//状态保存
-		"aoColumnDefs": [
-		  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-		  {"orderable":false,"aTargets":[0,2,3,4,5,6]}// 制定列不参与排序
-		] } );
-				
-				
-				$('table th input:checkbox').on('click' , function(){
-					var that = this;
-					$(this).closest('table').find('tr > td:first-child input:checkbox')
-					.each(function(){
-						this.checked = that.checked;
-						$(this).closest('tr').toggleClass('selected');
-					});
-						
-				});
-});</script>
+

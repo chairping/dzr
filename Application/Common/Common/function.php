@@ -32,6 +32,53 @@ function dd() {
     exit();
 }
 
+/*
+获取访问IP
+*/
+function getIP(){
+    global $ip;
+    if (getenv("HTTP_CLIENT_IP"))
+        $ip = getenv("HTTP_CLIENT_IP");
+    else if(getenv("HTTP_X_FORWARDED_FOR"))
+        $ip = getenv("HTTP_X_FORWARDED_FOR");
+    else if(getenv("REMOTE_ADDR"))
+        $ip = getenv("REMOTE_ADDR");
+    else $ip = "Unknow";
+    return $ip;
+}
+
+
+/**
+ * 获取完整URL
+ */
+function getAllUrl() {
+    $sys_protocal = isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443' ? 'https://' : 'http://';
+    $php_self = $_SERVER['PHP_SELF'] ? $_SERVER['PHP_SELF'] : $_SERVER['SCRIPT_NAME'];
+    $path_info = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '';
+    $relate_url = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : $php_self.(isset($_SERVER['QUERY_STRING']) ? '?'.$_SERVER['QUERY_STRING'] : $path_info);
+    return $sys_protocal.(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '').$relate_url;
+}
+
+/*
+* @param string $opr_name $type 操作类型:1:增,2:删,3:改,4:查
+* @param $data
+* 写入接口日志
+*/
+function addApiLog($opr_name = "API操作", $type) {
+    $data = array();
+    $data['opr_name'] = $opr_name;
+    $data['username'] = session('username');
+    $data['ip'] = getIP();
+    $data['time'] = time();
+    $sql = M()->getLastSql();
+
+    $data['sql'] = addslashes($sql);
+    $data['url'] = getAllUrl();
+
+    M('log_system')->add($data);
+
+}
+
 function sql($var=''){
     $sql = M()->getLastSql();
     if($var){
@@ -43,11 +90,11 @@ function sql($var=''){
 
 /*
  * @author 曹梦瑶
- * 用户密码加密规则  md5(md5(密码).用户id)
- * @params(用户id , md5(密码))
+ * 用户密码加密规则  sha1(md5(密码).用户id)
+ * @params( md5(密码))
  */
-function makePwd($user_id, $pwd) {
-    return md5($pwd.$user_id);
+function makePwd($pwd) {
+    return sha1($pwd);
 }
 
 /*
