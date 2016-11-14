@@ -205,7 +205,7 @@ $('#apply').on('click', function(){
 						});
 
 							var user_withdraw = $('#user_withdraw').val();
-							if(user_withdraw <= 0 ||user_withdraw =="" || Number(user_withdraw) > Number(data.avaible_money))
+							if(user_withdraw < 0.01 ||user_withdraw =="" || Number(user_withdraw) > Number(data.avaible_money))
 							{
 								layer.alert("提现金额输入有误\r\n",{
 									title: '提示框',
