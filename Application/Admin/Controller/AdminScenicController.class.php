@@ -60,7 +60,7 @@ class AdminScenicController extends AdminController
             $data = I('post.');
             unset($data['id']);
 
-            if($this->goodsModel->edit($id, $data)) {
+            if($this->ScenicModel->edit($id, $data)) {
                 $this->ajaxReturn(['code' => 1, 'message' => '商品编辑成功']);
             } else {
                 $this->ajaxReturn(['code' => 0, 'message' => '商品失败']);
@@ -73,7 +73,7 @@ class AdminScenicController extends AdminController
                 $this->error("非法访问");
             }
 
-            $data = D('Goods')->find($id);
+            $data = $this->ScenicModel->find($id);
 
             $this->assign('data', $data );
             $this->display();

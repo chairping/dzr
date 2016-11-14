@@ -1,0 +1,74 @@
+<include file="Public/avatar"/>
+<style>
+
+#clipArea {
+margin: 5px;
+height: 300px;
+}
+#file, #clipBtn {
+margin: 5px;
+}
+
+#view {
+margin: 0 auto;
+width: 200px;
+height: 200px;
+}
+/*.current {*/
+/**/
+/*}*/
+</style>
+
+<body>
+
+<div>
+
+  <input type="file" id="file" onclick="pic_clip('file', 'imge')" >
+
+
+</div>
+
+
+<div id="imge" style="display: none;">
+
+  <div id="clipArea"></div>
+  <button id="clipBtn" style="display:none;">截取</button>
+  <div id="view"></div>
+</div>
+
+
+<script>
+  $(function(){
+
+
+
+
+
+
+  })
+
+
+
+  var clipArea = new bjj.PhotoClip("#clipArea", {
+    size: [260, 260],
+    outputSize: [640, 640],
+    file: "#file",
+    view: "#view",
+    ok: "#clipBtn",
+    loadStart: function() {
+//            console.log("照片读取中");
+    },
+    loadComplete: function(img, url) {
+//            console.log("照片读取完成");
+    },
+    clipFinish: function(dataURL) {
+//        $("#xx").attr('src', dataURL);
+//        console.log(dataURL);
+    }
+  });
+
+
+</script>
+
+</body>
+</html>

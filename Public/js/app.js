@@ -29,5 +29,33 @@
         $.ajax(ajax_option);
     }
 
+    function pic_clip(obj, content) {
+
+        sh=setInterval(function() {
+            var xx = $('#'+obj).val();
+            if (xx) {
+                $('#' + content).show();
+                clearInterval(sh);
+
+                layer.open({
+                    type: 1,
+                    area: ['760px', '620px'],
+                    content: $('#' + content), //这里content是一个DOM
+                    btn: ['确定'],
+                    yes: function(index, layero){
+                        layer.close(index);
+                    }
+
+                });
+
+                setInterval(function() {
+                    $("#clipBtn").trigger('click');
+                }, 1000);
+            }
+
+        },1000);
+    }
+
+
 
 

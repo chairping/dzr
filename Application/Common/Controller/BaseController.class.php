@@ -26,8 +26,8 @@ class BaseController extends \Think\Controller {
 //            }
 
         } else {
-            session(null);
-            echo "<script>location.href='".__ROOT__."/admin.php/Public/login';</script>";
+//            session(null);
+//            echo "<script>location.href='".__ROOT__."/admin.php/Public/login';</script>";
         }
 
     }

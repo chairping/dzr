@@ -1097,3 +1097,15 @@ body
 .amounts_style .Statistics_btn{ margin-left:13px}
 .amounts_style .Statistics_btn i.bigger{ font-size:32px}
 .amounts_style .Statistics_btn a.btn{ margin-top:13px;}
+
+
+#clipArea {
+	margin: 5px;
+	height: 300px;
+}
+
+#view {
+	margin: 0 auto;
+	width: 200px;
+	height: 200px;
+}
