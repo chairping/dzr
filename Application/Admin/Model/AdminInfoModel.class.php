@@ -79,7 +79,7 @@ class AdminInfoModel extends Model {
 
    /*
      * @author 曹梦瑶
-     * 判断d登录信息是否存在
+     * 判断登录信息是否存在
      */
     public function is_exist($username, $pwd) {
         $is = $this->where(array(
@@ -247,13 +247,80 @@ class AdminInfoModel extends Model {
         }
     }
 
-//    /*
-//     * @author 曹梦瑶
-//     * 判断账号是否存在
-//     */
-//    public function is_exist_username() {
-//
-//    }
+    /*
+      * @author 曹梦瑶
+      * 获取用户所属景区的有效农民总个数 通过景点id
+      */
+    public function getPersonNumBySpots($scenic_spots_id) {
+        $list = $this->where(array(
+            'scenic_spots_id' => $scenic_spots_id,
+            'status' => 1,
+            'type' => 3
+        ))
+            ->getField('id', true);
+        $num = count($list);
+        $num = $num ? $num : 0;
+        return $num;
+    }
+
+    /*
+     * @author 曹梦瑶
+     * 获取用户提成方式
+     */
+    public function getWithdraw() {
+        return array(
+            '1' => '银行卡',
+            '2' => '微信',
+            '3' => '支付宝',
+        );
+    }
+
+    /*
+     * @author 曹梦瑶
+     * 银行卡信息
+     */
+    public function getBankInfo() {
+        $list = $this->where(array(
+            'id' => getHomeUserID()
+        ))
+            ->field(array('bank_name', 'bank_user_name', 'bank_account', 'bank_branches'))
+            ->find();
+//        dd($list,$this->getLastSql());
+        return $list;
+    }
+
+    /*
+      * @author 曹梦瑶
+      * 微信信息
+      */
+    public function getWeixinInfo() {
+        $list = $this->where(array(
+            'id' => getHomeUserID()
+        ))
+//            ->getField('id, weixin_account');
+        ->field(array('weixin_account'))
+            ->find();
+        return $list;
+    }
+
+    /*
+      * @author 曹梦瑶
+      * 支付宝信息
+      */
+    public function getAlipayInfo() {
+        $list = $this->where(array(
+            'id' => getHomeUserID()
+        ))
+//            ->getField('id, alipay_acount');
+        ->field(array('alipay_acount'))
+            ->find();
+
+
+        return $list;
+    }
+
+
+
 
 }
 

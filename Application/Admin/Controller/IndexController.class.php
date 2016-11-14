@@ -1,8 +1,9 @@
 <?php
 namespace Admin\Controller;
 use Admin\Services\MenuServices;
-use Think\Controller;
-class IndexController extends Controller {
+//use Think\Controller;
+use Common\Controller\BaseController;
+class IndexController extends BaseController {
     public function index(){
         
 

@@ -66,8 +66,6 @@ dd($img);
             $img_addr = D('TempImg')->getImg();
             $this->ajaxReturn( array( "statusCode" => C( 'SUC_CODE' ),
                 "message" => L('Successful_operation'), 'img_arr'=>$img ));
-
-
         }
 
         $this->ajaxReturn( array( "statusCode" => C( 'ERROR_CODE' ), "message" => '操作失败' ) );
@@ -95,5 +93,5 @@ dd($img);
         $this->ajaxReturn(array("statusCode" => C('ERROR_CODE'),  "message" =>'修改信息失败'));
     }
 
-
+    
 }
