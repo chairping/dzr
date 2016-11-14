@@ -3,8 +3,8 @@ namespace Admin\Controller;
 use Common\Controller\AgentController;
 
 class AgentInfoController extends AgentController{
-    public function _initialize() {
-
+    public function __construct() {
+        parent::__construct();
     }
 
     /*
@@ -70,8 +70,29 @@ dd($img);
 
         }
 
-        $this->ajaxReturn( array( "statusCode" => C( 'ERROR_CODE' ), "message" => L('Fail_operation') ) );
+        $this->ajaxReturn( array( "statusCode" => C( 'ERROR_CODE' ), "message" => '操作失败' ) );
 
+    }
+
+    /*
+     * @author 曹梦瑶
+     * 修改信息
+     */
+    public function changeInfo() {
+        $post = I('post.');
+        $id = $post['id'];
+        $data = $post;
+        unset($data['id']);
+
+        $is = D('AdminInfo')->saveInfoById($id, $data);
+        if($is) {
+            $this->ajaxReturn(
+                array(
+                    "statusCode" => C( 'SUC_CODE' ),
+                    "message" => '操作成功') );
+        }
+
+        $this->ajaxReturn(array("statusCode" => C('ERROR_CODE'),  "message" =>'修改信息失败'));
     }
 
 

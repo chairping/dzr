@@ -8,6 +8,27 @@ namespace Common\Controller;
  */
 class BaseController extends \Think\Controller {
 
+    public function _initialize() {
+
+        if(!in_array(strtolower(CONTROLLER_NAME), array('index')) && session('id')) {
+            $id = session('id');
+
+            $checkMemberStatus = D('AdminInfo')->where(array('id'=>$id))->getField('type');
+            if ( $checkMemberStatus == 2 && in_array(strtolower(CONTROLLER_NAME), array('agentachievement', 'agentinfo',))) {
+                session(null);
+                echo "<script>location.href='".__ROOT__."/admin.php/Public/login';</script>";
+             }
+
+            //平台管理员url限制还没有加
+
+
+        } else {
+            session(null);
+            echo "<script>location.href='".__ROOT__."/admin.php/Public/login';</script>";
+        }
+
+    }
+
        /**
         * 分页控件
         * @param $total int     总记录数

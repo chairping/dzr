@@ -152,9 +152,6 @@ class PublicController extends \Think\Controller {
                         "statusCode" => C( 'SUC_CODE' ),
                         "message" => '操作成功') );
             }
-//        } else {
-//
-//        }
 
         $this->ajaxReturn(array("statusCode" => C('ERROR_CODE'),  "message" =>'修改信息失败'));
 
