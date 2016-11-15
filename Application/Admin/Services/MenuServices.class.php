@@ -51,11 +51,11 @@ class MenuServices {
                             'name' => '商品列表',
                             'url' => U('AdminGoods/index'),
                         ],
-                        [
-                            'name' => '图片裁剪',
-//                            'url' => U('AgentAchievement/index'),
-                            'url' =>  U('AdminGoods/cropAvatar'),
-                        ],
+//                        [
+//                            'name' => '图片裁剪',
+////                            'url' => U('AgentAchievement/index'),
+//                            'url' =>  U('AdminGoods/cropAvatar'),
+//                        ],
                     ]
                 ],
                 [
@@ -79,8 +79,8 @@ class MenuServices {
                     'icon' => '',
                     'sub_menu' => [
                         [
-                            'name' => '公众号信息管理',
-                            'url' => 'Weixin/Gzh/index',
+                            'name' => '提现申请',
+                            'url' => 'AdminWithDraw/index',
                         ],
                     ]
                 ],
