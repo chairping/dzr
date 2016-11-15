@@ -96,6 +96,10 @@ class AdminScenicController extends AdminController
         $this->_pageShow($count, $pageSize);
 
         $this->assign('data', $data);
+
+        $scenic = $this->ScenicModel->select();
+        $this->assign('scenic', $scenic);
+        $this->assign('data', $data);
         $this->display();
     }
 

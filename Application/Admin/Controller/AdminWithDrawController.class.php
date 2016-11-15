@@ -15,106 +15,79 @@ use Common\Lib\Base64Image;
 class AdminWithDrawController extends AdminController
 {
 
-    public $goodsModel;
+    public $Model;
 
     public function _initialize() {
-        $this->goodsModel= D('Goods');
+        $this->Model= D('Withdraw');
     }
 
     public function index() {
 
-        $type = I('type', 0, 'intval');
+        $type = I('type', 1, 'intval');
+        $page = I('p', 0, 'intval');
+        $pageSize = 10;
+
+
+        $where = [];
 
         if ($type == 1) {
-            $page = I('p', 0, 'intval');
-            $pageSize = 10;
-
-            $data = $this->goodsModel->getListWithCount([], $page, $pageSize, 'update_time desc');
-
-            $goodsList = $data['data'];
-            $count = $data['count'];
-
-            $this->_pageShow($count, $pageSize);
-
-            $this->assign('goods_list', $goodsList );
-
+            $where['withdraw_status'] = 1;
         } else {
-
+            $where['withdraw_status'] = 2;
         }
 
-        $this->display();
-    }
+        $result = $this->Model->getInfoList($where, $page, $pageSize, 'update_time desc');
 
-    public function add() {
-        if (IS_POST) {
+        $data = $result['data'];
+        $count = $result['count'];
+//var_dump($data);
 
-            $data = I('post.');
-            $data['update_time'] = time();
+        array_walk($data, function(&$row) {
+            $spotsId = $row['scenic_spots_id'];
+            $spotsInfo = D('ScenicSpots')->find($spotsId);
+            $row['spots_name'] = $spotsInfo['scenic_name'];
 
-            $coverAddr = $data['cover_img_addr'];
+        });
+        $this->_pageShow($count, $pageSize);
 
+        $this->assign('data', $data );
 
-            $base64Img = new Base64Image('sale', $coverAddr);
-            $data['cover_img_addr'] = $base64Img->deal();
+        $this->assign('complete_url', U("index", array('type'=> 1)));
+        $this->assign('un_complete_url', U("index", array('type' => 2)));
 
-            if($this->goodsModel->add($data)) {
-                $this->redirect('AdminGoods/index');
-//                $this->ajaxReturn(['code' => 1, 'message' => '商品添加成功']);
-            } else {
-                $this->error("商品添加失败");
-//                $this->ajaxReturn(['code' => 0, 'message' => '商品添加失败']);
-            }
-
+        if ($type == 1) {
+            $this->display('index');
         } else {
-
-            $this->display();
-
+            $this->display('index2');
         }
 
     }
 
-    public function edit() {
-        if (IS_POST) {
+    public function check() {
+        $id = I('id', 0, 'intval');
 
-            $id = I('id', 0, 'intval');
-
-            if (!$id) {
-                $this->error('非法访问');
-            }
-//            var_dump(I('post.'));exit;
-
-            $data = I('post.');
-            unset($data['id']);
-
-            $coverAddr = $data['cover_img_addr'];
-
-            $base64Img = new Base64Image('sale', $coverAddr);
-            $data['cover_img_addr'] = $base64Img->deal();
-            ;
-            if($this->goodsModel->edit($id, $data) >= 0) {
-//                $this->ajaxReturn(['code' => 1, 'message' => '商品编辑成功']);
-                $this->redirect('AdminGoods/index');
-            } else {
-                $this->error("商品添加失败");
-//                $this->ajaxReturn(['code' => 0, 'message' => '商品失败']);
-            }
-        
-        } else {
-            $id = I('id', 0, 'intval');
-        
-            if (!$id) {
-                $this->error("非法访问");
-            }
-
-            $data = D('Goods')->find($id);
-
-            $this->assign('data', $data );
-            $this->display();
+        if(!$id) {
+            $this->ajaxReturn([
+                'code' => 0,
+                'msg' => '非法访问'
+            ]);
         }
+
+        if($this->Model->check($id)) {
+            $this->ajaxReturn([
+                'code' => 1,
+                'msg' => '审核成功'
+            ]);
+        } else {
+            $this->ajaxReturn([
+                'code' => 0,
+                'msg' => '审核失败'
+            ]);
+        }
+
+
     }
 
-    public function cropAvatar() {
-        $this->display();
-    }
+
 
 }
