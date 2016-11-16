@@ -9,7 +9,7 @@ class MenuServices {
     }
 
     public static function getAdminMenu() {
-        $type = session('type');$type=2;
+        $type = session('type');
         if (in_array($type, array('1', '3'))) {
             //代理、农民
             return [
