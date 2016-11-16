@@ -127,6 +127,20 @@ function cp_U($url, $params = []) {
     return $url;
 }
 
+/**
+ * 格式化金额
+ * @param $money
+ * @param bool $isShow 是否展示
+ * @return float
+ */
+function formatMoney($money, $isShow = false) {
+    if ($isShow) {
+        return round($money/100, 2);
+    } else {
+        return $money * 100;
+    }
+
+}
 
 
 

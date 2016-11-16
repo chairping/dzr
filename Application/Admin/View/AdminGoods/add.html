@@ -14,7 +14,7 @@
         <div class="sort_list">
 
 <div class="sort_style_add margin" id="sort_style_add" style="">
-    <form id="goods-edit" method="post" action="{:cp_U('AdminGods/add')}">
+    <form id="goods-edit" method="post" action="{:cp_U('AdminGoods/add')}">
     <div class="">
         <ul>
             <li>
@@ -36,7 +36,7 @@
 
             <li>
                 <label class="label_name">介绍文</label><div class="col-sm-9">
-                <textarea name="description" class="form-control" id="form-field-8" placeholder="" onkeyup="checkLength(this);"> <?= $data['description'] ?> </textarea>
+                <textarea name="description" class="form-control" id="form-field-8" placeholder="" onkeyup="checkLength(this);"><?= $data['description']; ?></textarea>
                 <span class="wordage">剩余字数：<span id="sy" style="color:Red;">200</span>字</span></div>
             </li>
 
@@ -46,7 +46,7 @@
                 <div class="col-sm-9">
                     <input type="file" id="file" onclick="pic_clip('file', 'imge')" >
 
-                    <img  id="pic_img1" src="" style="height: 40px;width: 40px;">
+                    <img  id="pic_img1" src="" style="height: 40px;width: 40px;display: none;">
 
 
                     <!--<input class="btn btn-info radius" id="image-upload" type="button" value="上传图片">-->
@@ -103,8 +103,8 @@
 <script type="text/javascript">
 
     var clipArea = new bjj.PhotoClip("#clipArea", {
-        size: [260, 260],
-        outputSize: [640, 640],
+        size: [600, 350],
+        outputSize: [900, 640],
         file: "#file",
         view: "#view",
         ok: "#clipBtn",
@@ -116,7 +116,7 @@
         },
         clipFinish: function(dataURL) {
         $("#pic_img").val(dataURL);
-        $("#pic_img1").attr('src', dataURL);
+        $("#pic_img1").attr('src', dataURL).show();
 //        console.log(dataURL);
         }
     });
