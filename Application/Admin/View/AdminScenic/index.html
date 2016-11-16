@@ -16,7 +16,7 @@
                     <th width="25px"><label><input type="checkbox" class="ace"><span class="lbl"></span></label></th>
                     <th width="50px">ID</th>
                     <th width="100px">景区名称</th>
-                    <th width="50px">价格</th>
+                    <!--<th width="50px">价格</th>-->
                     <th width="180px">加入时间</th>
                     <th width="70px">状态</th>
                     <th width="250px">操作</th>
@@ -28,7 +28,7 @@
                     <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
                     <td><?= $goods['id'] ?></td>
                     <td><?= $goods['scenic_name'] ?></td>
-                    <td><?= $goods['price'] ?></td>
+                    <!--<td><?= $goods['price'] ?></td>-->
                     <td><?= date("Y-m-d H:i:s", $goods['update_time']); ?> </td>
                     <td class="td-status">
                         <?php if ($goods['status'] == 1): ?>

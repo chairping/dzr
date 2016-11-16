@@ -333,9 +333,14 @@ class AdminInfoModel extends Model {
     public function addUser($username, $password, $status, $scenic_spots_id, $type = 1) {
 
         if ($type == 1) {
-            $info = $this->where(['scenic_spots_id' => $scenic_spots_id])->find();
+            $info = $this->where(['scenic_spots_id' => $scenic_spots_id, 'type' => 1])->find();
             if ($info){
                 throw new \LogicException("该景区已存在代理人");
+            }
+        } else {
+            $info = $this->where(['scenic_spots_id' => $scenic_spots_id, 'type' => 3])->find();
+            if ($info){
+                throw new \LogicException("该景区已存在农民");
             }
         }
 

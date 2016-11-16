@@ -139,6 +139,7 @@ class AdminScenicController extends AdminController
         $spots = $this->ScenicModel->find($scenicId);
         $this->assign('data', $data);
         $this->assign('scenic_name', $spots['scenic_name']);
+        $this->assign('scenicId', $scenicId);
         $this->display();
     }
 
@@ -151,7 +152,7 @@ class AdminScenicController extends AdminController
         try{
 
 
-            if(!$this->AdminInfo->addUser($username, $password, $status, $scenic_spots_id)) {
+            if(!$this->AdminInfo->addUser($username, $password, $status, $scenic_spots_id, $type)) {
                 throw new \LogicException("代理添加失败");
             }
             $this->ajaxReturn(['code' => 1, 'msg' => '代理添加成功']);
