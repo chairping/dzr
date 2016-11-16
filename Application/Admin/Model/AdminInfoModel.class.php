@@ -321,7 +321,23 @@ class AdminInfoModel extends Model {
     }
 
 
+    /**
+     * 添加代理人 或 农民
+     * @param $username
+     * @param $password
+     * @param $status
+     * @param $scenic_spots_id
+     * @param int $type
+     * @return mixed
+     */
     public function addUser($username, $password, $status, $scenic_spots_id, $type = 1) {
+
+        if ($type == 1) {
+            $info = $this->where(['scenic_spots_id' => $scenic_spots_id])->find();
+            if ($info){
+                throw new \LogicException("该景区已存在代理人");
+            }
+        }
 
         if (!$username) {
             throw new \LogicException("帐号名不能为空");

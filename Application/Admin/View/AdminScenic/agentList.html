@@ -15,7 +15,8 @@
                 <tr>
                     <th width="25px"><label><input type="checkbox" class="ace"><span class="lbl"></span></label></th>
                     <th width="50px">ID</th>
-                    <th width="100px">代理点</th>
+                    <th width="100px">代理景点</th>
+                    <th width="100px">代理人</th>
                     <th width="50px">销售总额</th>
                     <th width="180px">今日销售额</th>
                     <th width="250px">查看详情</th>
@@ -27,6 +28,7 @@
                     <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
                     <td><?= $goods['id'] ?></td>
                     <td><?= $goods['scenic_name'] ?></td>
+                    <td><?= $goods['agent_name'] ?></td>
                     <td><?= $goods['total'] ?></td>
                     <td> <?= $goods['today_total'] ?></td>
 
@@ -147,13 +149,18 @@
 num = 0;
                 if(num>0){  return false;}
                 else{
-                    ajax_form($("#agent-form"), function () {
-                        layer.alert('添加成功！',{
-                            title: '提示框',
-                             icon:1,
-                        }, function() {
-                            location.reload();
-                        });
+                    ajax_form($("#agent-form"), function (ret) {
+                        if (ret.code == 0) {
+                            layer.msg(ret.msg);
+                        } else {
+                            layer.alert('添加成功！',{
+                                title: '提示框',
+                                icon:1,
+                            }, function() {
+                                location.reload();
+                            });
+                        }
+
                     })
                 }
             }
