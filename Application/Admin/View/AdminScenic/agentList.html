@@ -18,7 +18,7 @@
                     <th width="100px">代理点</th>
                     <th width="50px">销售总额</th>
                     <th width="180px">今日销售额</th>
-                    <th width="250px">操作</th>
+                    <th width="250px">查看详情</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -31,7 +31,7 @@
                     <td> <?= $goods['today_total'] ?></td>
 
                     <td class="td-manage">
-                        <a  href="javascript:;" title=""  class="btn btn-xs btn-success">审核</a>
+                        <a  href="<?= cp_U('AdminScenic/agentScenicSaleList', array('id'=>$goods['id'])); ?>" title=""  class="btn btn-xs btn-success">进入</a>
                     </td>
                 </tr>
                 <?php endforeach; ?>

@@ -40,11 +40,11 @@ class ScenicSpotsModel extends \Common\Model\BaseModel  {
         $end = mktime(23,59,59,date("m",$t),date("d",$t),date("Y",$t));
 
         $data = $this->query(
-            "select s.*, sum(sales_price) as total, sum(if ((o.update_time >" . $start . " and o.update_time < " . $end ."), sales_price, 0)) as today_total 
- from dzr_scenic_spots as s, dzr_order as o 
- where s.id = o.scenic_spots_id and s.status=1  GROUP BY s.id limit " . ($page) * $pageSize. "," . $pageSize
+            "select s.*, IFNULL(sum(o.sales_price),0) as total, sum(if ((o.update_time >" . $start . " and o.update_time < " . $end ."), sales_price, 0)) as today_total 
+ from dzr_scenic_spots as s left join dzr_order as o on
+  s.id = o.scenic_spots_id and s.status=1  GROUP BY s.id limit " . ($page) * $pageSize. "," . $pageSize
         );
-
+//var_dump($data);
         return compact('data', 'count');
 
     }

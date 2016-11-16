@@ -4,7 +4,7 @@
     <div class="sort_style">
         <div class="border clearfix">
        <span class="l_f">
-        <a href="javascript:ovid()" id="sort_add" class="btn btn-warning"><i class="fa fa-plus"></i> 添加产品</a>
+        <a href="javascript:ovid()" id="sort_add" class="btn btn-warning"><i class="fa fa-plus"></i> 添加景区</a>
         <!--<a href="javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i> 批量删除</a>-->
        </span>
             <!--<span class="r_f">共：<b>5</b>类</span>-->
@@ -40,7 +40,7 @@
                     <td class="td-manage">
                         <!--<a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>-->
                         <a title="编辑"  href="javascript:;"  data-id="<?= $goods['id'] ?>" class="btn goods-edit btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a>
-                        <a title="删除" href="javascript:;"   class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
+                        <!--<a title ="删除" href="javascript:;"   class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>-->
                         <!--<a href="javascript:ovid()" name="Ads_list.html" class="btn btn-xs btn-pink ads_link" onclick="AdlistOrders('561');" title="幻灯片广告列表"><i class="fa  fa-bars  bigger-120"></i></a>-->
                     </td>
                 </tr>
@@ -62,7 +62,7 @@
     <div class="">
         <ul>
             <li>
-                <label class="label_name">标题</label>
+                <label class="label_name">景区</label>
                 <div class="col-sm-9">
                     <input name="scenic_name" type="text" id="form-field-1" placeholder="" class="col-xs-10 col-sm-5">
                 </div>
@@ -97,7 +97,7 @@
 
         layer.open({
             type: 2,
-            area: ['770px', '520px'],
+            area: ['570px', '220px'],
             fix: false, //不固定
             maxmin: true,
             shade:0.4,
@@ -109,10 +109,10 @@
     $('#sort_add').on('click', function(){
         layer.open({
             type: 1,
-            title: '添加分类',
+            title: '新增',
             maxmin: true,
             shadeClose: false, //点击遮罩关闭层
-            area : ['750px' , ''],
+            area : ['570px' , '220px'],
             content:$('#sort_style_add'),
             btn:['提交','取消'],
             yes:function(index,layero){
