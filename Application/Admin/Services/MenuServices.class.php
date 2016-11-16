@@ -85,6 +85,17 @@ class MenuServices {
                         ],
                     ]
                 ],
+                [
+                    'name' => '交易管理',
+                    'code' => 'Weixin',
+                    'icon' => '',
+                    'sub_menu' => [
+                        [
+                            'name' => '交易列表',
+                            'url' => cp_U('AdminOrder/index'),
+                        ],
+                    ]
+                ],
             ];
         }
 
