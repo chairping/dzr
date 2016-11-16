@@ -20,13 +20,15 @@ class BaseController extends \Think\Controller {
              }
 
             //平台管理员url限制还没有加
-//            if ( $checkMemberStatus != 2 && in_array(strtolower(CONTROLLER_NAME), array('admingoods', 'adminscenic',))) {
-//                session(null);
+            if ( $checkMemberStatus != 2 && in_array(strtolower(CONTROLLER_NAME), array('admingoods', 'adminscenic',))) {
+                session(null);
+                $this->redirect('Public/login');
 //                echo "<script>location.href='".__ROOT__."/admin.php/Public/login';</script>";
-//            }
+            }
 
         } else {
-//            session(null);
+            session(null);
+            $this->redirect('Public/login');
 //            echo "<script>location.href='".__ROOT__."/admin.php/Public/login';</script>";
         }
 

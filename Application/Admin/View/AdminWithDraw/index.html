@@ -1,0 +1,118 @@
+<include file="Public/header"/>
+<body>
+<div class="margin clearfix">
+    <div class="stystems_style">
+        <div class="tabbable">
+            <ul class="nav nav-tabs" id="myTab">
+                <li class="active">
+                    <a href="<?= $compete_url; ?>"><i class="green fa fa-home bigger-110"></i>&nbsp;申请中</a>
+                </li>
+                <li >
+                    <a href="<?= $un_complete_url; ?>">已打款</a >
+                </li>
+            </ul>
+            <div class="tab-content">
+
+                <div class="sort_list">
+                    <table class="table table-striped table-bordered table-hover" id="sample-table">
+                        <thead>
+                        <tr>
+                            <th width="50px">代理点</th>
+                            <th width="50px">提现代理人</th>
+                            <th width="100px">时间</th>
+                            <th width="50px">申请金额</th>
+
+                            <th width="250px">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach($data as $goods): ?>
+                        <tr>
+                            <td><?= $goods['spots_name'] ?></td>
+                            <td><?= $goods['username'] ?></td>
+                            <td><?= $goods['update_time'] ?></td>
+                            <td> <?= $goods['money'] ?></td>
+
+                            <td class="td-manage">
+                            <!--<a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>-->
+                            <a title="进入详情" data-id="<?= $goods['id']; ?>" class="btn btn-xs btn-inf shenhe " ><i class="fa fa-edit bigger-120">审核</i></a>
+                            <!--<a href="javascript:ovid()" name="Ads_list.html" class="btn btn-xs btn-pink ads_link" onclick="AdlistOrders('561');" title="幻灯片广告列表"><i class="fa  fa-bars  bigger-120"></i></a>-->
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+
+                    <?= $my_page; ?>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--添加商品-->
+    <div class="sort_style_add margin" id="sort_style_add" style="display:none">
+        <form id="goods-add" method="post" action="{:U('add')}">
+            <div class="">
+                <ul>
+                    <li>
+                        <label class="label_name">金额</label>
+                        <div class="col-sm-9">
+                        </div>
+                    </li>
+
+
+                    <li>
+                        <label class="label_name">提现账户</label>
+
+                    </li>
+                </ul>
+            </div>
+        </form>
+
+
+    </div>
+
+
+
+
+</body>
+</html>
+<script type="text/javascript">
+
+
+    $('.shenhe').on('click', function(){
+
+        var _self = $(this);
+
+        var id = _self.data('id');
+        layer.open({
+            type: 1,
+            title: '武夷山风景区',
+            maxmin: true,
+            shadeClose: false, //点击遮罩关闭层
+            area : ['750px' , ''],
+            content:$('#sort_style_add'),
+            btn:['已打款，并关闭页面','取消'],
+            yes:function(index,layero){
+
+
+                var data = {id: id};
+
+
+                $.post('{:U("check")}', data, function(ret){
+                    if(ret.code == 1) {
+                        layer.close(index);
+                        location.reload();
+                    } else {
+                        layer.msg(ret.msg);
+                    }
+                }, 'json');
+
+            }
+        });
+    })
+
+
+</script>

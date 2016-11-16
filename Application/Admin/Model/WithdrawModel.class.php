@@ -53,5 +53,37 @@ class WithdrawModel extends \Common\Model\BaseModel  {
         }
     }
 
+    /**
+     * 获取申请提现列表
+     * @param array $where
+     * @param $page
+     * @param $pageSize
+     */
+    public function getInfoList($where= [], $pageIndex, $pageSize) {
+
+
+        $count= $this->where($where)->count();
+
+        if($count < $pageIndex* $pageSize){
+            $pageIndex= intval($count/$pageSize) + (($count % $pageSize > 0) ? 1 : 0);
+        }
+
+
+        $data = $this->join('dzr_admin_info on dzr_admin_info.id=dzr_withdraw.withdraw_user_id', 'LEFT')
+            ->where($where)
+            ->page($pageIndex, $pageSize)
+            ->field('dzr_withdraw.money,dzr_withdraw.id, dzr_withdraw.update_time,dzr_admin_info.username,dzr_admin_info.scenic_spots_id')
+            ->select();
+
+        return compact('data', 'count');
+    }
+
+    public function check($id, $data = []) {
+        $data['update_time'] = time();
+        $data['withdraw_status'] = 2;
+
+        return $this->where(['id' => $id])->save($data);
+    }
+
 }
 

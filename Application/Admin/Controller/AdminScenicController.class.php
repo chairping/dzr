@@ -15,9 +15,13 @@ class AdminScenicController extends AdminController
 {
 
     public $ScenicModel;
+    public $AdminInfo;
+    public $Order;
 
     public function _initialize() {
         $this->ScenicModel= D('ScenicSpots');
+        $this->AdminInfo = D('AdminInfo');
+        $this->Order = D('Order');
     }
 
     public function index() {
@@ -79,5 +83,51 @@ class AdminScenicController extends AdminController
             $this->display();
         }
     }
+
+    public function agentList() {
+
+        $page = I('p', 0, 'intval');
+        $pageSize = 10;
+
+        $result = $this->ScenicModel->scenicsSale($page, $pageSize);
+        $count = $result['count'];
+        $data = $result['data'];
+
+        $this->_pageShow($count, $pageSize);
+
+        $this->assign('data', $data);
+
+        $scenic = $this->ScenicModel->select();
+        $this->assign('scenic', $scenic);
+        $this->assign('data', $data);
+        $this->display();
+    }
+
+    public function agentScenicSaleList() {
+        $scenicId = I('id');
+
+        $data = $this->Order->getInfoBySpots($scenicId);
+
+        $spots = $this->ScenicModel->find($scenicId);
+        $this->assign('data', $data);
+        $this->assign('scenic_name', $spots['scenic_name']);
+        $this->display();
+    }
+
+    public function agentAdd() {
+
+        extract(I('post.'));
+        try{
+            if(!$this->AdminInfo->addUser($username, $password, $status, $scenic_spots_id)) {
+                throw new \LogicException("代理添加失败");
+            }
+            $this->ajaxReturn(['code' => 1, 'message' => '代理添加成功']);
+
+        } catch (\LogicException$e) {
+            $this->ajaxReturn(['code' => 0, 'message' =>$e->getMessage()]);
+        }
+    }
+
+
 
 }

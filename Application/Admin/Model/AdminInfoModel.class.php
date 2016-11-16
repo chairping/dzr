@@ -2,6 +2,7 @@
 
 namespace Admin\Model;
 
+use Admin\Controller\PublicController;
 use Think\Model;
 use Admin\Model\CommonModel;
 
@@ -319,6 +320,41 @@ class AdminInfoModel extends Model {
         return $list;
     }
 
+
+    public function addUser($username, $password, $status, $scenic_spots_id, $type = 1) {
+
+        if (!$username) {
+            throw new \LogicException("帐号名不能为空");
+        }
+
+        if (!$password) {
+            throw new \LogicException("密码不能为空");
+        }
+
+        $password = sha1(md5($password));
+
+        if (!in_array($status, [1,2])) {
+            $status = 1;
+        }
+        $scenic_spots_id = intval($scenic_spots_id);
+
+        $isExist = $this->is_exist_username($username);
+
+        if($isExist) {
+            throw new \LogicException("该账号已被注册");
+        }
+
+        if (!in_array($type, [1,3])) {
+            throw new \LogicException("用户类型不正确");
+        }
+
+        $update_time = time();
+
+        return $this->add(compact(
+            'username', 'password', 'status', 'scenic_spots_id', 'type', 'update_time')
+        );
+
+    }
 
 
 

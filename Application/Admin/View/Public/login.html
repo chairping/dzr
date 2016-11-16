@@ -101,8 +101,8 @@ $('#login_btn').on('click', function(){
 			  $("#login_btn").attr("disabled", true);
 			  var username = $('#username').val();
 			  var password = $('#password').val();
-
-			  $.post(  '__APP__/admin.php/Public/login', { username: username, password: hex_md5( password ) },
+//			  __APP__/admin.php/Public/login
+			  $.post(  '{:U("Public/login")}', { username: username, password: hex_md5( password ) },
 					  function(data){
 						  if(data.statusCode=="success"){
 							  layer.alert(data.message,{
