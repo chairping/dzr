@@ -29,7 +29,15 @@
         $.ajax(ajax_option);
     }
 
-    function pic_clip(obj, content) {
+    function pic_clip(obj, content, height, witch) {
+
+        if (!height) {
+            height = '760px';
+        }
+
+        if (!witch) {
+            height = '620px';
+        }
 
         sh=setInterval(function() {
             var xx = $('#'+obj).val();
@@ -39,7 +47,7 @@
 
                 layer.open({
                     type: 1,
-                    area: ['760px', '620px'],
+                    area: [height, witch],
                     content: $('#' + content), //这里content是一个DOM
                     btn: ['确定'],
                     yes: function(index, layero){

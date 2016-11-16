@@ -32,7 +32,14 @@ class AdminOrderController extends AdminController
         });
         $count = $data['count'];
 
+
         $this->_pageShow($count, $pageSize);
+
+        $this->assign('to_complete_url', cp_U("AdminOrder/index", array_merge(I('get.'), array('type'=> 1))));
+        $this->assign('ing_complete_url', cp_U("AdminOrder/index", array_merge(I('get.'), array('type' => 2))));
+        $this->assign('complete_url', cp_U("AdminOrder/index", array_merge(I('get.'), array('type' => 3))));
+
+        $this->assign('type', I('type', 1, 'intval'));
 
         $this->assign('goods_list', $goodsList );
         $this->display();
