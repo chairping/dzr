@@ -6,7 +6,7 @@ return array(
 
     "DB_NAME"=>'dzr',
     "DB_USER"=>'root',
-    "DB_PWD"=>'111111',
+    "DB_PWD"=>'root',
     "DB_PREFIX"=>'dzr_',
     'DB_HOST'=>'127.0.0.1',
     'DB_TYPE'=>'mysql',
@@ -86,6 +86,16 @@ return array(
         '__Uploads__' => __ROOT__.'/Uploads',
         '__Public__' => __ROOT__.'/Public',
         '__UPLOADIMG__' => __ROOT__.'/Public/uploadimg',
+
+        '__HCSS__' => __ROOT__.'/Public/Home/css',
+        '__HIMG__' => __ROOT__.'/Public/Home/img',
+        '__HIMGS__' => __ROOT__.'/Public/Home/images',
+        '__HJS__' => __ROOT__.'/Public/Home/js',
+
+        '__HSCSS__' => __ROOT__.'/Public/Home/Shop/css',
+        '__HSIMG__' => __ROOT__.'/Public/Home/Shop/images',
+        '__HSJS__' => __ROOT__.'/Public/Home/Shop/js',
+        '__HKind__' => __ROOT__.'/Public/kindeditor',
 
     ),
 

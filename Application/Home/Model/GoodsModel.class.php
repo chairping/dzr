@@ -24,6 +24,18 @@ class GoodsModel extends CommonModel {
         return $list;
     }
 
+    /*
+     * @author 曹梦瑶
+     * 根据产品id 获得产品信息
+     */
+    public function getInfoById($id) {
+        $list = array();
+        if($id) {
+            $list = $this->where(array('id' => $id))->find();
+        }
+      return $list;
+    }
+
 
 
 }

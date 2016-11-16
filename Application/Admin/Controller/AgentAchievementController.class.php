@@ -60,7 +60,11 @@ class AgentAchievementController extends AgentController{
         //销售总提成
         //提成被除数
         $withdraw_num = 100 * $person;
-        $all_withdraw_price = round($all_sales_price * $withdraw_proportion / $withdraw_num);
+//        $all_withdraw_price = round($all_sales_price * $withdraw_proportion / $withdraw_num);
+        //获取真正能够拿到的总提成（这个月之前的总和）
+        $all_money =  D('RealShare')->getPercentById($scenic_spots_id);
+        $all_withdraw_price = round($all_money * $withdraw_proportion / $withdraw_num);
+
 //        dd($all_sales_price, $withdraw_proportion,$withdraw_num );
         //获取景点的订单信息 --终
 
@@ -110,6 +114,7 @@ class AgentAchievementController extends AgentController{
      * 申请提现
      */
     public function apply() {
+//        dd(mktime(0,0,0,date('m'),1,date('Y')));
         if(IS_POST) {
             $post = I('post.');
 //            dd($post);
@@ -196,7 +201,9 @@ class AgentAchievementController extends AgentController{
             //销售总提成
             //提成被除数
             $withdraw_num = 100 * $person;
-            $all_withdraw_price = round($all_sales_price * $withdraw_proportion / $withdraw_num);
+//            $all_withdraw_price = round($all_sales_price * $withdraw_proportion / $withdraw_num);
+            $all_money =  D('RealShare')->getPercentById($scenic_spots_id);
+            $all_withdraw_price = round($all_money * $withdraw_proportion / $withdraw_num);
             //获取景点的订单信息 --终
 
             //获取登录用户的提成信息 --始
