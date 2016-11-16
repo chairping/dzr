@@ -111,6 +111,22 @@ function is_login() {
     }
 }
 
+/**
+ * .......
+ * @param $url
+ * @param array $params
+ * @return string
+ */
+function cp_U($url, $params = []) {
+    $url = __APP__ . '/admin.php/' . $url;
+
+    if ($params) {
+        $url .= '?' . http_build_query($params);
+    }
+
+    return $url;
+}
+
 
 
 

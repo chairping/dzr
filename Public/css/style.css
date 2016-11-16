@@ -1054,10 +1054,10 @@ body
 #navbar-container .operating .link_cz li img{ margin:8px 0px;}
 #navbar-container .operating .link_cz li a{ display:block; color:#FFF; height:75px; width:75px; cursor:pointer; text-decoration:none}
 #navbar-container .operating .link_cz li.active{ background:#892e65}
-/***********************************店铺申请*******************************/
+/***********************************景点申请*******************************/
 .Shops_Audit .prompt{ padding:10px; border:1px solid #dddddd; font-size:16px; text-align:center; margin-bottom:15px;}
 .Shops_Audit .prompt b{ color:#F63; padding:0px 5px;}
-/**************************店铺详细************************/
+/**************************景点详细************************/
 .detailed_style .type{ 
     position:absolute;   
     width: 115px;

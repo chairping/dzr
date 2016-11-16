@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <script charset="utf-8" src="__HJS__/jquery.min.js?v=01291"></script>
+        <script charset="utf-8" src="__HJS__/global.js?v=01291"></script>
+        <script charset="utf-8" src="__HJS__/bootstrap.min.js?v=01291"></script>
+        <script charset="utf-8" src="__HJS__/template.js?v=01291"></script>
+
+        <link rel="stylesheet" href="__HCSS__/bootstrap.css?v=01291">
+        <link rel="stylesheet" href="__HCSS__/style.css?v=1?v=01291">
+        <link rel="stylesheet" href="__HCSS__/member.css?v=01291">
+        <link rel="stylesheet" href="__HCSS__/order3.css?v=01291"><meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="yes" name="apple-mobile-web-app-capable">
+        <meta content="yes" name="apple-touch-fullscreen">
+        <meta content="telephone=no" name="format-detection">
+        <meta content="black" name="apple-mobile-web-app-status-bar-style">
+        <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1,user-scalable=no">
+        <script charset="utf-8" src="__HJS__/jquery.form.js?v=01291"></script>
+        <script charset="utf-8" src="__HJS__/prodSort.js?v=01291"></script>
+
+        <title>{$spots_name}</title>
+    </head>
+<body style="background-color: #fff">
+<div class="fanhui_cou">
+    <div class="fanhui_1"></div>
+    <div class="fanhui_ding">{$Think.lang.Top}</div>
+</div>
+
+<div class="container">
+
+    <div class="row row-horizon" style="background-color: #fff;" >
+
+        <a class="col-xs-12" style="color:#40b3ff;font-size: 12px;text-align:center;margin-top: 15px;" id="show_long">此处做一个搜索框</a>
+    </div>
+
+        <php>
+            foreach($pro_arr as $k => $v){
+        </php>
+        <a href="__ROOT__/index.php/AllProduct/index/classify_id/{$v.id}" class="col-xs-3">
+            <php>if($mark == $v['id']) {</php>
+            <p style="color:#ffad00;font-size: 12px; padding-top: 15px;text-align:center;">{$v['classify_name']}</p>
+            <php>}else {</php>
+            <p style="color: #999999;font-size: 12px;margin-top: 15px;text-align:center;">{$v['classify_name']}</p>
+
+            <php>}</php>
+        </a>
+
+        <php>}</php>
+        <a class="col-xs-3" style="color:#40b3ff;font-size: 12px;text-align:center;margin-top: 15px;" id="show_short">{$Think.lang.Retract}></a>
+    </div>
+
+
+    <div class=" row-horizon" id="cmy_con" style="background-color: #fff">
+
+        <php>foreach($shop_info as $k => $v) { </php>
+        <div class="row" style="margin-bottom: 5px">
+
+
+            <div style="float: left;margin-right: 10px;"><img style="margin-left: 10px;width: 110px;height: 110px" class="img-rounded" src="{$v.pro_img}"></div>
+            <div style="margin-left: 10px;border-bottom: 1px solid #e0e0e0; padding-bottom:10px;">
+                <p style="color: #333333;font-size: 14px;margin-top: 15px;"  >{$v.pro_name}</p>
+                <p style="font-size: 12px;" >{$v.pro_subtitle}</p>
+                <p style="font-size: 18px;margin-bottom: 0px"><span style="color: #333333;">{$v.price_tw}{$Think.lang.Yen} /</span><span style="color: #000000">¥{$v.price}</span>
+                    <a href="__ROOT__/index.php/Product/index/pro_id/{$v.id}" style="float: right;color:#fda300;font-size: 12px; margin-right:10px" ><span style="margin-right: 10px">{$Think.lang.Look_detail}</span>></a></p>
+
+            </div>
+        </div>
+        <php>}</php>
+
+
+
+
+
+    </div>
+    <input id="page" value="{$page}" hidden>
+    <input id="total_num" value="{$total_num}" hidden >
+    <input id="classify_id" value="{$mark}" hidden>
+
+    <input id="shop_type" value='<php>echo json_encode($shop_type);</php>' hidden>
+    <div class="item-list  text-center" id="container1" rel="2" status="0" >
+
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+
+    function change() {
+        var page = $('#page').val();
+        var total_num = $('#total_num').val();
+        var str = '';
+        if(total_num == page || page == 0) {
+
+            str = '<br/><button class="btn btn-dufault " type="button" >::{$Think.lang.No_more}::</button>';
+        } else if(total_num > page ) {
+            str = '<br/><button class="btn btn-dufault " type="button" id="show_more"  >::{$Think.lang.Click_for_more}::</button>';
+        } else {
+            str = '<br/><button class="btn btn-dufault " type="button">::{$Think.lang.Roading}::</button>';
+        }
+        $("#container1").empty();
+        $("#container1").append(str);
+    }
+</script>
+
+
+<script>
+    $(function(){
+
+        $("#show_more").click(function(){
+            var page = $('#page').val();
+            var classify_id = $('#classify_id').val();
+
+            $.ajax({
+                type: "post",//数据提交的类型（post或者get）
+                url: "__APP__/index.php/AllProduct/getMore",//数据提交得地址
+                data: {classify_id: classify_id, page: page},//提交的数据(自定义的一些后台程序需要的参数)
+                dataType: "json",//返回的数据类型
+                success: function (data) {
+                    var shop = data.data;
+                    var num = shop.length;
+                    $('#page').val(data.page_num);
+                    change();
+//					$("#childMenuShow").empty();
+                    if (num <= 0) {
+
+                    } else {
+//						alert( Number(num));
+                        for (var i = 0; i < num; i++) {
+                            var str = '';
+//							alert(i);exit;
+                            str += '<div class="row" style="margin-bottom: 5px">' +
+                                    ' <div style="float: left;margin-right: 10px;">' +
+                                    '<img style="margin-left: 10px;width: 110px;height: 110px" class="img-rounded" src="' + shop[i].pro_img +'"></div> ' +
+                                    '<div style="margin-left: 10px;border-bottom: 1px solid #e0e0e0; padding-bottom:10px;"> ' +
+                                    '<p style="color: #333333;font-size: 14px;margin-top: 15px;"  >'+ shop[i].pro_name +'</p> ' +
+                                    '<p style="font-size: 12px;" >'+ shop[i].pro_subtitle +'</p> ' +
+                                    '<p style="font-size: 18px;margin-bottom: 0px"><span style="color: #333333;">'+shop[i].price_tw + data.yen +' /</span><span style="color: #000000">¥'+shop[i].price+'</span>' +
+                                    '<a href="__ROOT__/index.php/Product/index/pro_id/' + shop[i].id +'" style="float: right;color:#fda300;font-size: 12px; margin-right:10px" ><span style="margin-right: 10px">{$Think.lang.Look_detail}</span>></a></p> ' +
+                                    '</div> </div>';
+
+
+
+                            $("#cmy_con").append(str);
+                        }
+                    }
+                }
+            });
+
+
+        });
+
+    });
+</script>
+
+<script src="__HJS__/lanren.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        var x = 272; //填入目标图片高度
+        var y = $(document.body).width();//填入目标图片宽度
+        for (var j = 0; j < $('.con').length; j++) {
+
+            var src = $('.con')[j].src;
+
+            imgReady(src, function () {
+                // alert('图片的宽度：' + this.width + '; 高度：' + this.height);
+                var w = this.width;
+                var h = this.height;
+                var rate = w / h;
+                if (h > x) { //图片宽度大于目标宽度时
+                    h = x; //根据目标宽度按比例算出高度
+                    w = x * rate; //宽度等于预定宽度
+                    if (w > y) { //如果按比例缩小后的高度小于预定高度时
+                        w = y; //按目标高度重新计算宽度
+                        h = y / rate; //高度等于预定高度
+                    }
+                } else if (w > y) {
+                    w = y; //按目标高度重新计算宽度
+                    h = y / rate; //高度等于预定高度
+                }
+                $('.con')[j].width = w;
+                $('.con')[j].height=h;
+
+            });
+
+        }
+
+
+    });
+</script>
+
+
+</body></html>
+

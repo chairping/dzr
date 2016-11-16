@@ -118,7 +118,7 @@ class AdminInfoModel extends Model {
 //            //写日志
 //            addApiLog('用户注册', 1);
 //
-//            //将店铺写入店铺表
+//            //将景点写入景点表
 //            $params_user['shop_name'] =  $data['shop_name'];
 //            $params_user['shop_type_id'] =  $data['shop_type_id'];
 //            $params_user['shop_owner_id'] =  $id;
@@ -131,7 +131,7 @@ class AdminInfoModel extends Model {
 //            D('ShopInfo')->saveInfoImg1($id, $params_user['cover_img']);
 //
 //            //写日志
-//            addApiLog('店铺注册', 1);
+//            addApiLog('景点注册', 1);
 //
 //            //设置一个默认的类别
 //            D('CategoryInfo')->addOne($user_id);

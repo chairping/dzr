@@ -48,7 +48,7 @@
 
 <!--添加商品-->
 <div class="sort_style_add margin" id="sort_style_add" style="display:none">
-    <form id="agent-form" method="post" action="{:U('agentAdd')}">
+    <form id="agent-form" method="post" action="{:cp_U('AdminScenic/agentAdd')}">
     <div class="">
         <ul>
             <li>
@@ -104,7 +104,7 @@
 </body>
 </html>
 <script type="text/javascript">
-//    onclick="member_edit('编辑','{:U(\"\")}','4','','510')"
+//    onclick="member_edit('编辑','{:cp_U(\"\")}','4','','510')"
     $('.goods-edit').on('click', function() {
         var id = $(this).data('id');
 //        layer_show('编辑', ;
@@ -116,7 +116,7 @@
             maxmin: true,
             shade:0.4,
             title: '编辑',
-            content: "{:U('edit', array('id'=> "%s"))}".replace('%25s', id),
+            content: "{:cp_U('AdminScenic/edit', array('id'=> "%s"))}".replace('%25s', id),
         });
     });
 

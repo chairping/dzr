@@ -20,8 +20,8 @@ class MenuServices {
                     'sub_menu' => [
                         [
                             'name' => '业绩列表',
-                            'url' => U('AgentAchievement/index'),
-//                            'url' => __APP__.'/admin.php/AgentAchievement/index',
+//                            'url' => U('AgentAchievement/index'),
+                            'url' => __APP__.'/admin.php/AgentAchievement/index',
                         ],
                     ]
                 ],
@@ -32,7 +32,7 @@ class MenuServices {
                     'sub_menu' => [
                         [
                             'name' => '信息管理',
-                            'url' => U('AgentInfo/index'),
+                            'url' => cp_U('AgentInfo/index'),
 //                            'url' => __APP__.'/admin.php/AgentInfo/index'
                         ],
                     ]
@@ -49,7 +49,8 @@ class MenuServices {
                     'sub_menu' => [
                         [
                             'name' => '商品列表',
-                            'url' => U('AdminGoods/index'),
+
+                            'url' => cp_U('AdminGoods/index'),
                         ],
 //                        [
 //                            'name' => '图片裁剪',
@@ -65,11 +66,11 @@ class MenuServices {
                     'sub_menu' => [
                         [
                             'name' => '代理点列表',
-                            'url' => U('AdminScenic/agentList'),
+                            'url' => cp_U('AdminScenic/agentList'),
                         ],
                         [
                             'name' => '景区管理',
-                            'url' => U('AdminScenic/index'),
+                            'url' => cp_U('AdminScenic/index'),
                         ],
                     ]
                 ],
@@ -80,7 +81,7 @@ class MenuServices {
                     'sub_menu' => [
                         [
                             'name' => '提现申请',
-                            'url' => 'AdminWithDraw/index',
+                            'url' => cp_U('AdminWithDraw/index'),
                         ],
                     ]
                 ],

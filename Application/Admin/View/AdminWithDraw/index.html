@@ -53,7 +53,7 @@
 
     <!--添加商品-->
     <div class="sort_style_add margin" id="sort_style_add" style="display:none">
-        <form id="goods-add" method="post" action="{:U('add')}">
+        <form id="goods-add" method="post" action="{:cp_U('AdminWithDraw/add')}">
             <div class="">
                 <ul>
                     <li>
@@ -101,7 +101,7 @@
                 var data = {id: id};
 
 
-                $.post('{:U("check")}', data, function(ret){
+                $.post('{:cp_U("check")}', data, function(ret){
                     if(ret.code == 1) {
                         layer.close(index);
                         location.reload();

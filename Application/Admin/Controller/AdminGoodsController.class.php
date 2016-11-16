@@ -49,7 +49,9 @@ class AdminGoodsController extends AdminController
             $data['cover_img_addr'] = $base64Img->deal();
 
             if($this->goodsModel->add($data)) {
-                $this->redirect('AdminGoods/index');
+                echo "<script>location.href='".__ROOT__."/admin.php/AdminGoods/index';</script>";
+                exit;
+//                $this->redirect('AdminGoods/index');
 //                $this->ajaxReturn(['code' => 1, 'message' => '商品添加成功']);
             } else {
                 $this->error("商品添加失败");
