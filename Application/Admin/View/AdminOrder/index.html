@@ -44,10 +44,12 @@
                             <tbody>
                             <?php foreach($data as $goods): ?>
                             <tr>
-                                <td><?= $goods['spots_name'] ?></td>
-                                <td><?= $goods['username'] ?></td>
-                                <td><?= $goods['update_time'] ?></td>
-                                <td> <?= $goods['money'] ?></td>
+                                <td><?= $goods['id'] ?></td>
+                                <td><?= $goods['user_id'] ?></td>
+                                <td><?= $goods['goods_id'] ?></td>
+                                <td> <?= $goods['single_price'] ?></td>
+                                <td> <?= $goods['num'] ?></td>
+                                <td> <?= $goods['sales_price'] ?></td>
 
                                 <td class="td-manage">
                                     <!--<a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>-->
