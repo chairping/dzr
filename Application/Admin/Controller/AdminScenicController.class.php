@@ -122,7 +122,9 @@ class AdminScenicController extends AdminController
 
         $this->assign('data', $data);
 
+
         $scenic = $this->ScenicModel->select();
+        $this->assign('total', formatMoney($this->Order->sum('sales_price'), true));
         $this->assign('scenic', $scenic);
         $this->assign('data', $data);
         $this->display();
@@ -141,8 +143,16 @@ class AdminScenicController extends AdminController
         array_walk($data, function(&$row) {
             $row['sales_price'] = formatMoney($row['sales_price'],true);
 
+            $goodsInfo = D('Goods')->find($row['goods_id']);
+            $row['goods_name'] = $goodsInfo['title'];
+
+            $row['update_time'] = date('Y-m-d H:i:s', $row['update_time']);
+
         });
 
+        $total = formatMoney($this->Order->where(['scenic_spots_id' => $scenicId])->sum('sales_price'), true);
+
+        $this->assign('total', $total);
         $this->assign('data', $data);
         $this->assign('scenic_name', $spots['scenic_name']);
         $this->display();

@@ -10,6 +10,13 @@
 
            <!--<a href="javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i> 批量删除</a>-->
        </span>
+            </span>
+            <span class="r_f">总销售额：<a href="javacript:;" style="color: red;font-style: normal;"><?= $total; ?></a>元
+
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                销售总提成： <a href="javacript:;" style="color: red;font-style: normal;"><?= $total; ?></a>元
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
             <!--<span class="r_f">共：<b>5</b>类</span>-->
         </div>
         <div class="sort_list">
@@ -31,9 +38,9 @@
                 <tr>
                     <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
                     <td><?= $goods['user_id'] ?></td>
-                    <td><?= $goods['goods_id'] ?></td>
+                    <td><?= $goods['goods_name'] ?></td>
                     <td><?= $goods['num'] ?></td>
-                    <td> <?= $goods['upate_time'] ?></td>
+                    <td> <?= $goods['update_time'] ?></td>
                     <td> <?= $goods['sales_price'] ?></td>
                     <td> <?= $goods['today_total'] ?></td>
 
