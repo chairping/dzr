@@ -155,6 +155,7 @@ class AdminScenicController extends AdminController
         $this->assign('total', $total);
         $this->assign('data', $data);
         $this->assign('scenic_name', $spots['scenic_name']);
+        $this->assign('scenicId', $scenicId);
         $this->display();
     }
 
