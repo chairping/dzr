@@ -137,9 +137,14 @@ class AdminScenicController extends AdminController
         $data = $this->Order->getInfoBySpots($scenicId);
 
         $spots = $this->ScenicModel->find($scenicId);
+
+        array_walk($data, function(&$row) {
+            $row['sales_price'] = formatMoney($row['sales_price'],true);
+
+        });
+
         $this->assign('data', $data);
         $this->assign('scenic_name', $spots['scenic_name']);
-        $this->assign('scenicId', $scenicId);
         $this->display();
     }
 
