@@ -32,8 +32,8 @@
         }
         #view {
             margin: 0 auto;
-            width: 500px;
-            height: 300px;
+            width: 300px;
+            height: 500px;
         }
         /*.current {*/
             /**/
@@ -72,17 +72,20 @@
 
      <h5>首页背景图片:</h5>
      <div id="view" style="height: 500px;width: 300px;">
-         <?php if($spots_info['img_addr']): ?>
-         <img src="{$spots_info.img_addr}" alt="" width="800px" height="500px"/>
-         <?php endif; ?>
+         <!--<?php if($spots_info['img_addr']): ?>-->
+         <img src="{$spots_info.img_addr}" id="img-show" alt="" width="300px" height="500px"/>
+         <!--<?php endif; ?>-->
      </div>
      <input type="file" id="file" onclick="pic_clip('file', 'imge', '800px', '700px')" />
+
      <div id="imge" style="display: none;">
 
          <div id="clipArea"></div>
          <button id="clipBtn" style="display:none;">截取</button>
          <!--<div id="view"></div>-->
      </div>
+
+
      <input type="hidden" id="sports_img" name="img_addr" value="{$spots_info.img_addr}" />
      <input type="hidden" id="spots_id" value="{$spots_info.id}"/>
 
@@ -175,7 +178,7 @@
 <script>
     //document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
     var clipArea = new bjj.PhotoClip("#clipArea", {
-        size: [500, 300],
+        size: [300, 500],
         outputSize: [500, 300],
         file: "#file",
         view: "#view",
@@ -188,6 +191,7 @@
         },
         clipFinish: function(dataURL) {
             $("#sports_img").val(dataURL);
+            $("#img-show").attr('src', dataURL);
 //            console.log(dataURL);
         }
     });
@@ -436,8 +440,13 @@ $("#alipay").click(function() {
         data.img_addr = $("#sports_img").val();
         data.spots_id = $("#spots_id").val();
         $.post('__APP__/admin.php/AgentInfo/uploadProduct', data, function(ret){
+            if (ret.code == 0) {
+                layer.msg(ret.msg);
+            } else {
+                layer.alert('上传成功');
 
-        });
+            }
+        }, 'json');
 
     });
         $(".displayPart").displayPart();  

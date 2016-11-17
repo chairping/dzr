@@ -46,9 +46,14 @@ class AgentInfoController extends AgentController{
 
         $spots_info = D('ScenicSpots')->where(['id' => $spots_id])->save($data);
 
+        if ($spots_info>= 0) {
+            $this->ajaxReturn( array( "code" => 1, "msg" => '操作成功' ) );
 
+        } else {
+            $this->ajaxReturn( array( "code" => 0, "meg" => '操作失败' ) );
 
-        $this->ajaxReturn( array( "statusCode" => C( 'ERROR_CODE' ), "message" => '操作失败' ) );
+        }
+
 
     }
 
