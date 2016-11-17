@@ -52,8 +52,8 @@ class AdminWithDrawController extends AdminController
 
         $this->assign('data', $data );
 
-        $this->assign('complete_url', U("index", array('type'=> 1)));
-        $this->assign('un_complete_url', U("index", array('type' => 2)));
+        $this->assign('complete_url', cp_U("AdminWithDraw/index", array('type'=> 1)));
+        $this->assign('un_complete_url', cp_U("AdminWithDraw/index", array('type' => 2)));
 
         if ($type == 1) {
             $this->display('index');

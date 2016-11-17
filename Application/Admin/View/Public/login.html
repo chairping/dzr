@@ -102,7 +102,7 @@ $('#login_btn').on('click', function(){
 			  var username = $('#username').val();
 			  var password = $('#password').val();
 //			  __APP__/admin.php/Public/login
-			  $.post(  '__APP__/admin.php/Public/login', { username: username, password: hex_md5( password ) },
+			  $.post(  '{:cp_U("Public/login")}', { username: username, password: hex_md5( password ) },
 					  function(data){
 						  if(data.statusCode=="success"){
 							  layer.alert(data.message,{

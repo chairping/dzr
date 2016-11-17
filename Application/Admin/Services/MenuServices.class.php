@@ -10,7 +10,6 @@ class MenuServices {
 
     public static function getAdminMenu() {
         $type = session('type');
-//        $type=2;
         if (in_array($type, array('1', '3'))) {
             //代理、农民
             return [
@@ -33,8 +32,8 @@ class MenuServices {
                     'sub_menu' => [
                         [
                             'name' => '信息管理',
-//                            'url' => U('AgentInfo/index'),
-                            'url' => __APP__.'/admin.php/AgentInfo/index'
+                            'url' => cp_U('AgentInfo/index'),
+//                            'url' => __APP__.'/admin.php/AgentInfo/index'
                         ],
                     ]
                 ],
@@ -50,8 +49,8 @@ class MenuServices {
                     'sub_menu' => [
                         [
                             'name' => '商品列表',
-//                            'url' => U('AdminGoods/index'),
-                            'url' => __APP__.'/admin.php/AdminGoods/index'
+
+                            'url' => cp_U('AdminGoods/index'),
                         ],
 //                        [
 //                            'name' => '图片裁剪',
@@ -67,11 +66,11 @@ class MenuServices {
                     'sub_menu' => [
                         [
                             'name' => '代理点列表',
-                            'url' => U('AdminScenic/agentList'),
+                            'url' => cp_U('AdminScenic/agentList'),
                         ],
                         [
                             'name' => '景区管理',
-                            'url' => U('AdminScenic/index'),
+                            'url' => cp_U('AdminScenic/index'),
                         ],
                     ]
                 ],
@@ -82,7 +81,18 @@ class MenuServices {
                     'sub_menu' => [
                         [
                             'name' => '提现申请',
-                            'url' => 'AdminWithDraw/index',
+                            'url' => cp_U('AdminWithDraw/index'),
+                        ],
+                    ]
+                ],
+                [
+                    'name' => '交易管理',
+                    'code' => 'Weixin',
+                    'icon' => '',
+                    'sub_menu' => [
+                        [
+                            'name' => '交易列表',
+                            'url' => cp_U('AdminOrder/index'),
                         ],
                     ]
                 ],

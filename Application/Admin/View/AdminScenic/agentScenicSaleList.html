@@ -5,6 +5,8 @@
         <div class="border clearfix">
        <span class="l_f">
         <a href="javascript:ovid()"  class="btn btn-warning"> <?= $scenic_name;?></a>
+           <a href="javascript:ovid()"  class="btn btn-warning add-user"> 添加农民</a>
+
            <!--<a href="javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i> 批量删除</a>-->
        </span>
             <!--<span class="r_f">共：<b>5</b>类</span>-->
@@ -27,7 +29,7 @@
                 <?php foreach($data as $goods): ?>
                 <tr>
                     <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-                    <td><?= $goods['agent_id'] ?></td>
+                    <td><?= $goods['user_id'] ?></td>
                     <td><?= $goods['goods_id'] ?></td>
                     <td><?= $goods['num'] ?></td>
                     <td> <?= $goods['upate_time'] ?></td>
@@ -54,25 +56,12 @@
 
 <!--添加商品-->
 <div class="sort_style_add margin" id="sort_style_add" style="display:none">
-    <form id="agent-form" method="post" action="{:U('agentAdd')}">
+    <form id="agent-form" method="post" action="{:cp_U('AdminScenic/agentAdd')}">
         <div class="">
             <ul>
-                <li>
-                    <label class="label_name">景区</label>
-                    <div class="col-sm-9">
-                        &nbsp;
 
-                        <select name="scenic_spots_id" class="text_add">
-                            <option value="0>">－请选择－</option>
-                            <?php foreach($scenic as $val) :?>
-                            <option value="<?= $val['id'] ?>"><?= $val['scenic_name']?></option>
-                            <!--<option value="2">国外品牌</option>-->
-                            <?php endforeach; ?>
-                        </select>
-                        <!--<input name="scenic_name" type="text" id="form-field-1" placeholder="" class="col-xs-10 col-sm-5">-->
-                    </div>
-                </li>
-
+                <input name="scenic_spots_id" type="hidden" value="<?= $scenicId; ?>" >
+                <input name="type" type="hidden"  value="3" >
 
                 <li>
                     <label class="label_name">账户</label>
@@ -122,14 +111,14 @@
             maxmin: true,
             shade:0.4,
             title: '编辑',
-            content: "{:U('edit', array('id'=> "%s"))}".replace('%25s', id),
-    });
+            content: "{:cp_U('AdminScenic/edit', array('id'=> "%s"))}".replace('%25s', id),
+        });
     });
 
-    $('#agent_add').on('click', function(){
+    $('.add-user').on('click', function(){
         layer.open({
             type: 1,
-            title: '添加代理',
+            title: '添加农民',
             maxmin: true,
             shadeClose: false, //点击遮罩关闭层
             area : ['400px' , ''],
@@ -153,13 +142,18 @@
                 num = 0;
                 if(num>0){  return false;}
                 else{
-                    ajax_form($("#agent-form"), function () {
-                        layer.alert('添加成功！',{
-                            title: '提示框',
-                            icon:1,
-                        }, function() {
-                            location.reload();
-                        });
+                    ajax_form($("#agent-form"), function (ret) {
+                        if (ret.code == 0) {
+                            layer.msg(ret.msg);
+                        } else {
+                            layer.alert('添加成功！',{
+                                title: '提示框',
+                                icon:1,
+                            }, function() {
+                                location.reload();
+                            });
+                        }
+
                     })
                 }
             }

@@ -19,19 +19,13 @@ class ShopController extends Controller {
     public function addOrder() {
         $is_real = false;
         $data = I('post.');
-//        $morder = M('order');
-//        $mgoods = M('goods');
         $goods_info = D('Goods')->getInfoById($data['goods_id']);
         $add_params = array();
-//        $mgoods->where(array('id' => $data['goods_id']))->find();
         $sales_price = $goods_info['price'] * 100 * $data['num'];
         $add_params['sales_price'] = $sales_price;
         $add_params['scenic_spots_id'] = $data['scenic_spots_id'];
         $add_params['goods_id'] = $data['goods_id'];
         $add_params['num'] = $data['num'];
-//        $data['user_id'] = getHomeUserID();
-//        $data['create_time'] = time();
-//        $data['update_time'] = time();
         //添加订单 返回订单id
         $order_id = D('Order')->addOrder($data);
 
@@ -58,26 +52,71 @@ class ShopController extends Controller {
                 //添加分成
                 $save_share_arr['order_id'] = $order_id;
                 $save_share_arr['spots_id'] = $data['scenic_spots_id'];
-                $save_share_arr['money'] = $sales_price * ($percent_arr['first_proportion'] + $percent_arr['this_proportion'])/100;
+                $save_share_arr['money'] = round($sales_price * ($percent_arr['first_proportion'] + $percent_arr['this_proportion'])/100);
                 $save_share_arr['share_proportion'] = $percent_arr['first_proportion'] + $percent_arr['this_proportion'];
 
                 $is_real = D('RealShare')->RealShare->addShare($save_share_arr);
-
             }
 
         } else {
             //两种公司 4 6分
-             
+            //第一次的景点
+            $save_share_arr['order_id'] = $order_id;
+            $save_share_arr['spots_id'] = $first_spots_id;
+            $save_share_arr['money'] = round($sales_price * ($percent_arr['first_proportion'])/100);
+            $save_share_arr['share_proportion'] = $percent_arr['first_proportion'];
 
+            $is_real1 = D('RealShare')->RealShare->addShare($save_share_arr);
+
+            //当前的景点
+            $save_share_arr['order_id'] = $order_id;
+            $save_share_arr['spots_id'] = $data['scenic_spots_id'];
+            $save_share_arr['money'] = round($sales_price * ($percent_arr['this_proportion'])/100);
+            $save_share_arr['share_proportion'] = $percent_arr['this_proportion'];
+
+            $is_real2 = D('RealShare')->RealShare->addShare($save_share_arr);
+
+            if($is_real1 && $is_real2) {
+                $is_real = true;
+            }
         }
-
-
         //记录景点分红情况 --终
 
+        if($is_real) {
+            $this->ajaxReturn(
+                array(
+                    "statusCode" => C( 'SUC_CODE' ),
+                    "message" => '操作成功',
+                   ) );
+        }
+        $this->ajaxReturn(array("statusCode" => C('ERROR_CODE'),  "message" =>'密码错误'));
+    }
 
+    /*
+     * @author 曹梦瑶
+     * 我的订单
+     */
+    public function myOrder() {
+        //查找出对应的有效订单
+        $order_info = array();
+         $order_info = D('Order')->getInfo();
 
+        //算出单价 以及修改价格
+        foreach ($order_info as $k =>$v) {
+            $order_info[$k]['sales_price'] = round($v['sales_price'] / 100, 2);
+            $order_info[$k]['per_money'] = round($order_info[$k]['sales_price'] / $v['num'], 2);
+        }
 
-//        $morder->add($data);
+        //获取商品名字、图片
+        $goods_info = array();
+        $goods_id_arr = array_unique(array_column($order_info, 'goods_id'));
+        $goods_id_arr && $goods_info = D('Goods')->getInfoByIdArr($goods_id_arr);
+
+        $this->assign('order_info', $order_info);
+        $this->assign('goods_info', $goods_info);
+
+        $this->display('myOrder');
+
     }
 
 }

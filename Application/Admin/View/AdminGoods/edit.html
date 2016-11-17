@@ -10,7 +10,7 @@
         <div class="sort_list">
 
 <div class="sort_style_add margin" id="sort_style_add" style="">
-    <form id="goods-edit" method="post" action="{:U('edit')}">
+    <form id="goods-edit" method="post" action="{:cp_U('AdminGoods/edit')}">
     <div class="">
         <ul>
             <li>
@@ -44,7 +44,7 @@
 
                     <img id="pic_img1" style="height: 40px;width: 40px;" src="<?= $data['cover_img_addr'] ?>">
                     <!--<input class="btn btn-info radius" id="image-upload" type="button" value="上传图片">-->
-                    <input name="cover_img_addr" id="pic_img" value="<?= $data['cover_img_addr'] ?>"  type="hidden" id="form-field-1" placeholder="" class="col-xs-10 col-sm-5">
+                    <input name="cover_img_addr" id="pic_img" value="<?= $data['cover_img_addr'] ?>"  type="hidden"  placeholder="" class="col-xs-10 col-sm-5">
                 </div>
             </li>
 
@@ -64,14 +64,9 @@
                 <div class="row">
                     <div class="col-lg-4"></div>
                     <div class="col-lg-4">
-                        <input class="btn btn-info radius" id="submit" type="submit" value="提交">
-                        <!--<input class="btn btn-warning radius cansel" type="button" value="取消">-->
-                    </div>
+                        <input class="btn btn-info radius"  type="submit" value="提交"></div>
                     <div class="col-lg-4"></div>
-
-
                 </div>
-
             </div>
         </div>
     </form>
@@ -97,8 +92,8 @@
 <script type="text/javascript">
 
     var clipArea = new bjj.PhotoClip("#clipArea", {
-        size: [260, 260],
-        outputSize: [640, 640],
+        size: [600, 350],
+        outputSize: [900, 640],
         file: "#file",
         view: "#view",
         ok: "#clipBtn",
@@ -110,7 +105,7 @@
         },
         clipFinish: function(dataURL) {
         $("#pic_img").val(dataURL);
-        $("#pic_img1").attr(src, dataURL);
+        $("#pic_img1").attr('src', dataURL);
 //        console.log(dataURL);
         }
     });
@@ -125,7 +120,7 @@
             maxmin: true,
             shade:0.4,
             title: '编辑',
-            content: "{:U('AdminGoods/cropAvatar')}"
+            content: "{:cp_U('AdminGoods/cropAvatar')}"
         });
     });
 

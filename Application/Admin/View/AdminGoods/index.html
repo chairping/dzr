@@ -41,8 +41,17 @@
                     </td>
                     <td class="td-manage">
                         <!--<a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>-->
-                        <a title="编辑"  href="javascript:;"  data-id="<?= $goods['id'] ?>" class="btn goods-edit btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a>
-                        <a title="删除" href="javascript:;"   class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
+                        <a href="javascript:;"  data-id="<?= $goods['id'] ?>" class="btn goods-edit btn-xs btn-info" >修改</a>
+                        <a href="javascript:;"  data-id="<?= $goods['id'] ?>" data-status="<?= $goods['sale_status'] ?>" class="btn goods-switch btn-xs btn-info" >
+
+                            <?php if ($goods['sale_status'] ==1): ?>
+                            下架
+                            <?php else: ?>
+                            上架
+                            <?php endif; ?>
+
+                        </a>
+                        <a href="javascript:;"  data-id="<?= $goods['id'] ?>"  class="btn btn-xs btn-warning goods-del" >删除</a>
                         <!--<a href="javascript:ovid()" name="Ads_list.html" class="btn btn-xs btn-pink ads_link" onclick="AdlistOrders('561');" title="幻灯片广告列表"><i class="fa  fa-bars  bigger-120"></i></a>-->
                     </td>
                 </tr>
@@ -65,7 +74,7 @@
     $('.goods-edit').on('click', function() {
         var id = $(this).data('id');
 //        layer_show('编辑', ;
-        location.href = "{:U('AdminGoods/edit', array('id'=> "%s"))}".replace('%25s', id);
+        location.href = "{:cp_U('AdminGoods/edit', array('id'=> "%s"))}".replace('%25s', id);
 //        layer.open({
 //            type: 2,
 //            area: ['760px', '520px'],
@@ -77,9 +86,37 @@
 //        });
     });
 
+    $('.goods-del').on('click', function(){
+        var _self = $(this);
+        layer.confirm('确定删除？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            var id = _self.data('id');
+            $.post('{:cp_U("AdminGoods/del")}', {id: id}, function(ret) {
+                if (ret.code == 1) {
+                    location.reload();
+                } else {
+                    layer.msg('删除失败', {icon: 1});
+                }
+            }, 'json');
+        }, function(){});
+    });
+
+    $('.goods-switch').on('click', function() {
+        var id = $(this).data('id');
+        $.post('{:cp_U("AdminGoods/saleSwitch")}', {id: id}, function (ret) {
+            if (ret.code == 1) {
+                location.reload();
+            } else {
+                layer.msg('删除失败', {icon: 1});
+            }
+
+        });
+    });
+
     $('#sort_add').on('click', function(){
 
-        location.href = "{:U('AdminGoods/add')}";
+        location.href = "{:cp_U('AdminGoods/add')}";
 /*
 ////        layer.open({
 ////            type: 1,
@@ -118,26 +155,27 @@
 ////                }
 ////            }
       });*/
-    })
+    });
 
 
-    function checkLength(which) {
-        var maxChars = 200; //
-        if(which.value.length > maxChars){
-            layer.open({
-                icon:2,
-                title:'提示框',
-                content:'您出入的字数超多限制!',
-            });
-            // 超过限制的字数了就将 文本框中的内容按规定的字数 截取
-            which.value = which.value.substring(0,maxChars);
-            return false;
-        }else{
-            var curr = maxChars - which.value.length; //250 减去 当前输入的
-            document.getElementById("sy").innerHTML = curr.toString();
-            return true;
-        }
-    };
+//    function checkLength(which) {
+//        var maxChars = 200; //
+//        if (which.value.length > maxChars) {
+//            layer.open({
+//                icon: 2,
+//                title: '提示框',
+//                content: '您出入的字数超多限制!'
+//            });
+//            // 超过限制的字数了就将 文本框中的内容按规定的字数 截取
+//            which.value = which.value.substring(0, maxChars);
+//            return false;
+//        } else {
+//            var curr = maxChars - which.value.length; //250 减去 当前输入的
+//            document.getElementById("sy").innerHTML = curr.toString();
+//            return true;
+//        }
+//    }
+//
 
 </script>
 <script type="text/javascript">

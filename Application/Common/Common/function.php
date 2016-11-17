@@ -111,6 +111,36 @@ function is_login() {
     }
 }
 
+/**
+ * .......
+ * @param $url
+ * @param array $params
+ * @return string
+ */
+function cp_U($url, $params = []) {
+    $url = __APP__ . '/admin.php/' . $url;
+
+    if ($params) {
+        $url .= '?' . http_build_query($params);
+    }
+
+    return $url;
+}
+
+/**
+ * 格式化金额
+ * @param $money
+ * @param bool $isShow 是否展示
+ * @return float
+ */
+function formatMoney($money, $isShow = false) {
+    if ($isShow) {
+        return round($money/100, 2);
+    } else {
+        return $money * 100;
+    }
+
+}
 
 
 
