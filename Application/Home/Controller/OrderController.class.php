@@ -1,7 +1,7 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-class ShopController extends Controller {
+class OrderController extends Controller {
 
     public function __construct() {
         parent::__construct();
@@ -9,23 +9,78 @@ class ShopController extends Controller {
     }
 
     /*
+   * @author 曹梦瑶
+   * 我的订单
+   */
+    public function myOrder() {
+        //查找出对应的有效订单
+        $order_info = array();
+        $order_info = D('Order')->getInfo();
+        $goods_id_arr_all = array();
+        //算出单价 以及修改价格
+        foreach ($order_info as $k =>$v) {
+            $order_info[$k]['sales_price'][] = round($v['sales_price'] / 100, 2);
+            //循环订单中的商品
+            $goods_id_arr = explode(',', $v['goods_id']);
+            $goods_id_arr_all = array_merge($goods_id_arr_all, $goods_id_arr);
+            $per_price_arr = explode(',', $v['per_price']);
+            $num = explode(',', $v['num']);
+            foreach ($goods_id_arr as $kk => $vv) {
+                $order_info[$k]['per_money'][] = round($per_price_arr[$kk] / 100, 2);
+                $order_info[$k]['num'][] = $num[$kk];
+                $order_info[$k]['goos_id'][] = $goods_id_arr[$kk];
+            }
+
+
+        }
+
+        //获取商品名字、图片
+        $goods_info = array();
+        $goods_id_arr = array();
+        $goods_id_arr = array_unique($goods_id_arr_all);
+        $goods_id_arr && $goods_info = D('Goods')->getInfoByIdArr($goods_id_arr);
+
+        $this->assign('order_info', $order_info);
+        $this->assign('goods_info', $goods_info);
+
+        $this->display('myOrder');
+
+    }
+
+    /*
      * 添加付款订单信息
      * @params array(
-     * 'goods_id',
-     * 'num',
+     * 'goods_id', (逗号分隔)
+     * 'num', (逗号分隔)
      * 'scenic_spots_id'
      * )
      */
     public function addOrder() {
         $is_real = false;
         $data = I('post.');
-        $goods_info = D('Goods')->getInfoById($data['goods_id']);
+//        $data = array(
+//            'goods_id' => '',
+//            'num' => '',
+//            'num' => '',
+//        )
+        $goods_id_arr = array_filter($data['goods_id']);
+        $num_arr = array_filter($data['num']);
+        $goods_info = D('Goods')->getInfoByIdArr($goods_id_arr);
+
+        $per_price_str = '';
+        $sales_price = 0;
+        foreach($goods_id_arr as $k => $v) {
+            $sales_price += $goods_info[$v]['price'] * 100 * $num_arr[$k];
+            $per_price_str .= $goods_info[$v]['price'].',';
+        }
+
         $add_params = array();
-        $sales_price = $goods_info['price'] * 100 * $data['num'];
+//        $sales_price = $goods_info['price'] * 100 * $data['num'];
         $add_params['sales_price'] = $sales_price;
         $add_params['scenic_spots_id'] = $data['scenic_spots_id'];
         $add_params['goods_id'] = $data['goods_id'];
         $add_params['num'] = $data['num'];
+        $add_params['per_price'] = $per_price_str;
         //添加订单 返回订单id
         $order_id = D('Order')->addOrder($data);
 
@@ -89,34 +144,8 @@ class ShopController extends Controller {
                     "message" => '操作成功',
                    ) );
         }
-        $this->ajaxReturn(array("statusCode" => C('ERROR_CODE'),  "message" =>'密码错误'));
+        $this->ajaxReturn(array("statusCode" => C('ERROR_CODE'),  "message" =>'订单生成失败'));
     }
 
-    /*
-     * @author 曹梦瑶
-     * 我的订单
-     */
-    public function myOrder() {
-        //查找出对应的有效订单
-        $order_info = array();
-         $order_info = D('Order')->getInfo();
-
-        //算出单价 以及修改价格
-        foreach ($order_info as $k =>$v) {
-            $order_info[$k]['sales_price'] = round($v['sales_price'] / 100, 2);
-            $order_info[$k]['per_money'] = round($order_info[$k]['sales_price'] / $v['num'], 2);
-        }
-
-        //获取商品名字、图片
-        $goods_info = array();
-        $goods_id_arr = array_unique(array_column($order_info, 'goods_id'));
-        $goods_id_arr && $goods_info = D('Goods')->getInfoByIdArr($goods_id_arr);
-
-        $this->assign('order_info', $order_info);
-        $this->assign('goods_info', $goods_info);
-
-        $this->display('myOrder');
-
-    }
 
 }

@@ -21,6 +21,10 @@ class GoodsModel extends CommonModel {
             ->order('update_time desc')
             ->select();
 
+        foreach ($list as $k => $v) {
+            $list[$k]['price'] = round($v['price'] / 100, 2);
+        }
+
         return $list;
     }
 
@@ -32,7 +36,11 @@ class GoodsModel extends CommonModel {
         $list = array();
         if($id) {
             $list = $this->where(array('id' => $id))->find();
+            $list['price'] = round($list['price']/100, 2);
+
         }
+
+//dd($this->getLastSql());
       return $list;
     }
 
@@ -45,7 +53,7 @@ class GoodsModel extends CommonModel {
         if($id_arr) {
             $list = $this->
             where(array('id' => array('in', $id_arr)))
-                ->getField('id, title, cover_img_addr', true);
+                ->getField('id, title, cover_img_addr, price', true);
         }
       return $list;
     }

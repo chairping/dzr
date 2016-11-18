@@ -21,8 +21,8 @@ audio,canvas,progress,video {  display: inline-block; /* 1 */
 /*页面固定定位样式*/
 .fixed-header{ position: fixed; top: 0; left: 0;}
 .fixed-footer{ position: fixed; bottom: 0; left: 0;}
-.fixed-cont{margin-top: 15%;margin-bottom: 20%;}/*顶部和底部都固定*/
-.fixed-conta{margin-top: 15%;}/*顶部固定，底部不固定*/
+.fixed-cont{margin-top: 0%;margin-bottom: 20%;}/*顶部和底部都固定*/
+.fixed-conta{margin-top: 0%;}/*顶部固定，底部不固定*/
 .fixed-contb{margin-bottom: 20%;}/*顶部不固定，底部固定*/
 
 
