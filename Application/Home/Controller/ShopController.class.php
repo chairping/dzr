@@ -9,6 +9,7 @@ class ShopController extends Controller {
     }
 
     /*
+     * @author 曹梦瑶
      * 本景点商品
      */
     public function shop() {
@@ -33,9 +34,6 @@ class ShopController extends Controller {
 
             //获取有效的商品信息
             $pro_arr = D('Goods')->getInfo();
-
-
-
 //dd($product_info);
             $this->assign('spots_id', $spots_id);
             $this->assign('spots_name', $spots_name);

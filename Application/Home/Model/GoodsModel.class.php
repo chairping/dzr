@@ -21,7 +21,41 @@ class GoodsModel extends CommonModel {
             ->order('update_time desc')
             ->select();
 
+        foreach ($list as $k => $v) {
+            $list[$k]['price'] = round($v['price'] / 100, 2);
+        }
+
         return $list;
+    }
+
+    /*
+     * @author 曹梦瑶
+     * 根据产品id 获得产品信息
+     */
+    public function getInfoById($id) {
+        $list = array();
+        if($id) {
+            $list = $this->where(array('id' => $id))->find();
+            $list['price'] = round($list['price']/100, 2);
+
+        }
+
+//dd($this->getLastSql());
+      return $list;
+    }
+
+    /*
+     * @author 曹梦瑶
+     * 根据产品id 获得产品信息
+     */
+    public function getInfoByIdArr($id_arr) {
+        $list = array();
+        if($id_arr) {
+            $list = $this->
+            where(array('id' => array('in', $id_arr)))
+                ->getField('id, title, cover_img_addr, price', true);
+        }
+      return $list;
     }
 
 

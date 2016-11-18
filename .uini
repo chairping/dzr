@@ -1,0 +1,1 @@
+open_basedir="E:\cmy_code\dzr\;E:\upupw\UPUPW_NP5.6\memcached\;E:\upupw\UPUPW_NP5.6\phpmyadmin\;E:\upupw\UPUPW_NP5.6\temp\;C:\Windows\Temp\"

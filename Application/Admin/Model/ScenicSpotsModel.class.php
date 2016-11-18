@@ -52,4 +52,3 @@ class ScenicSpotsModel extends \Common\Model\BaseModel  {
 
 
 }
-
