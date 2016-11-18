@@ -40,12 +40,12 @@ class AdminWithDrawController extends AdminController
 
         $data = $result['data'];
         $count = $result['count'];
-//var_dump($data);
 
         array_walk($data, function(&$row) {
             $spotsId = $row['scenic_spots_id'];
             $spotsInfo = D('ScenicSpots')->find($spotsId);
             $row['spots_name'] = $spotsInfo['scenic_name'];
+            $row['update_time'] = date("Y-m-d H:i:s", $row['update_time']);
 
         });
         $this->_pageShow($count, $pageSize);
@@ -84,7 +84,20 @@ class AdminWithDrawController extends AdminController
                 'msg' => '审核失败'
             ]);
         }
+    }
 
+    /**
+     * 审核模版
+     */
+    public function getCheckTpl() {
+        $id = I('post.id');
+
+        $info = $this->Model->find($id);
+
+        $this->assign('data', $info);
+        $this->assign('withdraw_info', json_decode($info['withdraw_data'], true));
+
+        exit($this->fetch());
 
     }
 

@@ -1,3 +1,4 @@
+
 <include file="Public/header"/>
 <body>
 <div class="margin clearfix">
@@ -35,7 +36,7 @@
 
                             <td class="td-manage">
                             <!--<a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>-->
-                            <a title="进入详情" data-id="<?= $goods['id']; ?>" class="btn btn-xs btn-inf shenhe " ><i class="fa fa-edit bigger-120">审核</i></a>
+                            <a data-id="<?= $goods['id']; ?>" data-spots="<?= $goods['spots_name']; ?>" class="btn btn-xs btn-inf shenhe " ><i class="fa fa-edit bigger-120">审核</i></a>
                             <!--<a href="javascript:ovid()" name="Ads_list.html" class="btn btn-xs btn-pink ads_link" onclick="AdlistOrders('561');" title="幻灯片广告列表"><i class="fa  fa-bars  bigger-120"></i></a>-->
                             </td>
                         </tr>
@@ -54,20 +55,23 @@
     <!--添加商品-->
     <div class="sort_style_add margin" id="sort_style_add" style="display:none">
         <form id="goods-add" method="post" action="{:cp_U('AdminWithDraw/add')}">
-            <div class="">
-                <ul>
-                    <li>
-                        <label class="label_name">金额</label>
-                        <div class="col-sm-9">
-                        </div>
-                    </li>
+            <div class="shenhe-info">
 
 
-                    <li>
-                        <label class="label_name">提现账户</label>
 
-                    </li>
-                </ul>
+                    <!--<div class="col-sm-9">-->
+                        <!--</div>-->
+                    <!--</li>-->
+                    <!--<ul>-->
+                        <!--<li>-->
+                            <!--<label class="label_name">金额</label>-->
+
+
+                        <!--<li>-->
+                        <!--<label class="label_name">提现账户</label>-->
+
+                    <!--</li>-->
+                <!--</ul>-->
             </div>
         </form>
 
@@ -87,21 +91,25 @@
         var _self = $(this);
 
         var id = _self.data('id');
+        var spots = _self.data('spots');
+
+        $.post('{:cp_U("AdminWithDraw/getCheckTpl")}', {id: id}, function(ret){
+            $(".shenhe-info").html(ret);
+        });
+
         layer.open({
             type: 1,
-            title: '武夷山风景区',
+            title: spots,
             maxmin: true,
             shadeClose: false, //点击遮罩关闭层
-            area : ['750px' , ''],
+            area : ['650px' , ''],
             content:$('#sort_style_add'),
             btn:['已打款，并关闭页面','取消'],
             yes:function(index,layero){
 
-
                 var data = {id: id};
 
-
-                $.post('{:cp_U("check")}', data, function(ret){
+                $.post('{:cp_U("AdminWithDraw/check")}', data, function(ret){
                     if(ret.code == 1) {
                         layer.close(index);
                         location.reload();
@@ -112,6 +120,8 @@
 
             }
         });
+
+
     })
 
 

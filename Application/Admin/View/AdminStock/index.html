@@ -1,0 +1,209 @@
+<include file="Public/header"/>
+<body>
+<div class="page-content clearfix">
+    <div class="border">
+
+         <span class="l_f">
+        <a href="javascript:ovid()"  class="btn btn-info l-btn-disabled"> <?= $scenic_name;?></a>
+
+             <a href="javascript:ovid()"  class="btn btn-warning add-user"> 添加库存</a>
+
+             <!--<a href="javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i> 批量删除</a>-->
+       </span>
+    </div>
+    <div class="sort_style">
+        <!--<div class="search_style ">-->
+            <!--<form>-->
+            <!--<ul class="search_content clearfix">-->
+                <!--<li>-->
+                    <!--<label class="l_f">状态&nbsp;</label>-->
+                    <!--<select name="deliver_status" style=" width:100px">-->
+                    <!--<option value="">&#45;&#45;请选择&#45;&#45;</option>-->
+                        <!--deliver_status-->
+                    <!--<option value="1" <?php if (I('deliver_status') == 1) echo 'selected="selected"'; ?>>自取</option>-->
+                    <!--<option value="2" <?php if (I('deliver_status') == 2) echo 'selected="selected"';?>>未发货</option>-->
+                    <!--<option value="3" <?php if (I('deliver_status') == 3) echo 'selected="selected"';?>>已发货</option>-->
+                    <!--<option value="4" <?php if (I('deliver_status') == 4) echo 'selected="selected"';?>>已收货</option>-->
+                    <!--</select>-->
+                <!--</li>-->
+                <!--&lt;!&ndash;<li><label class="l_f">信息来源</label><input name="" type="text" class="text_add" placeholder="信息来源" style=" width:150px"></li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<li><label class="l_f">咨询方式</label><input name="" type="text" class="text_add" placeholder="咨询方式" style=" width:150px"></li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<li><label class="l_f">校区</label><input name="" type="text" class="text_add" placeholder="校区" style=" width:200px"></li>&ndash;&gt;-->
+                <!--&lt;!&ndash;<li><label class="l_f">添加时间</label><input class="inline laydate-icon" id="start" style=" margin-left:10px;"></li>&ndash;&gt;-->
+                <!--<li style="width:90px;">-->
+                    <!--<input type="submit" class="btn btn-info" value="搜索">-->
+                <!--</li>-->
+            <!--</ul>-->
+            <!--</form>-->
+        <!--</div>-->
+
+
+
+        <div class="stystems_style">
+            <div class="tabbable">
+
+                <div class="tab-content">
+
+                    <div class="sort_list">
+                        <table class="table table-striped table-bordered table-hover" id="sample-table">
+                            <thead>
+                            <tr>
+                                <!--<th width="50px">商品</th>-->
+                                <th width="100px">商品名称</th>
+                                <th width="50px">库存</th>
+                                <th width="50px">更新时间</th>
+                                <th width="50px">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach($data as $v): ?>
+                            <tr>
+                                <td><?= $v['goods_name'] ?></td>
+                                <td> <?= $v['stock_num'] ?></td>
+                                <td> <?= $v['update_time'] ?></td>
+
+                                <td class="td-manage">
+                                    <a href="javascript:ovid()" data-id="<?= $v['id']; ?>" data-num="<?= $v['stock_num'];?>" class="btn btn-xs btn-info kc-edit" >修改库存</a>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+
+                        <?= $my_page; ?>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<!--添加商品-->
+<div class="sort_style_add margin" id="sort_style_add" style="display:none">
+    <form id="goods-add" method="post" action="{:cp_U('AdminStock/add')}">
+    <div class="">
+        <ul>
+
+            <li>
+                <label class="label_name">状态:&nbsp;&nbsp;&nbsp;</label>
+                <div class="col-sm-9" id="">&nbsp;&nbsp;&nbsp;&nbsp;
+                    <select name="goods_id" style=" width:100px" class="col-xs-10 col-sm-10">
+                        <option value="">--请选择--</option>
+                        <?php foreach($goods as $k => $v): ?>
+                        <option value="<?= $k; ?>" ><?= $v; ?></option>
+                        <?php endforeach; ?>
+
+                    </select>
+                </div>
+
+
+            </li>
+            <input type="hidden" name="scenic_spots_id" value="<?= $id; ?>"/>
+
+            <li>
+                <label class="label_name">库存：</label>
+                <div class="col-sm-9" id="kddh">
+                    <input name="stock_num" type="text"  placeholder="" class="col-xs-10 col-sm-10">
+                </div>
+            </li>
+
+        </ul>
+    </div>
+    </form>
+
+
+</div>
+
+<div class="sort_style_add margin" id="sort_style_add1" style="display:none">
+    <form id="goods-edit" method="post" action="{:cp_U('AdminStock/edit')}">
+        <div class="">
+            <ul>
+
+                <input type="hidden" name="id" value="" id="kc-id"/>
+
+                <li>
+                    <label class="label_name">库存：</label>
+                    <div class="col-sm-9" >
+                        <input name="stock_num" id="kc" type="text"  placeholder="" class="col-xs-10 col-sm-10">
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </form>
+
+
+</div>
+
+
+
+
+</body>
+</html>
+<script type="text/javascript">
+
+    var goods = '<?php echo count($goods);?>';
+    $('.add-user').on('click', function(){
+
+        if (goods == 0) {
+            layer.msg("您已添加所有商品, 暂无新产品添加");
+            return false;
+        }
+
+        layer.open({
+            type: 1,
+            title: '添加库存',
+            maxmin: true,
+            shadeClose: false, //点击遮罩关闭层
+            area : ['570px' , '320px'],
+            content:$('#sort_style_add'),
+            btn:['确定'],
+            yes:function(index,layero){
+
+                ajax_form($("#goods-add"), function(ret){
+                    if (ret.code == 0) {
+                        layer.msg(ret.msg);
+                    } else {
+                        location.reload();
+                    }
+
+                });
+            }
+        });
+
+    })
+
+    $('.kc-edit').on('click', function(){
+        var id = $(this).data('id');
+        $("#kc-id").val(id);
+        $("#kc").val($(this).data('num'));
+
+        layer.open({
+            type: 1,
+            title: '修改库存',
+            maxmin: true,
+            shadeClose: false, //点击遮罩关闭层
+                area : ['370px' , '220px'],
+            content:$('#sort_style_add1'),
+            btn:['确定'],
+            yes:function(index,layero){
+
+                ajax_form($("#goods-edit"), function(ret){
+                    if (ret.code == 0) {
+                        layer.msg(ret.msg);
+                    } else {
+                        location.reload();
+                    }
+
+                });
+            }
+        });
+
+    })
+
+</script>
+

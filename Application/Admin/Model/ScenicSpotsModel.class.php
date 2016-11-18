@@ -44,7 +44,7 @@ class ScenicSpotsModel extends \Common\Model\BaseModel  {
  from dzr_scenic_spots as s left join dzr_order as o on
   s.id = o.scenic_spots_id and s.status=1  GROUP BY s.id limit " . ($page) * $pageSize. "," . $pageSize
         );
-//var_dump($data);
+
         return compact('data', 'count');
 
     }
@@ -52,4 +52,3 @@ class ScenicSpotsModel extends \Common\Model\BaseModel  {
 
 
 }
-

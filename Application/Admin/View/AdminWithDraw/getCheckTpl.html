@@ -1,0 +1,33 @@
+<div class="xinxi">
+    <div class="form-group"><label class="col-sm-3 control-label no-padding-right" for="form-field-1">申请金额： </label>
+        <div class="col-sm-9"><?= $withdraw_info['money']; ?></div>
+    </div>
+
+    <?php if ($data['withdraw_type_id']== 1): ?>
+    <div class="form-group"><label class="col-sm-3 control-label no-padding-right" for="form-field-1">姓名： </label>
+        <div class="col-sm-9"><?= $withdraw_info['bank_user_name']; ?></div>
+    </div>
+    <div class="form-group"><label class="col-sm-3 control-label no-padding-right" for="form-field-1">银行卡号： </label>
+        <div class="col-sm-9"><?= $withdraw_info['bank_account']; ?></div>
+    </div>
+    <div class="form-group"><label class="col-sm-3 control-label no-padding-right" for="form-field-1">开户网点： </label>
+        <div class="col-sm-9"><?= $withdraw_info['bank_branches']; ?></div>
+    </div>
+
+    <?php endif; ?>
+
+    <?php if($data['withdraw_type_id'] == 2): ?>
+
+    <div class="form-group"><label class="col-sm-3 control-label no-padding-right" for="form-field-1">微信号： </label>
+        <div class="col-sm-9"><?= $withdraw_info['weixin_account']; ?> </div>
+    </div>
+    <?php endif; ?>
+
+    <?php if($data['withdraw_type_id'] == 3): ?>
+
+    <div class="form-group"><label class="col-sm-3 control-label no-padding-right" for="form-field-1">支付宝： </label>
+        <div class="col-sm-9"><?= $withdraw_info['alipay_acount']; ?> </div>
+    </div>
+    <?php endif; ?>
+
+</div>
