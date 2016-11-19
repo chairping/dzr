@@ -1,4 +1,3 @@
-
 <?php
 /**
  * Created by PhpStorm.
@@ -182,4 +181,3 @@ class AdminScenicController extends AdminController
 
 
 }
->>>>>>> 0d51d0d2b3ec6307ed7e7d790e1685f33919fb7b

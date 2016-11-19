@@ -1,99 +1,153 @@
-body{ background-color:#E5E5E5;}
-.swiper-container { width:4rem; height:0.85rem;}
-.swiper-wrapper img{ width:4rem; height:0.85rem;}
-.swiper-slide { text-align: center; font-size: 18px; background: #fff; /* Center slide text vertically */  display: -webkit-box; display: -ms-flexbox; display: -webkit-flex; display: flex;
--webkit-box-pack: center;  -ms-flex-pack: center;  -webkit-justify-content: center;  justify-content: center;  -webkit-box-align: center;  -ms-flex-align: center;  -webkit-align-items: center;
-align-items: center;}
-.top p span.tp-lf{ float:left; margin-left:0.15rem;}
-.top p span.tp-rt{ float:right; margin-right:0.15rem;}
-.nav-lf{ position:absolute; left:0; width:20%; background-color:#E5E5E5; font-size:15px; text-align:center;}
-.nav-lf ul li{ position:relative; width:100%;line-height:60px; border-bottom: solid 1px #e3e3e3;font-size:0.23rem;padding-top:22px; padding-bottom:22px;}
-.nav-lf ul li b{ position:absolute; top:0.05rem; right:0.05rem; display:none; width:0.2rem; height:0.2rem; line-height:0.2rem; font-size:0.15rem; color:#fff; background-color:#FF5151; border-radius:0.1rem;}
-.container{ position:absolute; right:0; width:80%;}
-.current{ background-color:#fff; border-bottom: solid 1px #e3e3e3;font-size:15px;width:95px;}
-.sticky {position: fixed;top: 0;width: 20%;	animation:thedrop 1s 1;	-moz-animation:thedrop 1s 1;-webkit-animation:thedrop 1s 1;  background-color:#E5E5E5; font-size:0.15rem;}
-.sticky .nav-above {position: absolute;	top:0;left:1em;	right:1em;height:15px;}
-.section{ background-color:#fff;}
-.prt-lt{ position:relative; width:3rem; height:0.8rem; border-bottom:1px solid #e5e5e5;padding-bottom: 10px}
-.prt-lt .lt-lt{ position:relative; float:left; width:20%; height:0.6rem; margin:0.1rem;}
-.prt-lt .lt-lt img{ float:left; width:0.8rem; height:0.6rem;}
-.prt-lt .lt-lt i.commend{ position:absolute; top:0; left:0.05rem; display:block; width:0.18rem; height:0.24rem; background:url(../images/index/commend.png) no-repeat; background-size:0.18rem 0.24rem;}
-.prt-lt .lt-ct{ float:left; width:1.9rem; height:0.6rem; margin-top:0.1rem;}
-.prt-lt .lt-ct p{ font-size:0.09rem; }
-.prt-lt .lt-ct p.pr{  color:sandybrown;}
-.prt-lt .lt-rt{ position:absolute; bottom:0.1rem; right:0.1rem; width:0.9rem; height:0.3rem;}
-.prt-lt .lt-rt input{ float:left; width:0.28rem; height:0.28rem; font-size:0.18rem; border:1px solid #e5e5e5; text-align:center; color:#A1A09C; background-color:#fff;}
-.prt-lt .lt-rt input.result{ border:none; color:#FF5151;}
+<include file="Public/header"/>
+
+<body class="login-layout Reg_log_style">
+<!--<div class="logintop">    -->
+<!--<span>欢迎后台管理界面平台</span>    -->
+<!--<ul>-->
+<!--<li><a href="#">返回首页</a></li>-->
+<!--<li><a href="#">帮助</a></li>-->
+<!--<li><a href="#">关于</a></li>-->
+<!--</ul>    -->
+<!--</div>-->
+<div class="loginbody">
+	<div class="login-container">
+		<!--<div class="center">-->
+		<!--后台登录-->
+		<!--</div>-->
+
+		<div class="space-6"></div>
+
+		<div class="position-relative">
+			<div id="login-box" class="login-box widget-box no-border visible">
+				<div class="widget-body">
+					<div class="widget-main">
+						<h4 class="header blue lighter bigger">
+							<i class="icon-coffee green"></i>
+							系统后台登录
+						</h4>
+
+						<div class="login_icon"><img src="__IMG__/login.png" /></div>
+
+						<form class="" style="width: 100%">
+							<fieldset>
+								<ul>
+									<li class="frame_style form_error"><label class="user_icon"></label><input name="账号" type="text"  id="username" placeholder="账号"/></li>
+									<li class="frame_style form_error"><label class="password_icon"></label><input name="密码" type="password"   id="password" placeholder="密码"/></li>
+									<!--<li class="frame_style form_error"><label class="Codes_icon"></label><input name="验证码" type="text"   id="Codes_text"/><i>验证码</i><div class="Codes_region"></div></li>-->
 
 
-.total{ color:#FF5151;}
-.nm{ color:#868B92;}
-.support{ width:3rem; height:0.4rem; margin-bottom:0.45rem; background-color:#fff;}
-.support p{ line-height:0.4rem; text-align:center; font-size:0.15rem; color:#CCCCCC;}
 
-/*.contaniner .assort{width: 25%; float: left;margin: 3% 0%;}*/
-/*.contaniner .assort ul{ width: 100%;}*/
-/*.contaniner .assort ul li{ width: 100%;background-color: #f5f5f5;  border-bottom: solid 1px #c8c8c8; border-right: solid 1px #c8c8c8; padding:15% 15%;text-align:center;}*/
-/*.contaniner .assort ul li img{ width: 17%; margin: 0 10%; vertical-align: middle;}*/
-/*.contaniner .assort ul li span{ font-size: 1.3em; color: #666; vertical-align: middle;display: block}*/
-/*.contaniner .assort ul .active{  border-right: none;background-color: #fff ;}*/
-/*.contaniner .assort ul .active span{ color:sandybrown;}*/
-/*img{ width: 100%;}*/
-/*!*.contaniner .assort-cont dl{ width: 100%; margin-top: 5%; overflow: hidden;}*!*/
-/*.section dl dt{font-size: 1.169em; color: #999; margin-bottom: 1%;text-align:center;}*/
-/*.section dl dd{ width: 48%; float: left; margin-bottom: 0.5%;}*/
-/*.section dl dd img{ height: 7em;}*/
-/*.section dl dd a{ width: 100%; display: block;}*/
-/*.section dl dd p{ text-align: left; color: #666; font-size: 1.169em;}*/
-/*.section dl dd:nth-child(even){margin-right: 2%;}*/
-/*.section dl dd:nth-child(odd){margin-left: 2%;}*/
-body{ background-color:#E5E5E5;}
-.swiper-container { width:4rem; height:0.85rem;}
-.swiper-wrapper img{ width:4rem; height:0.85rem;}
-.swiper-slide { text-align: center; font-size: 18px; background: #fff; /* Center slide text vertically */  display: -webkit-box; display: -ms-flexbox; display: -webkit-flex; display: flex;
--webkit-box-pack: center;  -ms-flex-pack: center;  -webkit-justify-content: center;  justify-content: center;  -webkit-box-align: center;  -ms-flex-align: center;  -webkit-align-items: center;
-align-items: center;}
-.top p span.tp-lf{ float:left; margin-left:0.15rem;}
-.top p span.tp-rt{ float:right; margin-right:0.15rem;}
-.nav-lf{ position:absolute; left:0; width:20%; background-color:#E5E5E5; font-size:15px; text-align:center;}
-.nav-lf ul li{ position:relative; width:100%; line-height:30px; border-bottom: solid 1px #e3e3e3;font-size:0.23rem;padding-top:22px; padding-bottom:22px;}
-.nav-lf ul li b{ position:absolute; top:0.05rem; right:0.05rem; display:none; width:0.2rem; height:0.2rem; line-height:0.2rem; font-size:0.15rem; color:#fff; background-color:#FF5151; border-radius:0.1rem;}
-.container{ position:absolute; right:0; width:80%;margin-top: 0%;}
-.current{ background-color:#fff; border-bottom: solid 1px #e3e3e3;font-size:15px;width:95px;}
-.sticky {position: fixed;top: 0;width: 20%;	animation:thedrop 1s 1;	-moz-animation:thedrop 1s 1;-webkit-animation:thedrop 1s 1;  background-color:#E5E5E5; font-size:0.15rem;}
-.sticky .nav-above {position: absolute;	top:0;left:1em;	right:1em;height:15px;}
-.section{ background-color:#FFF;padding:2%;width:100%;}
-.prt-lt{ position:relative; width:100%; height:0.8rem; border-bottom:1px solid #e5e5e5;}
-.prt-lt .lt-lt{ position:relative; float:left; width:20%; height:0.6rem; }
-.prt-lt .lt-lt img{ float:left; width:100%; height:0.6rem;}
-.prt-lt .lt-lt i.commend{ position:absolute; top:0; left:0.05rem; display:block; width:0.18rem; height:0.24rem; background:url(../images/index/commend.png) no-repeat; background-size:0.18rem 0.24rem;}
-.prt-lt .lt-ct{ float:left; width:65%; height:0.6rem; margin-top:0.1rem;}
-.prt-lt .lt-ct p{ font-size:0.18rem; }
-.prt-lt .lt-ct span{ font-size:0.10rem; }
-.prt-lt .lt-ct p.pr{ color:sandybrown;margin-top:5%;}
-.prt-lt .lt-rt{ position:absolute; bottom:0.1rem; right:0.1rem; width:0.9rem; height:0.3rem;}
-.prt-lt .lt-rt input{ float:left; width:0.28rem; height:0.28rem; font-size:0.18rem; border:1px solid #e5e5e5; text-align:center; color:#A1A09C; background-color:#fff;}
-.prt-lt .lt-rt input.result{ border:none; color:#FF5151;}
+								</ul>
+								<div class="space"></div>
+
+								<div class="clearfix">
+									<!--<label class="inline">-->
+										<!--<input type="checkbox" class="ace">-->
+										<!--<span class="lbl">保存密码</span>-->
+									<!--</label>-->
+
+									<button type="button" class="width-35 pull-right btn btn-sm btn-primary" id="login_btn">
+										<i class="icon-key"></i>
+										登录
+									</button>
+								</div>
+
+								<div class="space-4"></div>
+							</fieldset>
+						</form>
+
+						<div class="social-or-login center">
+							<span class="bigger-110">通知</span>
+						</div>
+
+						<div class="social-login center">
+							本网站系统不再对IE8以下浏览器支持，请见谅。
+						</div>
+					</div><!-- /widget-main -->
+
+					<div class="toolbar clearfix">
 
 
-.total{ color:#FF5151;}
-.nm{ color:#868B92;}
-.support{ width:3rem; height:0.4rem; margin-bottom:0.45rem; background-color:#fff;}
-.support p{ line-height:0.4rem; text-align:center; font-size:0.15rem; color:#CCCCCC;}
 
-/*.contaniner .assort{width: 25%; float: left;margin: 3% 0%;}*/
-/*.contaniner .assort ul{ width: 100%;}*/
-/*.contaniner .assort ul li{ width: 100%;background-color: #f5f5f5;  border-bottom: solid 1px #c8c8c8; border-right: solid 1px #c8c8c8; padding:15% 15%;text-align:center;}*/
-/*.contaniner .assort ul li img{ width: 17%; margin: 0 10%; vertical-align: middle;}*/
-/*.contaniner .assort ul li span{ font-size: 1.3em; color: #666; vertical-align: middle;display: block}*/
-/*.contaniner .assort ul .active{  border-right: none;background-color: #fff ;}*/
-/*.contaniner .assort ul .active span{ color:sandybrown;}*/
-/*img{ width: 100%;}*/
-/*!*.contaniner .assort-cont dl{ width: 100%; margin-top: 5%; overflow: hidden;}*!*/
-/*.section dl dt{font-size: 1.169em; color: #999; margin-bottom: 1%;text-align:center;}*/
-/*.section dl dd{ width: 48%; float: left; margin-bottom: 0.5%;}*/
-/*.section dl dd img{ height: 7em;}*/
-/*.section dl dd a{ width: 100%; display: block;}*/
-/*.section dl dd p{ text-align: left; color: #666; font-size: 1.169em;}*/
-/*.section dl dd:nth-child(even){margin-right: 2%;}*/
-/*.section dl dd:nth-child(odd){margin-left: 2%;}*/
+					</div>
+				</div><!-- /widget-body -->
+			</div><!-- /login-box -->
+		</div><!-- /position-relative -->
+	</div>
+</div>
+<!--<div class="loginbm">版权所有  2016  <a href="">南京思美软件系统有限公司</a> </div><strong></strong>-->
+</body>
+</html>
+<script charset="utf-8" src="__JS__/md5.js"></script>
+<script>
+$('#login_btn').on('click', function(){
+	     var num=0;
+		 var str="";
+     $("input[type$='text'],input[type$='password']").each(function(n){
+          if($(this).val()=="")
+          {
+               
+			   layer.alert(str+=""+$(this).attr("name")+"不能为空！\r\n",{
+                title: '提示框',				
+				icon:0,								
+          }); 
+		    num++;
+            return false;            
+          } 
+		 });
+		  if(num>0){  return false;}
+          else{
+
+			  $("#login_btn").attr("disabled", true);
+			  var username = $('#username').val();
+			  var password = $('#password').val();
+//			  __APP__/admin.php/Public/login
+			  $.post(  '{:cp_U("Public/login")}', { username: username, password: hex_md5( password ) },
+					  function(data){
+						  if(data.statusCode=="success"){
+							  layer.alert(data.message,{
+								  title: '提示框',
+								  icon:1,
+							  });
+							  setTimeout(function(){
+								  window.location.href=data.url
+							  },1000);
+//							  location.href="index.html";
+							  layer.close(index);
+						  }else{
+
+							  layer.alert(data.message,{
+								  title: '提示框',
+								  icon:0,
+							  });
+
+							  $("#login_btn").attr("disabled", false);
+							  return false;
+						  }
+					  });
+
+		  }		  		     						
+		
+	});
+//  $(document).ready(function(){
+//	 $("input[type='text'],input[type='password']").blur(function(){
+//        var $el = $(this);
+//        var $parent = $el.parent();
+//        $parent.attr('class','frame_style').removeClass(' form_error');
+//        if($el.val()==''){
+//            $parent.attr('class','frame_style').addClass(' form_error');
+//        }
+//    });
+//	$("input[type='text'],input[type='password']").focus(function(){
+//		var $el = $(this);
+//        var $parent = $el.parent();
+//        $parent.attr('class','frame_style').removeClass(' form_errors');
+//        if($el.val()==''){
+//            $parent.attr('class','frame_style').addClass(' form_errors');
+//        } else{
+//			 $parent.attr('class','frame_style').removeClass(' form_errors');
+//		}
+//		});
+//	  })
+
+</script>
