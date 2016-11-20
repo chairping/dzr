@@ -27,6 +27,72 @@ class CartsModel extends CommonModel {
 
     }
 
+    /*
+     * @author 曹梦瑶
+     * 修改购物车状态
+     */
+    public function deleteByGoodsId($goods_id_arr) {
+        if($goods_id_arr) {
+            $is = $this->where(array(
+                'goods_id' => array('in', $goods_id_arr),
+                'user_id' => getHomeUserID()
+            ))
+                ->save(array(
+                    'update_time' => time(),
+                    'status' => 2
+                ));
+            if($is !== false) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
+  * @author 曹梦瑶
+  * 加入购物车
+  */
+    public function addToCarts($id, $num) {
+        if($id) {
+            $is = $this->where(array(
+                'goods_id' => $id,
+                'user_id' => getHomeUserID(),
+                'status' => 1
+            ))->find();
+
+//                ->save(array(
+//                    'update_time' => time(),
+//                    'status' => 2
+//                ));
+            if($is) {
+                //修改
+                $iss = $this->where(array(
+                    'id' =>$is['id']
+                ))
+                ->save(array(
+                    'update_time' => time(),
+                    'num' => $is['num'] + $num
+                ));
+
+            } else {
+                //添加
+                $iss = $this
+                    ->add(array(
+                        'goods_id' => $id,
+                        'user_id' => getHomeUserID(),
+                        'num' => $num,
+                        'update_time' => time(),
+                        'status' => 1,
+                    ));
+            }
+            if($iss !== false) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
 }
 

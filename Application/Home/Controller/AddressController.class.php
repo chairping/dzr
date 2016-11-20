@@ -13,13 +13,22 @@ class AddressController extends Controller {
      * 编辑收货地址
      */
     public function edit() {
-        //找出当前用户最新的一个收货地址
-        $address = D('UserShipingAddress')->getInfo();
+        if(IS_POST){
+            $data = I('post.');
+            $UserShipingAddress = M('user_shiping_address');
+            $UserShipingAddress->where(array('user_id' => session('id')))->save($data);
 
-        $this->assign('address', $address);
+            $list['error'] = 0;
+            echo json_encode($list);exit;
+        }else {
+            //找出当前用户最新的一个收货地址
+//            session('id', '1');
+            $address = D('UserShipingAddress')->getInfo();
 
-        $this->display('edit');
+            $this->assign('address', $address);
 
+            $this->display('edit');
+        }
     }
 
 }

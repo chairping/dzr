@@ -17,17 +17,17 @@
     </script>
 </head>
 <!--loading页开始-->
-<!--<div class="loading">-->
-	<!--<div class="loader">-->
-        <!--<div class="loader-inner pacman">-->
-          <!--<div></div>-->
-          <!--<div></div>-->
-          <!--<div></div>-->
-          <!--<div></div>-->
-          <!--<div></div>-->
-        <!--</div>-->
-	<!--</div>-->
-<!--</div>-->
+<div class="loading">
+	<div class="loader">
+        <div class="loader-inner pacman">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+	</div>
+</div>
 <!--loading页结束-->
 <!--<body style="background-image:{$spots_img_addr}">-->
 <body >
@@ -43,8 +43,12 @@
 		<section class="list">
 			<!--<figure><img src="__HIMGS__/list-ban01.png"/></figure>-->
 			<div class="search">
-				<input type="search" placeholder="请输入要查找的产品信息" />
-				<label><a><img src="__HIMGS__/list-search.png"/></a></label>
+				<input type="text" id="content" placeholder="请输入要查找的产品信息" value="<php>echo $_GET['content'];</php>" />
+				<label>
+					<a href="javascript:;" id="search">
+						<img src="__HIMGS__/list-search.png"/>
+					</a>
+				</label>
 			</div>
 			<!--<nav>-->
 				<!--<ul>-->
@@ -87,25 +91,47 @@
 				</php>
 			</ul>
 		</section>
+		<input type="hidden" id="scenic_spots_id" value="{$spots_id}">
 	</div>
 	<footer class="page-footer fixed-footer" id="footer">
 		<ul>
+			<php>if($menu == 'shop') {</php>
 			<li class="active">
-				<a href="index.html">
+				<a href="__ROOT__/index.php/Shop/shop">
 					<img src="__HIMGS__/footer01.png"/>
+				<php>}else{</php>
+			<li>
+			<a href="__ROOT__/index.php/Shop/shop">
+				<img src="__HIMGS__/footer001.png"/>
+				<php>}</php>
+
 					<p>首页</p>
 				</a>
 			</li>
+			<php>if($menu == 'cart') {</php>
+			<li class="active">
+				<a href="__ROOT__/index.php/Carts/index">
+					<img src="__HIMGS__/footer03.png"/>
+				<php>}else{</php>
 			<li>
-				<a href="shopcar.html">
-					<img src="__HIMGS__/footer003.png"/>
+			<a href="__ROOT__/index.php/Carts/index">
+				<img src="__HIMGS__/footer003.png"/>
+				<php>}</php>
+
 					<p>购物车</p>
 				</a>
 			</li>
 
+			<php>if($menu == 'order') {</php>
+			<li class="active">
+				<a href="__ROOT__/index.php/Order/index">
+					<img src="__HIMGS__/footer04.png"/>
+				<php>}else{</php>
 			<li>
-				<a href="self.html">
-					<img src="__HIMGS__/footer004.png"/>
+			<a href="__ROOT__/index.php/Order/index">
+				<img src="__HIMGS__/footer004.png"/>
+				<php>}</php>
+
 					<p>我的订单</p>
 				</a>
 			</li>
@@ -119,5 +145,23 @@
 		$('.wall').jaliswall({ item: '.pic' });
 	});
 	</script>
+	<script>
+		$(function(){
+
+			$("#search").click(function(){
+				var content = $('#content').val();
+				var scenic_spots_id = $('#scenic_spots_id').val();
+//alert('__ROOT__/index.php/Shop/shop?content=' + content + '&scenic_spots_id=' +scenic_spots_id);exit;
+//				__ROOT__/index.php/Shop/shop?content={$v.id}&scenic_spots_id={$spots_id}
+//				window.location.href='__APP__/index.php/Goods/buy?id=' + id + '&num='+ num + '&scenic_spots_id=' +scenic_spots_id;
+
+				window.location.href='__APP__/index.php/Shop/shop?content=' + content + '&scenic_spots_id=' +scenic_spots_id;
+
+
+			});
+
+		});
+	</script>
+
 </body>
 </html>

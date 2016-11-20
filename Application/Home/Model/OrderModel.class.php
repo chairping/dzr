@@ -42,6 +42,27 @@ class OrderModel extends CommonModel {
 
     }
 
+    /* @author 曹梦瑶
+    * 确认收货
+    */
+    public function checkOrder($id) {
+        $is = $this->where(array(
+            'id' => $id
+        ))
+            ->save(array(
+                'deliver_status' => 4,
+                'update_time' => time(),
+            ));
+
+        if($is !== false) {
+            return true;
+        } else {
+            return false;
+        }
+
+
+    }
+
 
 }
 

@@ -3,12 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>男装专区</title>
-    <link rel="stylesheet" type="text/css" href="css/loaders.min.css"/>
-    <link rel="stylesheet" type="text/css" href="css/loading.css"/>
-    <link rel="stylesheet" type="text/css" href="css/base.css"/>
-    <link rel="stylesheet" type="text/css" href="css/style.css"/>
-      <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <title>我的订单</title>
+    <link rel="stylesheet" type="text/css" href="__HCSS__/loaders.min.css"/>
+    <link rel="stylesheet" type="text/css" href="__HCSS__/loading.css"/>
+    <link rel="stylesheet" type="text/css" href="__HCSS__/base.css"/>
+    <link rel="stylesheet" type="text/css" href="__HCSS__/style.css"/>
+      <script src="__HJS__/jquery.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
     	$(window).load(function(){
     		$(".loading").addClass("loader-chanage")
@@ -30,80 +30,135 @@
 </div>
 <!--loading页结束-->
 <body>
-	<header class="top-header fixed-header">
-		<a class="icona" href="javascript:history.go(-1)">
-				<img src="images/left.png"/>
-			</a>
-		<h3>全部订单</h3>
-			<a class="iconb" href="shopcar.html">
-			</a>
-	</header>
+	<!--<header class="top-header fixed-header">-->
+		<!--<a class="icona" href="javascript:history.go(-1)">-->
+				<!--<img src="__HIMGS__/left.png"/>-->
+			<!--</a>-->
+		<!--<h3>全部订单</h3>-->
+			<!--<a class="iconb" href="shopcar.html">-->
+			<!--</a>-->
+	<!--</header>-->
 	
 	<div class="contaniner fixed-conta">
 		<section class="order">
+			<php>foreach($order_info as $k => $v){</php>
 			<dl>
 				<dt>
-					<time>2015-11-15 22:55:59</time>
-					<span>待发货</span>
+					<time><php>echo date('Y-m-d H:i:s', $v['create_time']);</php></time>
+					<span><php>echo $deliver_status[$v['deliver_status']];</php></span>
 				</dt>
+				<php>foreach($v['per_money'] as $kk => $vv) {</php>
 				<ul>
-					<a href="detail.html">
-						<figure><img src="images/classify-ph03.png"/></figure>
+
+						<figure><img src="<php>echo $goods_info[$v['goods_id'][$kk]]['cover_img_addr'];</php>"/></figure>
 						<li>
-							<p>超级大品牌服装，现在够级大品牌服装，现在够买只要998</p>
-							<small>颜色：经典绮丽款</small>
-							<span>尺寸：XL</span>
-							<b>￥32.00</b>
-							<strong>×3</strong>
+							<p><php>echo $goods_info[$v['goods_id'][$kk]]['title'];</php></p>
+
+							<b>￥<php>echo $v['per_money'][$kk];</php></b>
+							<strong>×<php>echo $v['num'][$kk];</php></strong>
 						</li>
-					</a>
+
+
 				</ul>
+				<php>}</php>
+
 				<dd>
 					<h3>商品总额</h3>
-					<i>￥98.00</i>
+					<i>￥{$v.sales_price}</i>
 				</dd>
 				<dd>
-					<input type="button" value="确认收货" class="order-que"/>
-					<input type="button" value="查看物流" onclick="javascript:location.href='wuliu.html'" />
-					<input type="button" value="取消订单" />
+					<php>if($v['deliver_status'] == 3) {</php>
+					<input type="button" data-id="{$v.id}" id='check' onclick="check(this)" value="确认收货" class="order-que"/>
+					<php>}</php>
+					<!--<input type="button" value="查看物流" onclick="javascript:location.href='wuliu.html'" />-->
+					<!--<input type="button" value="取消订单" />-->
 				</dd>
 			</dl>
-			
-			<dl>
-				<dt>
-					<time>2015-11-15 22:55:59</time>
-					<span>待发货</span>
-				</dt>
-				<ul>
-					<a href="detail.html">
-						<figure><img src="images/classify-ph03.png"/></figure>
-						<li>
-							<p>超级大品牌服装，现在够级大品牌服装，现在够买只要998</p>
-							<small>颜色：经典绮丽款</small>
-							<span>尺寸：XL</span>
-							<b>￥32.00</b>
-							<strong>×3</strong>
-						</li>
-					</a>
-				</ul>
-				<dd>
-					<h3>商品总额</h3>
-					<i>￥98.00</i>
-				</dd>
-				<dd>
-					<input type="button" value="确认收货" class="order-que"/>
-					<input type="button" value="查看物流" onclick="javascript:location.href='wuliu.html'" />
-					<input type="button" value="取消订单" />
-					
-					
-				</dd>
-			</dl>
+			<php>}</php>
+
 		</section>
 	</div>
-	
-	
-	
-	
 
+
+	<footer class="page-footer fixed-footer" id="footer">
+		<ul>
+			<php>if($menu == 'shop') {</php>
+			<li class="active">
+				<a href="__ROOT__/index.php/Shop/shop">
+					<img src="__HIMGS__/footer01.png"/>
+					<php>}else{</php>
+			<li>
+				<a href="__ROOT__/index.php/Shop/shop">
+					<img src="__HIMGS__/footer001.png"/>
+					<php>}</php>
+
+					<p>首页</p>
+				</a>
+			</li>
+			<php>if($menu == 'cart') {</php>
+			<li class="active">
+				<a href="__ROOT__/index.php/Carts/index">
+					<img src="__HIMGS__/footer03.png"/>
+					<php>}else{</php>
+			<li>
+				<a href="__ROOT__/index.php/Carts/index">
+					<img src="__HIMGS__/footer003.png"/>
+					<php>}</php>
+
+					<p>购物车</p>
+				</a>
+			</li>
+
+			<php>if($menu == 'order') {</php>
+			<li class="active">
+				<a href="__ROOT__/index.php/Order/index">
+					<img src="__HIMGS__/footer04.png"/>
+					<php>}else{</php>
+			<li>
+				<a href="__ROOT__/index.php/Order/index">
+					<img src="__HIMGS__/footer004.png"/>
+					<php>}</php>
+
+					<p>我的订单</p>
+				</a>
+			</li>
+		</ul>
+	</footer>
+
+
+<script>
+	function check(obj) {
+		var id = $(obj).attr("data-id");
+		$("this").attr("disabled", true);
+		$.ajax({
+			url: '__APP__/index.php/Order/checkOrder',
+			data: {
+				id: id
+			},
+			type: 'post',
+			cache: false,
+			dataType: 'json',
+			success: function (data) {
+
+				if (data.statusCode == "success") {
+
+					alert(data.message);
+
+					$("this").attr("disabled", false);
+					setTimeout("location.reload();", 1000);
+				} else {
+
+					alert(data.message);
+
+					$("this").attr("disabled", false);
+					return false;
+				}
+
+			}
+		});
+
+		$('#edit-form').modal('show');
+	}
+</script>
 </body>
 </html>

@@ -28,6 +28,29 @@ class GoodsModel extends CommonModel {
         return $list;
     }
 
+  /*
+     * @author 曹梦瑶
+     * 获取商品信息 通过搜索内容
+     */
+    public function getInfoBySearch($content) {
+        $list = array();
+        $list = $this->where(array(
+            'status' => 1,
+            'sale_status' => 1,
+            'title' => array('like', '%'.$content.'%')
+        ))
+            ->order('update_time desc')
+            ->select();
+
+        foreach ($list as $k => $v) {
+            $list[$k]['price'] = round($v['price'] / 100, 2);
+        }
+
+        return $list;
+    }
+
+
+
     /*
      * @author 曹梦瑶
      * 根据产品id 获得产品信息
@@ -53,8 +76,35 @@ class GoodsModel extends CommonModel {
         if($id_arr) {
             $list = $this->
             where(array('id' => array('in', $id_arr)))
-                ->getField('id, title, cover_img_addr, price', true);
+                ->field(array('id', 'title', 'cover_img_addr', 'price'))
+            ->select();
+
+            foreach ($list as $k =>$v) {
+                $list[$k]['price'] = round($v['price']/100, 2);
+            }
         }
+
+
+      return $list;
+    }
+
+   /*
+     * @author 曹梦瑶
+     * 根据产品id 获得产品信息
+     */
+    public function getInfoByIdArr1($id_arr) {
+        $list = array();
+        if($id_arr) {
+            $list = $this->
+            where(array('id' => array('in', $id_arr)))
+                ->getField('id, title, cover_img_addr, price', true);
+
+            foreach ($list as $k =>$v) {
+                $list[$k]['price'] = round($v['price']/100, 2);
+            }
+        }
+
+
       return $list;
     }
 
