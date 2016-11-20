@@ -10,6 +10,7 @@ namespace Admin\Controller;
 
 use Common\Controller\AdminController;
 use Common\Lib\Base64Image;
+use Common\Lib\Wx\Wx;
 
 class AdminGoodsController extends AdminController
 {
@@ -169,6 +170,27 @@ class AdminGoodsController extends AdminController
 
     public function cropAvatar() {
         $this->display();
+    }
+
+    public function test() {
+        $wx = new Wx();
+
+//        $result = $wx->qrcodeCreate(1);
+//        dd($result);
+
+        $ticket ='gQG28DoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL09reERTUTNrNTNtZXVXTlUyMkJVAAIEVZ0xWAMEAAAAAA==';
+
+        $resutl = $wx->showQrcode($ticket);
+        dd($resutl);
+
+//        array(2) {
+//            ["ticket"]=>
+//  string(96) "gQG28DoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL09reERTUTNrNTNtZXVXTlUyMkJVAAIEVZ0xWAMEAAAAAA=="
+//            ["url"]=>
+//  string(43) "http://weixin.qq.com/q/OkxDSQ3k53meuWNU22BU
+//
+//"
+//}
     }
 
 }

@@ -60,6 +60,8 @@
              <li> <i class="fa fa-newspaper-o icon " id="bank_icon" ></i> <a href="javascript:;" id="bank" class="content">银行卡</a> </li>
              <li> <i class="fa fa-newspaper-o icon " id="weixin_icon" ></i> <a href="javascript:;" id="weixin" class="content">微信</a></li>
              <li> <i class="fa fa-newspaper-o icon " id="alipay_icon" ></i> <a href="javascript:;" id="alipay" class="content">支付宝</a></li>
+             <li> <i class="fa fa-newspaper-o icon " id="qrcode_icon" ></i> <a href="javascript:;" id="qrcode" class="content">二维码下载</a></li>
+
              <input type="hidden" id="id" value="{$user_info.id}"/>
          </ul>
 
@@ -164,6 +166,19 @@
 </div>
  </div>
 
+     <div class="Ads_list" id="qrcode_list" style="display: none;">
+
+         <div>
+             <img src="/Public/upload/qrcode/{$spots_info.id}.jpg" />
+         </div>
+         <div class=" row">
+             <div class="col-sm-offset-1">
+                 <button class="btn btn-primary" type="button" id="qr_down">二维码下载</button>
+             </div>
+         </div>
+     </div>
+
+
 
 
 
@@ -262,8 +277,24 @@ $("#alipay").click(function() {
 
     });
 
+    $("#qrcode").click(function() {
+        //显示对应块
+        $(".Ads_list").hide();
+        $("#qrcode_list").show();
 
+        $('.icon').removeClass("orange");//删除
+        $('.content').removeClass("orange");//删除
 
+        $('#qrcode').addClass("orange");//增加
+        $('#qrcode_icon').addClass("orange");//增加
+
+    });
+
+    $("#qr_down").on('click', function(){
+        var id = '{$spots_info.id}';
+        location.href = "{:cp_U('AdminScenic/downQrcode', array('id'=> "%s"))}".replace('%25s', id);
+        return false;
+    });
 
 
 

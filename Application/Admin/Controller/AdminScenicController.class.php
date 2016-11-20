@@ -10,6 +10,8 @@ namespace Admin\Controller;
 
 
 use Common\Controller\AdminController;
+use Common\Lib\Wx\Wx;
+use Think\Exception;
 
 class AdminScenicController extends AdminController
 {
@@ -177,6 +179,50 @@ class AdminScenicController extends AdminController
             $this->ajaxReturn(['code' => 0, 'msg' =>$e->getMessage()]);
         }
     }
+
+    public function genQrcode() {
+        $id = I('id', 0, 'intval');
+
+        try {
+
+            $wx = new Wx();
+            $result = $wx->qrcodeCreate($id);
+
+            $ticket = $result['ticket'];
+
+            $wx->showQrcode($ticket, $id);
+
+
+            $this->ajaxReturn([
+                'code' => 1,
+                'msg' => '二维码生成成功'
+            ]);
+
+        } catch (\Exception $e) {
+            $this->ajaxReturn([
+                'code' => 0,
+                'msg' => $e->getMessage()
+            ]);
+        }
+
+    }
+
+    public function downQrcode() {
+        $id = I('id', 0, 'intval');
+
+        $webPath = dirname(realpath(APP_PATH));
+        $imagePath = '/Public/upload/qrcode'  . DIRECTORY_SEPARATOR;
+        $saleImagePath =  $webPath . $imagePath;
+
+
+        $file = $saleImagePath . $id . ".jpg";
+        header("Content-type: application/octet-stream");
+        header('Content-Disposition: attachment; filename="' . basename($file) . '"');
+        header("Content-Length: ". filesize($file));
+        readfile($file);
+
+    }
+
 
 
 

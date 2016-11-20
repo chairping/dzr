@@ -142,5 +142,47 @@ function formatMoney($money, $isShow = false) {
 
 }
 
+function getUrl($url, array $post_fields, $timeout = 60) {
+    $ch = curl_init();
+    curl_setopt ($ch, CURLOPT_URL, $url);
+    curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,FALSE);
+    curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,FALSE);
+    curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, false);
+    //设置curl默认访问为IPv4
+    if(defined('CURLOPT_IPRESOLVE') && defined('CURL_IPRESOLVE_V4')) {
+        curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+    }
 
+    //设置curl请求连接时的最长秒数，如果设置为0，则无限
+    curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+    //设置curl总执行动作的最长秒数，如果设置为0，则无限
+    curl_setopt ($ch, CURLOPT_TIMEOUT, $timeout);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
+    $contents = curl_exec($ch);
+    curl_close($ch);
+    return $contents;
+}
+
+function postUrl($url, $post_fields, $timeout = 60) {
+    $ch = curl_init();
+    curl_setopt ($ch, CURLOPT_URL, $url);
+    curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,FALSE);
+    curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,FALSE);
+    curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    //设置curl默认访问为IPv4
+    if(defined('CURLOPT_IPRESOLVE') && defined('CURL_IPRESOLVE_V4')) {
+        curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+    }
+
+    //设置curl请求连接时的最长秒数，如果设置为0，则无限
+    curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+    //设置curl总执行动作的最长秒数，如果设置为0，则无限
+    curl_setopt ($ch, CURLOPT_TIMEOUT, $timeout);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
+    $contents = curl_exec($ch);
+    curl_close($ch);
+    return $contents;
+}
 

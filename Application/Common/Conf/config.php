@@ -106,4 +106,17 @@ return array(
 
     'ACCESS_KEY'=> 'cmy88wkcae83ccmy',
     'ACCESS_IV'=>'cmy*5f-k',
+
+    /*微信支付配置*/
+    'WxPayConf_pub'=>array(
+        'APPID' => 'wx95a5e2ac6d04c066',
+        'APPSECRET' => '64f500e0c2194ce0e1649e91565303bb',
+        'MCHID' => '您的商户ID',
+        'KEY' => '商户秘钥',
+        'JS_API_CALL_URL' => WEB_HOST.'/index.php/Home/WxJsAPI/jsApiCall',
+        'SSLCERT_PATH' => WEB_HOST.'/ThinkPHP/Library/Vendor/WxPayPubHelper/cacert/apiclient_cert.pem',
+        'SSLKEY_PATH' => WEB_HOST.'/ThinkPHP/Library/Vendor/WxPayPubHelper/cacert/apiclient_key.pem',
+        'NOTIFY_URL' =>  WEB_HOST.'/index.php/Home/WxJsAPI/notify',
+        'CURL_TIMEOUT' => 30
+    )
 );
