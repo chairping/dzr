@@ -12,23 +12,25 @@ class OrderController extends Controller {
    * @author 曹梦瑶
    * 我的订单
    */
-    public function myOrder() {
+    public function index() {
         //查找出对应的有效订单
         $order_info = array();
         $order_info = D('Order')->getInfo();
         $goods_id_arr_all = array();
         //算出单价 以及修改价格
         foreach ($order_info as $k =>$v) {
-            $order_info[$k]['sales_price'][] = round($v['sales_price'] / 100, 2);
+            $order_info[$k]['sales_price'] = round($v['sales_price'] / 100, 2);
             //循环订单中的商品
             $goods_id_arr = explode(',', $v['goods_id']);
             $goods_id_arr_all = array_merge($goods_id_arr_all, $goods_id_arr);
             $per_price_arr = explode(',', $v['per_price']);
             $num = explode(',', $v['num']);
+//            dd($num);
+            $order_info[$k]['num'] = $num;
+            $order_info[$k]['goods_id'] = $goods_id_arr;
             foreach ($goods_id_arr as $kk => $vv) {
                 $order_info[$k]['per_money'][] = round($per_price_arr[$kk] / 100, 2);
-                $order_info[$k]['num'][] = $num[$kk];
-                $order_info[$k]['goos_id'][] = $goods_id_arr[$kk];
+
             }
 
 
@@ -38,12 +40,15 @@ class OrderController extends Controller {
         $goods_info = array();
         $goods_id_arr = array();
         $goods_id_arr = array_unique($goods_id_arr_all);
-        $goods_id_arr && $goods_info = D('Goods')->getInfoByIdArr($goods_id_arr);
+        $goods_id_arr && $goods_info = D('Goods')->getInfoByIdArr1($goods_id_arr);
 
         $this->assign('order_info', $order_info);
         $this->assign('goods_info', $goods_info);
-
+        $this->assign('menu', 'order');
+        $this->assign('deliver_status', C('DELIVER_STATUS'));
+//dd($order_info,$goods_info);
         $this->display('myOrder');
+
 
     }
 
@@ -145,6 +150,23 @@ class OrderController extends Controller {
                    ) );
         }
         $this->ajaxReturn(array("statusCode" => C('ERROR_CODE'),  "message" =>'订单生成失败'));
+    }
+    
+    /*
+     * @author 曹梦瑶
+     * 确认收货
+     */
+    public function checkOrder() {
+        $id = I('post.id');
+        $is = D('Order')->checkOrder($id);
+        if($is) {
+            $this->ajaxReturn(
+                array(
+                    "statusCode" => C( 'SUC_CODE' ),
+                    "message" => '操作成功',
+                ) );
+        }
+        $this->ajaxReturn(array("statusCode" => C('ERROR_CODE'),  "message" =>'确认收货失败'));
     }
 
 
