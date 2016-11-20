@@ -10,7 +10,9 @@
     <link rel="stylesheet" type="text/css" href="__HCSS__/loading.css"/>
     <link rel="stylesheet" type="text/css" href="__HCSS__/base.css"/>
     <link rel="stylesheet" type="text/css" href="__HCSS__/style.css"/>
+	<link rel="stylesheet" href="__HCSS__/style_cart.css"/>
       <script src="__HJS__/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<!--<script type="text/javascript" src="__HJS__/cart.js"></script>-->
     <script type="text/javascript">
     	$(window).load(function(){
     		$(".loading").addClass("loader-chanage")
@@ -21,80 +23,100 @@
     </script>
 </head>
 <!--loading页开始-->
-<!--<div class="loading">-->
-	<!--<div class="loader">-->
-        <!--<div class="loader-inner pacman">-->
-          <!--<div></div>-->
-          <!--<div></div>-->
-          <!--<div></div>-->
-          <!--<div></div>-->
-          <!--<div></div>-->
-        <!--</div>-->
-	<!--</div>-->
-<!--</div>-->
+<div class="loading">
+	<div class="loader">
+        <div class="loader-inner pacman">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+	</div>
+</div>
 <!--loading页结束-->
 <body>
 	<header class="top-header fixed-header">
-			<a class="icona" href="javascript:history.go(-1)">
+		<php>if($mark == 2) {</php>
+		<a class="icona" href="__APP__/index.php/Carts/index">
+		<php>}else{</php>
+		<a class="icona" href="javascript:history.go(-1)">
+		<php>}</php>
+
 					<img src="__HIMGS__/left.png"/>
 			</a>
 			<h3>确认购买</h3>
-			<a class="iconb" href="shopcar.html">
-			</a>
+			<!--<a class="iconb" href="__APP__/index.php/Goods/shopcar">-->
+			<!--</a>-->
 	</header>
 	
 	<div class="contaniner fixed-cont">
 		<section class="to-buy">
 			<header>
 
-				<div class="to-now" style="margin-top: 18%;">
-					<div class="tonow">
-							<label for="tonow"  onselectstart="return false" ></label>
-							<input type="checkbox" id="tonow"/>
-					</div>
-					<dl>
-							<dt>
-								<b>瑾晨</b>
-								<strong>13035059860</strong>
-							</dt>
-							<dd>安徽省合肥市XXXXXXXX</dd>
-					</dl>
-					<h3><a href="__ROOT__/index.php/Address/edit"><img src="__HIMGS__/write.png"/></a></h3>
-				</div>
+				<!--<div class="to-now" style="margin-top: 15%;">-->
+
+					<!--<div class="tonow">-->
+							<!--&lt;!&ndash;<label for="tonow"  onselectstart="return false" ></label>&ndash;&gt;-->
+							<!--&lt;!&ndash;<input type="checkbox" id="tonow"/>&ndash;&gt;-->
+					<!--</div>-->
+					<!--<dl>-->
+						<!--<php>//if(!$address) {</php>-->
+						<!--<dt>-->
+							<!--<strong>暂无可硬地址信息，请点击右侧图标添加收货地址信息</strong>-->
+						<!--</dt>-->
+						<!--&lt;!&ndash;<dd>{$address.address}</dd>&ndash;&gt;-->
+						<!--<php>//}else{</php>-->
+						<!--<dt>-->
+							<!--<b>{$address.name}</b>-->
+							<!--<strong>{$address.phone}</strong>-->
+						<!--</dt>-->
+						<!--<dd>{$address.address}</dd>-->
+						<!--<php>//}</php>-->
+
+
+					<!--</dl>-->
+					<!--<h3><a href="__ROOT__/index.php/Address/edit"><img src="__HIMGS__/write.png"/></a></h3>-->
+				<!--</div>-->
 			</header>
-			<div class="buy-list">
+			<div class="buy-list" style="margin-top: 15%;">
+				<php>foreach($goods_info as $k => $v) {</php>
 				<ul>
-					<a href="detail.html">
+					<!--<a href="detail.html">-->
 						<figure>
-							<img src="__HIMGS__/detail-pp01.png"/>
+							<img src="{$v.cover_img_addr}"/>
 						</figure>
 						<li>
-							<h3>超级大品牌服装，现在够买只要998</h3>
-							<span>
-								颜色：经典绮丽款
-								<br />
-								尺寸：M
+							<h3>{$v.title}</h3>
+							<span class="count">
+							<!--<span class="reduce"></span><input class="count-input" type="text" value="{$num.$k}"/><span class="add">+</span>-->
 							</span>
-							<b>￥32.00</b>
-							<small>×3</small>
+							<b>￥{$v.price}</b>
+							<small>×{$num.$k}</small>
+							<input type="hidden" class="price" value="{$v.price}">
+							<input type="hidden" class="num" value="{$num.$k}">
+							<input type="hidden" class="goods_id" value="{$v.id}">
 						</li>
-					</a>
+					<!--</a>-->
 				</ul>
 				<dl>
+					<!--<dd>-->
+						<!--<span>运费</span>-->
+						<!--<small>包邮</small>-->
+					<!--</dd>-->
 					<dd>
-						<span>运费</span>
-						<small>包邮</small>
+						<span>产品总额</span>
+						<b  style="float: right;">￥<span id="all" style="float: right;">{$price.$k}</span></b>
 					</dd>
-					<dd>
-						<span>商品总额</span>
-						<small>￥98.00</small>
-					</dd>
-					<dt>
-						<textarea rows="4" placeholder="给卖家留言（50字以内）"></textarea>
-					</dt>
+					<!--<dt>-->
+						<!--<textarea rows="4" placeholder="给卖家留言（50字以内）"></textarea>-->
+					<!--</dt>-->
 				</dl>
+
+				<php>}</php>
+
 			</div>
-			
+			<input type="hidden" class="scenic_spots_id" value="{$scenic_spots_id}">
 		</section>
 		<!--底部不够-->
 		<div style="margin-bottom: 9%;"></div>
@@ -103,10 +125,11 @@
 	<footer class="buy-footer fixed-footer">
 			<p> 
 				<small>总金额</small>
-				<b>￥98.00</b>
+				<b style="float: right;">￥<span id="all_price" >{$all_price}</span></b>
 			</p>
 				
-				<a href="/index.php?s=Pay/jsApiCall"><input type="button" value="去付款"/></a>
+
+				<a href="/index.php?s=Pay/jsApiCall"><input type="button" id="go_pay"  value="去付款"/></a>
 				<!--<a href="http://paysdk.weixin.qq.com/example/jsapi.php"><input type="button" value="去付款"/></a>-->
 		<!--<li style="background-color:#FF7F24"><a href="http://paysdk.weixin.qq.com/example/jsapi.php">JSAPI支付</a></li>-->
 
@@ -120,6 +143,35 @@
 				$(".to-now .tonow label").addClass("ton")
 			}
 		})
+	</script>
+
+	<script type="text/javascript">
+		$("#go_pay").click(function() {
+			var price = '';
+			$("input:text").filter(".price").each(function(element) {
+				price += this.value + ',';
+			});
+
+			var num = '';
+			$("input:text").filter(".num").each(function(element) {
+				num += this.value + ',';
+			});
+
+			var goods_id = '';
+			$("input:text").filter(".goods_id").each(function(element) {
+				goods_id += this.value + ',';
+			});
+
+			var all_price = $('#all_price').html();
+			var scenic_spots_id = $('#scenic_spots_id').html();
+
+
+			$(this).attr("disabled", true);
+
+			//支付接口
+
+
+		});
 	</script>
 
 </body>

@@ -1,5 +1,6 @@
 <?php
 
+
 namespace Home\Controller;
 use Think\Controller;
 
@@ -46,14 +47,12 @@ class PayController extends Controller {
 
         //=========步骤1：网页授权获取用户openid============
         //通过code获得openid
-        if (!isset($_GET['code']))
-        {
+        if (!isset($_GET['code'])) {
             //触发微信返回code码
             $url = $jsApi->createOauthUrlForCode(C('WxPayConf_pub.JS_API_CALL_URL'));
             Header("Location: $url");
             exit;
-        }else
-        {
+        } else {
             //获取code码，以获取openid
             $code = $_GET['code'];
             $jsApi->setCode($code);
@@ -72,10 +71,10 @@ class PayController extends Controller {
         //spbill_create_ip已填,商户无需重复填写
         //sign已填,商户无需重复填写
         $unifiedOrder->setParameter("openid", $openid);//商品描述
-        $unifiedOrder->setParameter("body","贡献一分钱");//商品描述
+        $unifiedOrder->setParameter("body", "贡献一分钱");//商品描述
         //自定义订单号，此处仅作举例
         $timeStamp = time();
-        $out_trade_no = C('WxPayConf_pub.APPID').$timeStamp;
+        $out_trade_no = C('WxPayConf_pub.APPID') . $timeStamp;
         $unifiedOrder->setParameter("out_trade_no", $out_trade_no);//商户订单号
         $unifiedOrder->setParameter("total_fee", "1");//总金额
         $unifiedOrder->setParameter("notify_url", C('WxPayConf_pub.NOTIFY_URL'));//通知地址
@@ -96,9 +95,46 @@ class PayController extends Controller {
 
         $jsApiParameters = $jsApi->getParameters();
 
-        $this->assign('jsApiParameters',$jsApiParameters);
+        $this->assign('jsApiParameters', $jsApiParameters);
         $this->display('pay');
         //echo $jsApiParameters;
+    }
+    /*
+     * @author 曹梦瑶
+     * 本景点商品
+     */
+    public function shop() {
+        //以下暂时注释掉
+       /* $code = $_GET['code'];
+        $url_data = file_get_contents("https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxf65f531bc5bad11c&secret=8d5bcc73f0a26475a706f35835305cb3&code=$code&grant_type=authorization_code");
+        $url_data_real = json_decode($url_data, true);
+
+        $openid = $url_data_real['openid'];
+
+//      1、如果之前有扫描过景点的二维码，则跳转至UC3 景点主页
+//      2、如果之前扫描过很多景点的二维码，则跳转至最近一次关注的景点主页
+//      3、如果没有扫描过景点的二维码，则推送文字“你还没有关注过景点，请先关注景点”
+//dd($openid);
+        //查找用户是否关注过景点
+        $spots_id = D('ActionHistory')->isIn($openid);*/
+
+        $spots_id = 1; //测试
+        if($spots_id) {
+            //获取景点信息
+            $spots_name = D('ScenicSpots')->getInfo($spots_id);
+
+            //获取有效的商品信息
+            $pro_arr = D('Goods')->getInfo();
+//dd($product_info);
+            $this->assign('spots_id', $spots_id);
+            $this->assign('spots_name', $spots_name);
+            $this->assign('pro_arr', $pro_arr );
+
+            $this->display('index');
+        } else {
+            $this->display('notFind');
+        }
+
     }
 
 }
