@@ -27,7 +27,7 @@ class ShopController extends Controller {
         //查找用户是否关注过景点
         $spots_id = D('ActionHistory')->isIn($openid);*/
 
-        $spots_id = 2; //测试
+        $spots_id = 1; //测试
         if($spots_id) {
             //获取景点信息
             $spots_name = D('ScenicSpots')->getInfo($spots_id);
