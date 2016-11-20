@@ -57,7 +57,11 @@ class Wx {
         return $this->_curlPost($url, json_encode($params));
     }
 
-
+    /**
+     * 二维码下载
+     * @param $ticket
+     * @param $id
+     */
     public function showQrcode($ticket, $id) {
         $ticket = urlencode($ticket);
 
