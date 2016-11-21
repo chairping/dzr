@@ -122,9 +122,6 @@ class AdminScenicController extends AdminController
             }
         });
 
-        $this->assign('data', $data);
-
-
         $scenic = $this->ScenicModel->select();
         $this->assign('total', formatMoney($this->Order->sum('sales_price'), true));
         $this->assign('scenic', $scenic);
@@ -139,26 +136,43 @@ class AdminScenicController extends AdminController
         $scenicId = I('id');
 
         $data = $this->Order->getInfoBySpots($scenicId);
-
+//dd($this->Order->getLastSql(),$data);
         $spots = $this->ScenicModel->find($scenicId);
 
         array_walk($data, function(&$row) {
             $row['sales_price'] = formatMoney($row['sales_price'],true);
 
-            $goodsInfo = D('Goods')->find($row['goods_id']);
-            $row['goods_name'] = $goodsInfo['title'];
+            $temp_goods_id = array_filter(array_unique(explode(',', $row['goods_id'])));
+            $temp_goods_id_str = '';
+            foreach ($temp_goods_id as $k => $v) {
+                $goodsInfo = D('Goods')->find($v);
+                $temp_goods_id_str .= $goodsInfo['title'].',';
+            }
+
+            $row['goods_name'] = rtrim($temp_goods_id_str, ",");
 
             $row['update_time'] = date('Y-m-d H:i:s', $row['update_time']);
 
         });
 
         $total = formatMoney($this->Order->where(['scenic_spots_id' => $scenicId])->sum('sales_price'), true);
+//dd($scenicId,$data);
+        
+        //销售提成
+        if($data) {
+            $order_id_arr = array_unique(array_column($data, 'id'));
+
+            $sales_arr = D('RealShare')->getSales($order_id_arr, $scenicId);
+//            dd($sales_arr);
+            $this->assign('sale_all', $sales_arr['sale_all_money']);
+            $this->assign('sale', $sales_arr['sale']);
+        }
 
         $this->assign('total', $total);
         $this->assign('data', $data);
         $this->assign('scenic_name', $spots['scenic_name']);
         $this->assign('scenicId', $scenicId);
-        $this->display();
+        $this->display('agentScenicSaleList');
     }
 
     /**

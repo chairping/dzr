@@ -15,17 +15,14 @@ class AgentAchievementController extends AgentController{
         $id = getHomeUserID();
         //获取个人信息
         $user_info = D('AdminInfo')->getInfo($id);
-//        $scenicId = M('admin_info')->where($con)->getField('scenic_spots_id');
 
         //获取代理景区信息
         $scenic_spots_id = $user_info['scenic_spots_id'];
         $spots_info = D('ScenicSpots')->getInfoById($user_info['scenic_spots_id']);
-//        $scenicName = M('scenic_spots')->where(array('id' => $scenicId))->getField('scenic_name');  //代理景区名
 
         $type = $user_info['type'] ;    //用户类型
         //根据用户类型 获取用户的分红提现百分比
         $withdraw_proportion = D('WithdrawProportion')->getPercentById($type);
-//        dd(D('WithdrawProportion')->getLastSql());
         //判断用户类型
         if($user_info['type'] == 2) {
             //一级代理用户 分红只有这一个人
@@ -34,17 +31,19 @@ class AgentAchievementController extends AgentController{
         } else {
             //农民 多个人 取平均值
             //获取用户所属景区的有效农民总个数
-
             $person = D('AdminInfo')->getPersonNumBySpots($scenic_spots_id);
             $person = $person ? $person: 1;
-//dd($person);
         }
 
         //获取景点的订单信息 --始
         $order_info = D('Order')->getInfoBySpots($scenic_spots_id);
         //获取订单中产品的信息
-        $good_id_arr = array_column($order_info, 'goods_id');
-        $goods_name_arr = D('Goods')->getGoodsName($good_id_arr);
+        $good_id_arr1 = array_column($order_info, 'goods_id');
+        $good_id_arr = array();
+        foreach ($good_id_arr1 as $k => $v) {
+            $good_id_arr = array_merge($good_id_arr, array_filter(explode(',', $v)));
+        }
+        $goods_name_arr = D('Goods')->getGoodsName(array_unique($good_id_arr));
 
         //获取用户信息
         $user_id_arr = array_column($order_info, 'ship_id');
@@ -55,17 +54,14 @@ class AgentAchievementController extends AgentController{
         foreach ($order_info as $k => $v) {
             $all_sales_price += $v['sales_price'];
         }
-//        dd($all_sales_price);
 
         //销售总提成
         //提成被除数
         $withdraw_num = 100 * $person;
-//        $all_withdraw_price = round($all_sales_price * $withdraw_proportion / $withdraw_num);
         //获取真正能够拿到的总提成（这个月之前的总和）
         $all_money =  D('RealShare')->getPercentById($scenic_spots_id);
         $all_withdraw_price = round($all_money * $withdraw_proportion / $withdraw_num);
 
-//        dd($all_sales_price, $withdraw_proportion,$withdraw_num );
         //获取景点的订单信息 --终
 
         //获取登录用户的提成信息 --始
@@ -74,27 +70,7 @@ class AgentAchievementController extends AgentController{
         //可提现金额
         $avaible_money = $all_withdraw_price - $withdraw_info['already'] - $withdraw_info['wait'];
         //获取登录用户的提成信息 --终
-
-
-//        $map['status'] = 1;
-//        $map['scenic_spots_id'] = $scenicId;
-//        $orderInfo = M('order')->where($map)->select();
-
-//        $goodNameId = array_column($orderInfo, 'goods_id');
-//        $goodsName = D('Goods')->getGoodsName($goodNameId);
-//        foreach ($orderInfo as $k=>$v){
-//            $orderInfo[$k]['goods_id'] = $goodsName[$v['goods_id']] ? $goodsName[$v['goods_id']] : '--';
-//        }
-
-//        $userNmaeId = array_column($orderInfo, 'user_id');
-//        $userName = D('UserShipingAddress')->getUserName($userNmaeId);
-//        foreach ($orderInfo as $k=>$v){
-//            $orderInfo[$k]['user_id'] = $userName[$v['user_id']] ? $userName[$v['user_id']] : '--';
-//        }
-//        $withdraw = M('withdraw_proportion')->getField('withdraw_proportion');
-//        $allSalesPrice = M('order')->where($con)->sum('sales_price');   //总销售额
-//        $allWithdrawPrice = $allSalesPrice * $withdraw / 100 ;   //销售总提成
-
+        
         $this->assign('order_info', $order_info);
 //        dd($order_info);
         $this->assign('spots_info', $spots_info);

@@ -56,7 +56,13 @@
        <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
 		  <td>{$v.id}</td>
 		  <td><php>echo $user_name_arr[$v['ship_id']];</php></td>
-		  <td><php>echo $goods_name_arr[$v['goods_id']];</php></td>
+		  <td><php>
+			  $data_rr = '';
+			  $temp = explode(',', $v['goods_id']);
+			  foreach($temp as $kk => $vv) {
+			  $data_rr .= $goods_name_arr[$vv].',';
+			  }
+			  echo rtrim($data_rr, ",");</php></td>
 		  <td>{$v.num}</td>
 		  <td><php>echo date('Y-m-d H:i:s', $v['create_time']);</php></td>
 		  <td><php>echo round($v['sales_price'] / 100, 2);</php> </td>

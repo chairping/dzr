@@ -15,7 +15,7 @@
             <span class="r_f">总销售额：<a href="javacript:;" style="color: red;font-style: normal;"><?= $total; ?></a>元
 
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                销售总提成： <a href="javacript:;" style="color: red;font-style: normal;"><?= $total; ?></a>元
+                销售总提成： <a href="javacript:;" style="color: red;font-style: normal;"><?= $sale_all; ?></a>元
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
             <!--<span class="r_f">共：<b>5</b>类</span>-->
@@ -43,7 +43,7 @@
                     <td><?= $goods['num'] ?></td>
                     <td> <?= $goods['update_time'] ?></td>
                     <td> <?= $goods['sales_price'] ?></td>
-                    <td> <?= $goods['today_total'] ?></td>
+                    <td> <?= $sale[$goods['id']] ?></td>
 
                     <!--<td class="td-manage">-->
                         <!--&lt;!&ndash;<a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>&ndash;&gt;-->

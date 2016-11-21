@@ -6,7 +6,7 @@ return array(
 
     "DB_NAME"=>'dzr',
     "DB_USER"=>'root',
-    "DB_PWD"=>'111111',
+    "DB_PWD"=>'root',
     "DB_PREFIX"=>'dzr_',
     'DB_HOST'=>'127.0.0.1',
     'DB_TYPE'=>'mysql',

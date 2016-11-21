@@ -25,8 +25,33 @@ class RealShareModel extends \Common\Model\BaseModel  {
         }
 //        dd(array('already'=>$already, 'wait' => $wait), $this->getLastSql());
         return $money;
+    }
 
+    /*
+     * @author 曹梦瑶
+     * 通过order_id 获取 销售额
+     */
+    public function getSales($order_id_arr, $spots_id) {
+        $list = array();
 
+        if($order_id_arr) {
+            $list1 = $this->where(array(
+                'order_id' => array('in', $order_id_arr),
+                'spots_id' => $spots_id,
+                'status' => 1,
+            ))
+                ->getField('order_id, money', true);
+//            dd( $list['sale']);
+            $list['sale'] = array();
+            $list['sale_all_money'] = 0;
+            foreach ($list1 as $k => $v) {
+                $temp = round($v/100, 2);
+                $list['sale'][$k] = $temp;
+                $list['sale_all_money'] += $temp;
+            }
+        }
+
+        return $list;
     }
 
 }
