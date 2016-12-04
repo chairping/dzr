@@ -25,15 +25,46 @@ class AdminGoodsController extends AdminController
         $page = I('p', 0, 'intval');
         $pageSize = 10;
 
-        $data = $this->goodsModel->getListWithCount(['status'=> 1], $page, $pageSize, 'update_time desc');
+        $is_integral = I('is_integral', 0, 'intval');
+        $is_better= I('is_better', 0, 'intval');
+        $integral_sort_id = I('integral_sort_id', 0, 'intval');
+
+        $where = array(
+            'status' => 1
+        );
+
+        if ($is_integral) {
+            $where['is_integral'] = $is_integral;
+        }
+
+        if ($is_better) {
+            $where['is_better'] = $is_better;
+        }
+
+        if ($integral_sort_id) {
+            $where['integral_sort_id'] = $integral_sort_id;
+        }
+
+        $data = $this->goodsModel->getListWithCount($where, $page, $pageSize, 'update_time desc');
 
         $goodsList = $data['data'];
         array_walk($goodsList, function(&$row) {
-            $row['price'] = formatMoney($row['price'], true);
+
+            if ($row['is_integral'] == 1) {
+                $row['price'] = formatMoney($row['price'], true);
+            }
+
         });
         $count = $data['count'];
 
         $this->_pageShow($count, $pageSize);
+
+        $sortObj = D('IntegralSort');
+
+        $sortList  = $sortObj->where(array('status' => 1))->select();
+        $sortList = array_column($sortList, 'name', 'id');
+
+        $this->assign('sortList', $sortList);
 
         $this->assign('goods_list', $goodsList );
         $this->display();
@@ -44,7 +75,11 @@ class AdminGoodsController extends AdminController
 
             $data = I('post.');
             $data['update_time'] = time();
-            $data['price'] = formatMoney($data['price']);
+
+            if(I('is_integral' == 1)) {
+                $data['price'] = formatMoney($data['price']);
+            }
+
             $coverAddr = $data['cover_img_addr'];
 
 
@@ -63,6 +98,14 @@ class AdminGoodsController extends AdminController
 
         } else {
 
+
+            $sortObj = D('IntegralSort');
+
+            $sortList  = $sortObj->where(array('status' => 1))->select();
+            $sortList = array_column($sortList, 'name', 'id');
+
+            $this->assign('sortList', $sortList);
+
             $this->display();
 
         }
@@ -79,9 +122,12 @@ class AdminGoodsController extends AdminController
             }
 
             $data = I('post.');
-            $data['price'] = formatMoney($data['price']);
-            unset($data['id']);
 
+            if(I('is_integral' == 1)) {
+                $data['price'] = formatMoney($data['price']);
+            }
+
+            unset($data['id']);
 
             $coverAddr = $data['cover_img_addr'];
             if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $coverAddr, $result)){
@@ -102,6 +148,13 @@ class AdminGoodsController extends AdminController
                 $this->error("非法访问");
             }
 
+            $sortObj = D('IntegralSort');
+
+            $sortList  = $sortObj->where(array('status' => 1))->select();
+            $sortList = array_column($sortList, 'name', 'id');
+
+            $this->assign('sortList', $sortList);
+
             $data = D('Goods')->find($id);
             $data['price'] = formatMoney($data['price'], true);
             $this->assign('data', $data );
@@ -114,6 +167,32 @@ class AdminGoodsController extends AdminController
 
         if ($id) {
             $status = $this->goodsModel->where(['id'=> $id])->save(['status'=> 2, 'update_time' => time()]);
+            if ($status) {
+                $this->ajaxReturn([
+                    'code' => 1,
+                    'msg' => '删除成功'
+                ]);
+            } else {
+                $this->ajaxReturn([
+                    'code' => 1,
+                    'msg' => '操作失败'
+                ]);
+            }
+        } else {
+            $this->ajaxReturn([
+                'code' => 0,
+                'msg' => '非法访问'
+            ]);
+        }
+
+    }
+
+    public function sortDel() {
+        $id = I('post.id', 0, 'intval');
+
+        if ($id) {
+            $sortObj = D('IntegralSort');
+            $status = $sortObj->where(['id'=> $id])->save(['status'=> 2, 'update_time' => time()]);
             if ($status) {
                 $this->ajaxReturn([
                     'code' => 1,
@@ -171,6 +250,65 @@ class AdminGoodsController extends AdminController
     public function cropAvatar() {
         $this->display();
     }
+
+    public function scoreGoodsIndex() {
+        $page = I('p', 0, 'intval');
+        $pageSize = 10;
+
+        $sortObj = D('IntegralSort');
+
+        $result = $sortObj->getListWithCount(array('status' => 1), $page, $pageSize, 'update_time desc');
+
+        $count = $result['count'];
+
+        $this->_pageShow($count, $pageSize);
+        $this->assign('data', $result['data']);
+
+        $this->display();
+    }
+
+    public function scoreGoodsTypeAdd() {
+
+        $id = I('id', 0, 'intval');
+
+        if($id) {
+            $status = D('IntegralSort')->where(array('id' => $id))->save(array(
+                'name' => I('name'),
+                'update_time' => time(),
+            ));
+
+        } else {
+            $sortObj = D('IntegralSort');
+
+            if ($sortObj->where(array('name' => I('name')))->find()) {
+
+                $this->ajaxReturn([
+                    'code' => 0,
+                    'msg' => '该分类已存在'
+                ]);
+            } else {
+                $status = D('IntegralSort')->add(array(
+                    'name' => I('name'),
+                    'update_time' => time(),
+                    'status' => 1
+                ));
+            }
+        }
+
+        if ($status) {
+            $this->ajaxReturn([
+                'code' => 1,
+                'msg' => '操作成功'
+            ]);
+        } else {
+            $this->ajaxReturn(array(
+                'code' => 0,
+                'msg' => '操作失败'
+            ));
+        }
+    }
+
+
 
     public function test() {
         $wx = new Wx();

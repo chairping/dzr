@@ -2,6 +2,44 @@
 <body>
 <div class="page-content clearfix">
     <div class="sort_style">
+
+        <div class="search_style ">
+            <form>
+                <ul class="search_content clearfix">
+                    <li>
+                        <label class="l_f">商品类别&nbsp;</label>
+                        <select id="goods_sort" name="is_integral" style=" width:100px">
+                            <option value="0">--请选择--</option>
+                            <option value="1" <?php if (I('is_integral') == 1) echo 'selected="selected"'; ?>>普通商品</option>
+                            <option value="2" <?php if (I('is_integral') == 2) echo 'selected="selected"';?>>积分商品</option>
+                        </select>
+                    </li>
+
+                    <li style="display: none;" class="integral-select">
+                        <label class="l_f">轮播&nbsp;</label>
+                        <select name="is_better" style=" width:100px">
+                            <option value="">--请选择--</option>
+                            <option value="2" <?php if (I('is_better') == 2) echo 'selected="selected"';?>>是</option>
+                            <option value="1" <?php if (I('is_better') == 1) echo 'selected="selected"'; ?>>否</option>
+                        </select>
+                    </li>
+
+                    <li style="display: none;" class="integral-select">
+                        <label class="l_f">积分商品分类&nbsp;</label>
+                        <select name="integral_sort_id" style=" width:100px">
+                        <option value="" >--请选择--</option>
+                        <?php foreach($sortList as $k => $v): ?>
+                        <option value="{$k}" <?php if(I('integral_sort_id') == $k) { echo  'selected="selected"';} ?> >{$v}</option>
+                        <?php endforeach; ?>
+                    </select>
+                    </li>
+                    <li style="width:90px;">
+                        <input type="submit" class="btn btn-info" value="搜索">
+                    </li>
+                </ul>
+            </form>
+        </div>
+
         <div class="border clearfix">
        <span class="l_f">
         <a href="javascript:ovid()" id="sort_add" class="btn btn-warning"><i class="fa fa-plus"></i> 添加产品</a>
@@ -20,6 +58,9 @@
                     <th width="50px">价格</th>
                     <th width="180px">加入时间</th>
                     <th width="70px">状态</th>
+                    <th width="70px">商品类型</th>
+                    <th width="80px">是否为轮播</th>
+                    <th width="100px">积分商品种类</th>
                     <th width="250px">操作</th>
                 </tr>
                 </thead>
@@ -32,11 +73,33 @@
                     <td><img style="height: 40px;width: 40px;" src="<?= $goods['cover_img_addr'] ?>" /></td>
                     <td><?= $goods['price'] ?></td>
                     <td><?= date("Y-m-d H:i:s", $goods['update_time']); ?> </td>
-                    <td class="td-status">
+                    <td class="">
                         <?php if ($goods['sale_status'] == 1): ?>
                         <span class="label label-success radius">上架</span>
                         <?php else: ?>
                         <span class="label label-danger radius">下架</span>
+                        <?php endif; ?>
+                    </td>
+                    <td class="td-status">
+                        <?php if ($goods['is_integral'] == 1): ?>
+                        <span class="label label-success radius">普通商品</span>
+                        <?php else: ?>
+                        <span class="label label-danger radius">积分商品</span>
+                        <?php endif; ?>
+                    </td>
+                    <td class="">
+                        <?php if($goods['is_integral'] == 2): ?>
+                            <?php if ($goods['is_better'] == 1): ?>
+                                <span class="label label-success radius">否</span>
+                            <?php else: ?>
+                                <span class="label label-danger radius">是</span>
+                            <?php endif; ?>
+                        <?php endif; ?>
+
+                    </td>
+                    <td class="">
+                        <?php if ($goods['is_integral'] == 2): ?>
+                        <?php echo $sortList[$goods['integral_sort_id']];?>
                         <?php endif; ?>
                     </td>
                     <td class="td-manage">
@@ -84,6 +147,24 @@
 //            title: '编辑',
 //            content: "{:U('AdminGoods/edit', array('id'=> "%s"))}".replace('%25s', id),
 //        });
+    });
+
+    var is_integral = '<?php echo I("is_integral") ?>';
+
+    if(is_integral == 2) {
+
+        $('.integral-select').show();
+    }
+
+    $("#goods_sort").change(function() {
+        var type = $(this).val();
+
+        if (type == 2) {
+            $('.integral-select').show();
+        } else {
+            $('.integral-select').hide();
+
+        }
     });
 
     $('.goods-del').on('click', function(){
@@ -179,23 +260,4 @@
 
 </script>
 <script type="text/javascript">
-    jQuery(function($) {
-        var oTable1 = $('#sample-table').dataTable( {
-            "aaSorting": [[ 1, "desc" ]],//默认第几个排序
-            "bStateSave": true,//状态保存
-            "aoColumnDefs": [
-                //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-                {"orderable":false,"aTargets":[0,1,2,3,4,5,6,7,8]}// 制定列不参与排序
-            ] } );
-        $('table th input:checkbox').on('click' , function(){
-            var that = this;
-            $(this).closest('table').find('tr > td:first-child input:checkbox')
-                    .each(function(){
-                        this.checked = that.checked;
-                        $(this).closest('tr').toggleClass('selected');
-
-                    });
-
-        });
-    })
 </script>

@@ -47,6 +47,35 @@
                     <input name="cover_img_addr" id="pic_img" value="<?= $data['cover_img_addr'] ?>"  type="hidden"  placeholder="" class="col-xs-10 col-sm-5">
                 </div>
             </li>
+            <li>
+                <label class="label_name">商品类型</label>
+                <span class="add_content"> &nbsp;&nbsp;<label>
+                    <input name="is_integral" type="radio" <?php if($data['is_integral'] == 1) { echo 'checked="checked"';} ?> value="1" class="ace">
+                    <span class="lbl">普通商品</span></label>&nbsp;&nbsp;&nbsp;
+                    <label><input name="is_integral" <?php if($data['is_integral'] == 2) { echo 'checked="checked"';}?> type="radio" class="ace" value="2">
+                        <span class="lbl">积分商品</span></label>
+                </span>
+            </li>
+            <li style="display: none" class="is_integral">
+
+                <label class="label_name">轮播</label>
+                <span class="add_content"> &nbsp;&nbsp;<label>
+                    <input name="is_better" type="radio" <?php if($data['is_better'] == 2) { echo 'checked="checked"';} ?> value="2" class="ace">
+                    <span class="lbl">是</span></label>&nbsp;&nbsp;&nbsp;
+                    <label><input name="is_better" <?php if($data['is_better'] == 1) { echo 'checked="checked"';}?> type="radio" class="ace" value="1">
+                        <span class="lbl">否</span></label>
+                </span>
+            </li>
+
+            <li style="display: none" class="is_integral">
+                <label class="label_name">商品分类</label> &nbsp;
+                <select name="integral_sort_id" style=" width:100px">
+                    <?php foreach($sortList as $k => $v): ?>
+                    <option value="{$k}" <?php if($data['integral_sort_id'] == $k) { echo  'selected="selected"';} ?> >{$v}</option>
+                    <?php endforeach; ?>
+                </select>
+            </li>
+
 
             <li>
                 <label class="label_name">状态</label>
@@ -125,7 +154,6 @@
     });
 
 
-
     //给父页面传值
     $('#submit').on('click', function(){
         ajax_form($("#goods-edit"), function(ret) {
@@ -148,6 +176,27 @@
 //        parent.layer.tips('Look here', '#parentIframe', {time: 5000});
 //        parent.layer.close(index);
     });
+
+
+    var is_integral = '<?php echo $data["is_integral"];?>';
+
+    if (is_integral == 2) {
+        $(".is_integral").show();
+    }
+
+    $("input[name=is_integral]").change(function() {
+
+        var type = $(this).val();
+
+        if (type == 2) {
+            $(".is_integral").show();
+        } else {
+
+            $(".is_integral").hide();
+        }
+
+    });
+
 
     //关闭iframe
     $('.cansel').click(function(){

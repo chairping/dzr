@@ -40,7 +40,7 @@ class MenuServices {
                 
             ];
         } else {
-            //平台管理员
+            //平台管理
             return [
                 [
                     'name' => '商品管理',
@@ -51,6 +51,11 @@ class MenuServices {
                             'name' => '商品列表',
 
                             'url' => cp_U('AdminGoods/index'),
+                        ],
+                        [
+                            'name' => '积分商品分类',
+
+                            'url' => cp_U('AdminGoods/scoreGoodsIndex'),
                         ],
 //                        [
 //                            'name' => '图片裁剪',
