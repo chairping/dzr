@@ -1,106 +1,145 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>个人中心</title>
-    <link rel="stylesheet" type="text/css" href="__HCSS__/loaders.min.css"/>
-    <link rel="stylesheet" type="text/css" href="__HCSS__/loading.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>积分商城</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <script src="__HJS__/rem.js"></script>
+    <link href="__Hiconfont__/iconfont.css" rel="stylesheet">
+    <link href="__HCSS__/mui.min.css" rel="stylesheet">
+    <link href="__HCSS__/all.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="__HCSS__/base.css"/>
     <link rel="stylesheet" type="text/css" href="__HCSS__/style.css"/>
-      <script src="__HJS__/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-    <script type="text/javascript">
-    	$(window).load(function(){
-    		$(".loading").addClass("loader-chanage")
-    		$(".loading").fadeOut(300)
-    	})
-    </script>
 </head>
 <body>
-	<div class="p-top  clearfloat">
-		<!--<a href="personal.html">-->
-			<!--<div class="tu">-->
-				<!--<img src="img/touxiang.png"/>-->
-			<!--</div>-->
-			<!--<p class="name">还没做</p>-->
-		<!--</a>-->
-		<div class="p-bottom p-bottom1 clearfloat">
-			<ul class="clearfloat">
-				<!--<a href="fx-center1.html">-->
-					<!--<li class="box-s">-->
-						<!--<span class="opa6"></span>-->
-						<!--<p class="bt">我的佣金</p>-->
-						<!--<p class="price">0.00</p>-->
-					<!--</li>-->
-				<!--</a>-->
-				<a href="#">
-					<li class="box-s">
-						<span class="opa6"></span>
-						<p class="bt">我的积分</p>
-						<p class="price">{$integral}</p>
-					</li>
-				</a>
-				<a href="#">
-					<li class="box-s">
-						<!--<span class="opa6"></span>-->
-						<!--<p class="bt">我的足迹</p>-->
-						<!--<p class="price">0</p>-->
-					</li>
-				</a>
-			</ul>
-		</div>
-	</div>
-	
-	<div class="contaniner fixed-contb">
-		<section class="self">
-			<dl>
-				<dt>
-					<a href="__ROOT__/index.php/Order/index">
-						<img src="__HIMGS__/self-icon.png"/>
-						<b>全部订单</b>
-						<span><img src="__HIMGS__/right.png"/></span>
-					</a>
-				</dt>
-				<dd>
-						<ul>
-							<li>
-								<a href="__ROOT__/index.php/Order/index?deliver_status=5">
-									<img src="__HIMGS__/order-icon03.png"/>
-									<p>待付款</p>
-								</a>
-							</li>
-							<li>
-								<a href="__ROOT__/index.php/Order/index?deliver_status=2">
-									<img src="__HIMGS__/order-icon01.png"/>
-									<p>待发货</p>
-								</a>
-							</li>
 
-							<li>
-								<a href="__ROOT__/index.php/Order/index?deliver_status=3">
-									<img src="__HIMGS__/order-icon02.png"/>
-									<p>待收货</p>
-								</a>
-							</li>
-							<li>
-								<a href="__ROOT__/index.php/Order/index?deliver_status=1,4">
-									<img src="__HIMGS__/order-icon04.png"/>
-									<p>交易成功</p>
-								</a>
-							</li>
-						</ul>
-				</dd>
-			</dl>
-			
+<div id="main" class="mui-clearfix">
 
-			
-		</section>
-		
-		
-	</div>
+    <div class="mui-content" >
+        <div class="banner swiper-container">
+            <div class="swiper-wrapper">
+                <php>
+                    foreach($banner as $k => $v){
+                </php>
+                    <div class="swiper-slide">
+                        <a href="__ROOT__/index.php/Goods/integral?goods_id={$v.id}&scenic_spots_id={$spots_id}">
+                            <img class="swiper-lazy " src="{$v.cover_img_addr}" alt="">
+                        </a>
+                    </div>
+                <php>}</php>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
 
-	<include file="Common:footer" />
-	
-	
+        <!--<div class="home-nav ui-box">-->
+            <div   style=" padding: 0.3rem;margin-bottom: 0.2rem;background-color: #fff;">
+          <a href="__ROOT__/index.php/Integral/showMore" style="font-size: 18px;font-weight: normal;">更多分类</a>
+          |
+                <a href="__ROOT__/index.php/Carts/index_integral" style="font-size: 18px;font-weight: normal;">兑换购物车</a>
+                <!--<a class="box" href=""><img class="figure" src="uploads/t3.jpg" alt="" /><span class="tit">更多分类</span></a>-->
+          <span style="font-size: 18px;color: #8f8f94;font-weight: normal;float: right;">我的积分:{$integral}</span>
+        </div>
+
+
+
+        <div class="home-fashion ui-box ui-border-t" style="background-color: #fff;padding: 0.1rem;">
+            <!--<img class="home-imgtit" src="__HHome__/img/hometit3.jpg" alt="" />-->
+            <!--<a href=""><img class="db margin-b-s" src="__HHome__/uploads/sch-banner.jpg" width="100%" alt="" /></a>-->
+            <div class="fastion-plist mui-row">
+                <php>
+                    foreach($goods as $k => $v){
+                </php>
+                <div class="mui-col-xs-6">
+                    <a class="item" href="__ROOT__/index.php/Goods/integral?goods_id={$v.id}&scenic_spots_id={$spots_id}">
+                        <img src="{$v.cover_img_addr}" alt="" class="figure" /><span class="tit">{$v.title}&nbsp;{$v.price}积分</span>
+                    </a>
+                </div>
+                <php>
+                    }
+                </php>
+
+            </div>
+        </div>
+
+    </div> <!--mui-content end-->
+</div>
+
+
+    <include file="Common:footer" />
+
 </body>
+<script type="text/javascript" src="__HJS__/jquery-1.8.3.min.js" ></script>
+<script src="__HJS__/fastclick.js"></script>
+<script src="__HJS__/mui.min.js"></script>
+<script type="text/javascript" src="__HJS__/hmt.js" ></script>
+<!--插件-->
+<link rel="stylesheet" href="__HJS__/swiper/swiper.min.css">
+<script src="__HJS__/swiper/swiper.jquery.min.js"></script>
+<!--插件-->
+<script src="__HJS__/global.js"></script>
+<script >
+    $(function () {
+        var banner = new Swiper('.banner',{
+            autoplay: 5000,
+            pagination : '.swiper-pagination',
+            paginationClickable: true,
+            lazyLoading : true,
+            loop:true
+        });
+
+         mui('.pop-schwrap .sch-input').input();
+        var deceleration = mui.os.ios?0.003:0.0009;
+         mui('.pop-schwrap .scroll-wrap').scroll({
+                bounce: true,
+                indicators: true,
+                deceleration:deceleration
+        });
+        $('.top-sch-box .fdj,.top-sch-box .sch-txt,.pop-schwrap .btn-back').on('click',function () {
+            $('html,body').toggleClass('holding');
+            $('.pop-schwrap').toggleClass('on');
+            if($('.pop-schwrap').hasClass('on')) {;
+                $('.pop-schwrap .sch-input').focus();
+            }
+        });
+
+    });
+</script>
+<script src="__HJS__/lanren.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        var x = 272; //填入目标图片高度
+        var y = $(document.body).width();//填入目标图片宽度
+        for (var j = 0; j < $('.swiper-lazy').length; j++) {
+
+            var src = $('.swiper-lazy')[j].src;
+
+            imgReady(src, function () {
+                // alert('图片的宽度：' + this.width + '; 高度：' + this.height);
+                var w = this.width;
+                var h = this.height;
+                var rate = w / h;
+                if (h > x) { //图片宽度大于目标宽度时
+                    h = x; //根据目标宽度按比例算出高度
+                    w = x * rate; //宽度等于预定宽度
+                    if (w > y) { //如果按比例缩小后的高度小于预定高度时
+                        w = y; //按目标高度重新计算宽度
+                        h = y / rate; //高度等于预定高度
+                    }
+                } else if (w > y) {
+                    w = y; //按目标高度重新计算宽度
+                    h = y / rate; //高度等于预定高度
+                }
+                $('.swiper-lazy')[j].width = w;
+                $('.swiper-lazy')[j].height=h;
+
+            });
+
+        }
+
+
+    });
+</script>
 </html>

@@ -1,7 +1,7 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-class OrderController extends Controller {
+class SelfController extends Controller {
 
     public function __construct() {
         parent::__construct();
@@ -13,41 +13,45 @@ class OrderController extends Controller {
    * 个人中心
    */
     public function index() {
-        //查找出对应的有效订单
-        $order_info = array();
-        $order_info = D('Order')->getInfo();
-        $goods_id_arr_all = array();
-        //算出单价 以及修改价格
-        foreach ($order_info as $k =>$v) {
-            $order_info[$k]['sales_price'] = round($v['sales_price'] / 100, 2);
-            //循环订单中的商品
-            $goods_id_arr = explode(',', $v['goods_id']);
-            $goods_id_arr_all = array_merge($goods_id_arr_all, $goods_id_arr);
-            $per_price_arr = explode(',', $v['per_price']);
-            $num = explode(',', $v['num']);
-//            dd($num);
-            $order_info[$k]['num'] = $num;
-            $order_info[$k]['goods_id'] = $goods_id_arr;
-            foreach ($goods_id_arr as $kk => $vv) {
-                $order_info[$k]['per_money'][] = round($per_price_arr[$kk] / 100, 2);
+        $_SESSION['id'] = 1;  //测试
+        //查找出用户的积分
+        $integral = D('UserInfo')->getIntegral();
 
-            }
-
-
-        }
-
-        //获取商品名字、图片
-        $goods_info = array();
-        $goods_id_arr = array();
-        $goods_id_arr = array_unique($goods_id_arr_all);
-        $goods_id_arr && $goods_info = D('Goods')->getInfoByIdArr1($goods_id_arr);
-
-        $this->assign('order_info', $order_info);
-        $this->assign('goods_info', $goods_info);
-        $this->assign('menu', 'order');
-        $this->assign('deliver_status', C('DELIVER_STATUS'));
+//        //查找出对应的有效订单
+//        $order_info = array();
+//        $order_info = D('Order')->getInfo();
+//        $goods_id_arr_all = array();
+//        //算出单价 以及修改价格
+//        foreach ($order_info as $k =>$v) {
+//            $order_info[$k]['sales_price'] = round($v['sales_price'] / 100, 2);
+//            //循环订单中的商品
+//            $goods_id_arr = explode(',', $v['goods_id']);
+//            $goods_id_arr_all = array_merge($goods_id_arr_all, $goods_id_arr);
+//            $per_price_arr = explode(',', $v['per_price']);
+//            $num = explode(',', $v['num']);
+////            dd($num);
+//            $order_info[$k]['num'] = $num;
+//            $order_info[$k]['goods_id'] = $goods_id_arr;
+//            foreach ($goods_id_arr as $kk => $vv) {
+//                $order_info[$k]['per_money'][] = round($per_price_arr[$kk] / 100, 2);
+//
+//            }
+//
+//
+//        }
+//
+//        //获取商品名字、图片
+//        $goods_info = array();
+//        $goods_id_arr = array();
+//        $goods_id_arr = array_unique($goods_id_arr_all);
+//        $goods_id_arr && $goods_info = D('Goods')->getInfoByIdArr1($goods_id_arr);
+//
+        $this->assign('integral', $integral);
+//        $this->assign('goods_info', $goods_info);
+        $this->assign('menu', 'self');
+//        $this->assign('deliver_status', C('DELIVER_STATUS'));
 //dd($order_info,$goods_info);
-        $this->display('myOrder');
+        $this->display('index');
 
 
     }

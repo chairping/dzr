@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-	<title>购物车</title>
+	<title>兑换购物车</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" type="text/css" href="__HCSS__/loaders.min.css"/>
@@ -97,10 +97,10 @@
 <div class="settlement">
 	<div class="settlement_left">
 		<font class="zongji">总计：</font><font class="money">￥0</font><br />
-(点击去结算进行购买产品)
+(点击去兑换进行兑换产品)
 	</div>
 	<div class="settlement_right">
-		<input type="button" id="settlement" value="去结算" />
+		<input type="button" id="settlement" value="去兑换" />
 	</div>
 </div>
 <!--结算信息 end-->
@@ -144,7 +144,7 @@
 //		$("#bank_submit").attr("disabled", true);
 		var check_num = $('#check_num').val();
 		if(check_num == '' || check_num == null) {
-			alert('请选择要购买的产品！');
+			alert('请选择要兑换的产品！');
 			return false;
 		}
 		var scenic_spots_id = $('#scenic_spots_id').val();
@@ -159,7 +159,7 @@
 			num += this.value + ',';
 		});
 
-		window.location.href='__APP__/index.php/Goods/buy?id=' + check_num + '&num='+ num + '&scenic_spots_id=' +scenic_spots_id ;
+		window.location.href='__APP__/index.php/Goods/buy_integral?id=' + check_num + '&num='+ num + '&scenic_spots_id=' +scenic_spots_id ;
 
 	});
 
