@@ -17,7 +17,7 @@ class CronController extends Controller {
     public function refleshOrder() {
         $date_start = strtotime(date('Y-m-d H:i:s', strtotime('-7 days')));
 
-        //查找 状态是 已发货 并且时间超过七天的
+        //查找 状态是 待收货 并且时间超过七天的
         $id_arr = $this->order->where(array(
             'create_time' => array('lt', $date_start),
             'deliver_status' => 3,

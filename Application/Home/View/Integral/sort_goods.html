@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<title>积分商城</title>
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<script src="__HJS__/rem.js"></script>
+	<link href="__Hiconfont__/iconfont.css" rel="stylesheet">
+	<link href="__HCSS__/mui.min.css" rel="stylesheet">
+	<link href="__HCSS__/all.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="__HCSS__/base.css"/>
+	<link rel="stylesheet" type="text/css" href="__HCSS__/style.css"/>
+</head>
+<body>
+
+<div id="main" class="mui-clearfix">
+
+	<div class="mui-content" >
+
+		<div class="home-fashion ui-box ui-border-t" style="background-color: #fff;padding: 0.1rem;">
+			<!--<img class="home-imgtit" src="__HHome__/img/hometit3.jpg" alt="" />-->
+			<!--<a href=""><img class="db margin-b-s" src="__HHome__/uploads/sch-banner.jpg" width="100%" alt="" /></a>-->
+			<div class="fastion-plist mui-row">
+				<php>
+					foreach($goods as $k => $v){
+				</php>
+				<div class="mui-col-xs-6">
+					<a class="item" href="__ROOT__/index.php/Goods/integral?goods_id={$v.id}&scenic_spots_id={$spots_id}">
+						<img src="{$v.cover_img_addr}" alt="" class="figure" /><span class="tit">{$v.title}&nbsp;{$v.price}积分</span>
+					</a>
+				</div>
+				<php>
+					}
+				</php>
+
+			</div>
+		</div>
+
+	</div> <!--mui-content end-->
+</div>
+
+
+<include file="Common:footer" />
+
+</body>
+<script type="text/javascript" src="__HJS__/jquery-1.8.3.min.js" ></script>
+<script src="__HJS__/fastclick.js"></script>
+<script src="__HJS__/mui.min.js"></script>
+<script type="text/javascript" src="__HJS__/hmt.js" ></script>
+<!--插件-->
+<link rel="stylesheet" href="__HJS__/swiper/swiper.min.css">
+<script src="__HJS__/swiper/swiper.jquery.min.js"></script>
+<!--插件-->
+<script src="__HJS__/global.js"></script>
+<script >
+	$(function () {
+		var banner = new Swiper('.banner',{
+			autoplay: 5000,
+			pagination : '.swiper-pagination',
+			paginationClickable: true,
+			lazyLoading : true,
+			loop:true
+		});
+
+		mui('.pop-schwrap .sch-input').input();
+		var deceleration = mui.os.ios?0.003:0.0009;
+		mui('.pop-schwrap .scroll-wrap').scroll({
+			bounce: true,
+			indicators: true,
+			deceleration:deceleration
+		});
+		$('.top-sch-box .fdj,.top-sch-box .sch-txt,.pop-schwrap .btn-back').on('click',function () {
+			$('html,body').toggleClass('holding');
+			$('.pop-schwrap').toggleClass('on');
+			if($('.pop-schwrap').hasClass('on')) {;
+				$('.pop-schwrap .sch-input').focus();
+			}
+		});
+
+	});
+</script>
+<script src="__HJS__/lanren.js"></script>
+
+</html>

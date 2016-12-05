@@ -59,8 +59,8 @@ class AdminOrderController extends AdminController
 
         $this->assign('status', [
             1=>'自取',
-            2=>'未发货',
-            3=>'已发货',
+            2=>'待发货',
+            3=>'待收货',
             4 =>'已收货'
         ]);
 

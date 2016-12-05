@@ -12,7 +12,7 @@ return array(
 //    'VAR_LANGUAGE'     => 'l', // 默认语言切换变量
     'LANG_SWITCH_PARAMETER' => 'language',
     
-    "DELIVER_STATUS" => array("1" => "自取", "2" => "未发货", "3" => "已发货", "4" => "已收货"),
+    "DELIVER_STATUS" => array("1" => "自取", "2" => "待发货", "3" => "待收货", "4" => "已收货"),
 
 
 

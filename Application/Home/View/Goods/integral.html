@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    
+        <meta name="format-detection" content="telephone=no" />
+    <title>确认购买</title>
+    <link rel="stylesheet" type="text/css" href="__HCSS__/loaders.min.css"/>
+    <link rel="stylesheet" type="text/css" href="__HCSS__/loading.css"/>
+    <link rel="stylesheet" type="text/css" href="__HCSS__/base.css"/>
+    <link rel="stylesheet" type="text/css" href="__HCSS__/style.css"/>
+	<link rel="stylesheet" href="__HCSS__/style_cart.css"/>
+      <script src="__HJS__/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<!--<script type="text/javascript" src="__HJS__/cart.js"></script>-->
+    <script type="text/javascript">
+    	$(window).load(function(){
+    		$(".loading").addClass("loader-chanage")
+    		$(".loading").fadeOut(300)
+    		
+    		
+    	})
+    </script>
+</head>
+<!--loading页开始-->
+<div class="loading">
+	<div class="loader">
+        <div class="loader-inner pacman">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+	</div>
+</div>
+<!--loading页结束-->
+<body>
+	<header class="top-header fixed-header">
+		<php>if($mark == 2) {</php>
+		<a class="icona" href="__APP__/index.php/Carts/index">
+		<php>}else{</php>
+		<a class="icona" href="javascript:history.go(-1)">
+		<php>}</php>
+
+					<img src="__HIMGS__/left.png"/>
+			</a>
+			<h3>确认购买</h3>
+			<!--<a class="iconb" href="__APP__/index.php/Goods/shopcar">-->
+			<!--</a>-->
+			<!--</a>-->
+	</header>
+	
+	<div class="contaniner fixed-cont">
+		<section class="to-buy">
+			<header>
+				<div class="detail" style="margin-top: 15%;">
+					<div class="chose">
+						<ul>
+							<h3>请选择提货方式</h3>
+							<li value="1" class="chose-active">
+								自取
+							</li>
+							<li value="2" >
+								快递
+							</li>
+
+						</ul>
+
+				</div>
+
+				</div>
+
+				<div class="to-now" style="display: none;">
+
+					<div class="tonow">
+							<!--<label for="tonow"  onselectstart="return false" ></label>-->
+							<!--<input type="checkbox" id="tonow"/>-->
+
+					</div>
+					<dl>
+						<php>if(!$address) {</php>
+						<dt>
+							<strong>暂无可用地址信息，请点击右侧图标添加收货地址信息</strong>
+						</dt>
+						<!--<dd>{$address.address}</dd>-->
+						<php>}else{</php>
+						<dt>
+							<b>{$address.name}</b>
+							<strong>{$address.phone}</strong>
+						</dt>
+						<dd>{$address.address}</dd>
+						<php>}</php>
+
+
+					</dl>
+					<h3><a href="__ROOT__/index.php/Address/edit?url={$url}"><img src="__HIMGS__/write.png"/></a></h3>
+				</div>
+			</header>
+			<div class="buy-list" >
+				<php>foreach($goods_info as $k => $v) {</php>
+				<ul>
+					<!--<a href="detail.html">-->
+						<figure>
+							<img src="{$v.cover_img_addr}"/>
+						</figure>
+						<li>
+							<h3>{$v.title}</h3>
+							<span class="count">
+							<!--<span class="reduce"></span><input class="count-input" type="text" value="{$num.$k}"/><span class="add">+</span>-->
+							</span>
+							<b>￥{$v.price}</b>
+							<small>×{$num.$k}</small>
+							<input type="hidden" class="price" value="{$v.price}">
+							<input type="hidden" class="num" value="{$num.$k}">
+							<input type="hidden" class="goods_id" value="{$v.id}">
+						</li>
+					<!--</a>-->
+				</ul>
+				<dl>
+					<!--<dd>-->
+						<!--<span>运费</span>-->
+						<!--<small>包邮</small>-->
+					<!--</dd>-->
+					<dd>
+						<span>产品总额</span>
+						<b  style="float: right;">￥<span id="all" style="float: right;">{$price.$k}</span></b>
+					</dd>
+
+					<dd class="express_charge_show" style="display: none;">
+						<span>快递费</span>
+						<b style="float: right;">￥&nbsp;
+							<input name="express_charge" type="text" id="express_charge" width="50%" style="text-align: right;" value="10">
+						</b>
+
+
+					</dd>
+
+
+					<!--<dt>-->
+						<!--<textarea rows="4" placeholder="给卖家留言（50字以内）"></textarea>-->
+					<!--</dt>-->
+				</dl>
+
+				<php>}</php>
+
+			</div>
+			<input type="hidden" class="scenic_spots_id" value="{$scenic_spots_id}">
+		</section>
+		<!--底部不够-->
+		<div style="margin-bottom: 9%;">
+
+		</div>
+	</div>
+	
+	<footer class="buy-footer fixed-footer">
+
+				<p>
+				<small>总金额</small>
+				<b style="float: right;">￥<span id="all_price">{$all_price}</span></b>
+			</p>
+
+
+				<a href="/index.php?s=Pay/jsApiCall"><input type="button" id="go_pay"  value="去付款"/></a>
+				<!--<a href="http://paysdk.weixin.qq.com/example/jsapi.php"><input type="button" value="去付款"/></a>-->
+		<!--<li style="background-color:#FF7F24"><a href="http://paysdk.weixin.qq.com/example/jsapi.php">JSAPI支付</a></li>-->
+
+	</footer>
+	
+	<script type="text/javascript">
+		$(".to-now .tonow label").on('touchstart',function(){
+			if($(this).hasClass('ton')){
+				$(".to-now .tonow label").removeClass("ton")
+			}else{
+				$(".to-now .tonow label").addClass("ton")
+			}
+		})
+	</script>
+
+	<script type="text/javascript">
+		$("#go_pay").click(function() {
+			var price = '';
+			$("input:text").filter(".price").each(function(element) {
+				price += this.value + ',';
+			});
+
+			var num = '';
+			$("input:text").filter(".num").each(function(element) {
+				num += this.value + ',';
+			});
+
+			var goods_id = '';
+			$("input:text").filter(".goods_id").each(function(element) {
+				goods_id += this.value + ',';
+			});
+
+			var all_price = $('#all_price').html();
+			var scenic_spots_id = $('#scenic_spots_id').html();
+
+
+			$(this).attr("disabled", true);
+
+			//支付接口
+
+
+		});
+	</script>
+	<script type="text/javascript">
+		$(function(){
+			$('.chose li').click(function(){
+				$(this).addClass('chose-active').siblings().removeClass('chose-active');
+				var orial_price = Number($('#all').text());
+				//获取快递的价格
+				var express_charge = $('#express_charge').val();
+
+//alert(express_charge);
+				if($(this).val() == 1) {
+					$('.to-now').hide();
+					$('.express_charge_show').hide();
+
+					var final_price = orial_price - Number(express_charge);
+					$('#all_price').text(final_price);
+
+				} else {
+					$('.to-now').show();
+					$('.express_charge_show').show();
+
+					var final_price = orial_price + Number(express_charge);
+					$('#all_price').text(final_price);
+				}
+//				var tags=document.getElementsByClassName('chose-active');//获取标签
+
+//				var tagArr = "";
+//				for(var i=0;i < tags.length; i++)
+//				{
+//					tagArr += tags[i].innerHTML;//保存满足条件的元素
+//
+//				}
+//
+//				$('#sss').html(tagArr);
+
+			});
+
+//			$("#express_charge").change(function(event){
+//				var val=$(this).val();
+//				alert(val);
+//			});
+			$("#express_charge").on("input propertychange", function () {
+				var express_charge=$(this).val();
+				var orial_price = Number($('#all').text());
+				var final_price = orial_price + Number(express_charge);
+				$('#all_price').text(final_price);
+			});
+
+//			$('.article li').click(function(){
+//
+//				$(this).addClass('article-active').siblings().removeClass('article-active');
+//				if($(this).attr("id")=="talkbox1"){
+//					$('.talkbox1').show();
+//					$('.talkbox2').hide();
+//				}else{
+//					$('.talkbox2').show();
+//					$('.talkbox1').hide();
+//				}
+//
+//			});
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<title>购物车</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="__HCSS__/loaders.min.css"/>
+	<link rel="stylesheet" type="text/css" href="__HCSS__/loading.css"/>
+	<link rel="stylesheet" type="text/css" href="__HCSS__/style.css">
+	<link rel="stylesheet" type="text/css" href="__HCSS__/base.css">
+	<link rel="stylesheet" type="text/css" href="__HCSS__/goodscar.css">
+
+	<script type="text/javascript" src="__HJS__/jquery-1.11.2.js"></script>
+	<script type="text/javascript" src="__HJS__/js.js"></script>
+	<script type="text/javascript" src="__HJS__/goodscar.js"></script>
+	<script type="text/javascript">
+		$(window).load(function(){
+			$(".loading").addClass("loader-chanage")
+			$(".loading").fadeOut(300)
+		})
+	</script>
+</head>
+
+<body>
+<div class="loading">
+	<div class="loader">
+		<div class="loader-inner pacman">
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+		</div>
+	</div>
+</div>
+<!--头部信息 start-->
+<div class="head_info">
+	<!--<a href="#" class="head_info_return"><img src="__HIMGS__/head_returnIcon.png" /></a>-->
+	<!--<span>购物车</span>-->
+	<!--<a href="#" class="head_info_other">完成</a>-->
+</div>
+<!--头部信息 end-->
+
+<!--无商品页面 与 有商品模块切换，后台调用购物车list数据，如果购物车无数据，如果有数据则显示该注释下方代码-->
+<!--内容信息 start-->
+<div class="main_con">
+	<php>if($carts_info) {</php>
+		<div class="main_con_allchoose">
+			<span class="circle"></span>全选 <a href="javascript:del_goods()"><img src="__HIMGS__/goods_del.png" /></a>
+		</div>
+	<php>}</php>
+	<php>if(!$carts_info) {</php>
+	<div style="margin: 32%;">
+	<img src="__HIMGS__/no_goods_ico.png" />
+	<p>购物车里没有东西哦~<br />快去首页逛逛吧！</p>
+		<!--无商品页面 start-->
+		<!--<div class="no_goods">-->
+			<!--<img src="__HIMGS__/no_goods_ico.png" />-->
+			<!--<p>购物车里没有东西哦~<br />快去首页逛逛吧！</p>-->
+			<!--&lt;!&ndash;<a href="">即刻添置</a>&ndash;&gt;-->
+		<!--</div>-->
+		<!--无商品页面 end-->
+	</div>
+	<php>} else {</php>
+	<div class="main_con_goods">
+		<ul>
+			<volist name="carts_info" id="vo">
+				<li><span class="circle">
+							<input type="hidden" class="gid" value="{$vo['goods_id']}" />
+						</span>
+					
+					<img src="{$goods_arr[$vo['goods_id']]['cover_img_addr']}">
+					<div>
+						<p class="title"><font>{$goods_arr[$vo['goods_id']]['title']}</font></p>
+						<p class="money"><font><?php echo round($goods_arr[$vo['goods_id']]['price'])?>&nbsp;元</font>
+							<!--<div style="margin-right: 1%;">-->
+							<input class="add" type="button" value="+" style="margin-right: 5%;"/>
+							<input class="num" type="text" value="{$vo['num']}"/>
+
+							<input class="del" type="button" value="-" />
+							<!--</div>-->
+						</p>
+					</div>
+				</li>
+				<!--<input type="hidden" id="id_good" value="{$vo['goods_id']}" />-->
+			</volist>
+		</ul>
+
+	</div>
+	<php>}</php>
+
+</div>
+<!--内容信息 end-->
+
+<!--结算信息 start-->
+<div class="settlement">
+	<div class="settlement_left">
+		<font class="zongji">总计：</font><font class="money">￥0</font><br />
+(点击去结算进行购买产品)
+	</div>
+	<div class="settlement_right">
+		<input type="button" id="settlement" value="去结算" />
+	</div>
+</div>
+<!--结算信息 end-->
+<input type="hidden" id="check_num" value=""/>
+<!--删除弹窗 start-->
+<div class="del_tc">
+	<div class="del_tc_box">
+		<div class="del_tc_box_title">
+			确认删除此商品？
+		</div>
+		<div class="del_tc_box_content">
+			<input class="cancel" type="button" value="取消" onclick="del_goods_cancel()"/>
+			<input class="ok" id="ok" type="button" value="确认" />
+			<input type="hidden" id="scenic_spots_id" value="{$scenic_spots_id}"/>
+		</div>
+	</div>
+</div>
+<!--删除弹窗 end-->
+<include file="Common:footer" />
+
+
+<!--无商品页面 与 有商品模块切换，后台调用购物车list数据，如果购物车无数据，则显示该注释下方代码-->
+<!--goodscar.css 修改样式 .no_goods{display: block}-->
+
+
+
+</body>
+<script>
+	$("#settlement").click(function () {
+//		var goodID = $("#settlement").val();
+//		var goodNum = $("#settlement").val();
+		var goodID = '';
+		var goodNum = '';
+		$(".circle input:text").filter(".price").each(function(element) {
+			goodID += this.value + ',';
+			goodNum += this.value + ',';
+		});
+	});
+
+	$("#settlement").click(function() {
+//		$("#bank_submit").attr("disabled", true);
+		var check_num = $('#check_num').val();
+		if(check_num == '' || check_num == null) {
+			alert('请选择要购买的产品！');
+			return false;
+		}
+		var scenic_spots_id = $('#scenic_spots_id').val();
+
+//		var id_good = '';
+//		$("input:text").filter("#id_good").each(function(element) {
+//			id_good += this.value + ',';
+//		});
+//		alert(id_good);exit;
+		var num = '';
+		$("input:text").filter(".num").each(function(element) {
+			num += this.value + ',';
+		});
+
+		window.location.href='__APP__/index.php/Goods/buy?id=' + check_num + '&num='+ num + '&scenic_spots_id=' +scenic_spots_id ;
+
+	});
+
+
+	$("#ok").click(function() {
+
+		var check_num = $('#check_num').val();
+		$("#ok").attr("disabled", true);
+		$.post('__APP__/index.php/Carts/delete', {
+					check_num: check_num,
+				},
+				function (data) {
+					if (data.statusCode == "success") {
+
+						alert(data.message);
+						$(".del_tc").css("display","none");
+						$("#ok").attr("disabled", false);
+						setTimeout("location.reload();", 1000);
+					} else {
+
+						alert(data.message);
+
+						$("#ok").attr("disabled", false);
+						return false;
+					}
+				});
+	});
+
+
+</script>
+
+
+
+
+
+
+</html>

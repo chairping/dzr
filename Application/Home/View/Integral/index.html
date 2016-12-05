@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>个人中心</title>
+    <link rel="stylesheet" type="text/css" href="__HCSS__/loaders.min.css"/>
+    <link rel="stylesheet" type="text/css" href="__HCSS__/loading.css"/>
+    <link rel="stylesheet" type="text/css" href="__HCSS__/base.css"/>
+    <link rel="stylesheet" type="text/css" href="__HCSS__/style.css"/>
+      <script src="__HJS__/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    	$(window).load(function(){
+    		$(".loading").addClass("loader-chanage")
+    		$(".loading").fadeOut(300)
+    	})
+    </script>
+</head>
+<body>
+	<div class="p-top  clearfloat">
+		<!--<a href="personal.html">-->
+			<!--<div class="tu">-->
+				<!--<img src="img/touxiang.png"/>-->
+			<!--</div>-->
+			<!--<p class="name">还没做</p>-->
+		<!--</a>-->
+		<div class="p-bottom p-bottom1 clearfloat">
+			<ul class="clearfloat">
+				<!--<a href="fx-center1.html">-->
+					<!--<li class="box-s">-->
+						<!--<span class="opa6"></span>-->
+						<!--<p class="bt">我的佣金</p>-->
+						<!--<p class="price">0.00</p>-->
+					<!--</li>-->
+				<!--</a>-->
+				<a href="#">
+					<li class="box-s">
+						<span class="opa6"></span>
+						<p class="bt">我的积分</p>
+						<p class="price">{$integral}</p>
+					</li>
+				</a>
+				<a href="#">
+					<li class="box-s">
+						<!--<span class="opa6"></span>-->
+						<!--<p class="bt">我的足迹</p>-->
+						<!--<p class="price">0</p>-->
+					</li>
+				</a>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="contaniner fixed-contb">
+		<section class="self">
+			<dl>
+				<dt>
+					<a href="__ROOT__/index.php/Order/index">
+						<img src="__HIMGS__/self-icon.png"/>
+						<b>全部订单</b>
+						<span><img src="__HIMGS__/right.png"/></span>
+					</a>
+				</dt>
+				<dd>
+						<ul>
+							<li>
+								<a href="__ROOT__/index.php/Order/index?deliver_status=5">
+									<img src="__HIMGS__/order-icon03.png"/>
+									<p>待付款</p>
+								</a>
+							</li>
+							<li>
+								<a href="__ROOT__/index.php/Order/index?deliver_status=2">
+									<img src="__HIMGS__/order-icon01.png"/>
+									<p>待发货</p>
+								</a>
+							</li>
+
+							<li>
+								<a href="__ROOT__/index.php/Order/index?deliver_status=3">
+									<img src="__HIMGS__/order-icon02.png"/>
+									<p>待收货</p>
+								</a>
+							</li>
+							<li>
+								<a href="__ROOT__/index.php/Order/index?deliver_status=1,4">
+									<img src="__HIMGS__/order-icon04.png"/>
+									<p>交易成功</p>
+								</a>
+							</li>
+						</ul>
+				</dd>
+			</dl>
+			
+
+			
+		</section>
+		
+		
+	</div>
+
+	<include file="Common:footer" />
+	
+	
+</body>
+</html>

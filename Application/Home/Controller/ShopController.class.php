@@ -42,7 +42,7 @@ class ShopController extends Controller {
 
             //获取有效的商品信息
             if(!I('get.content')) {
-                $pro_arr = D('Goods')->getInfo();
+                $pro_arr = D('Goods')->getInfo(1);
             } else {
                 $pro_arr = D('Goods')->getInfoBySearch($content);
             }

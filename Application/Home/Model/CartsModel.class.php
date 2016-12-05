@@ -12,13 +12,14 @@ class CartsModel extends CommonModel {
      * @author 曹梦瑶
      * 获取当前登录用户购物车内容
      */
-    public function getInfo() {
+    public function getInfo($type = 1) {
         $list = array();
         $user_id = getHomeUserID();
         if($user_id) {
             $list = $this->where(array(
                 'user_id' => $user_id,
-                'status' => 1
+                'status' => 1,
+                'type' => $type,
             ))
                 ->order('update_time desc')
                 ->select();
@@ -52,11 +53,12 @@ class CartsModel extends CommonModel {
   * @author 曹梦瑶
   * 加入购物车
   */
-    public function addToCarts($id, $num) {
+    public function addToCarts($id, $num, $type) {
         if($id) {
             $is = $this->where(array(
                 'goods_id' => $id,
                 'user_id' => getHomeUserID(),
+                'type' => $type,
                 'status' => 1
             ))->find();
 
@@ -82,6 +84,7 @@ class CartsModel extends CommonModel {
                         'user_id' => getHomeUserID(),
                         'num' => $num,
                         'update_time' => time(),
+                        'type' => $type,
                         'status' => 1,
                     ));
             }

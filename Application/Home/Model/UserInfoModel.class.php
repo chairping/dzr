@@ -38,6 +38,20 @@ class UserInfoModel extends CommonModel {
         }
     }
 
+    /*
+     * @author 曹梦瑶
+     * 获取用户积分
+     */
+    public function getIntegral() {
+        $user_id = getHomeUserID();
+        $integral = 0;
+        $integral = $this->where(array(
+            'id' => $user_id
+        ))
+            ->getField('integral');
+        return $integral;
+    }
+
 }
 
 ?>

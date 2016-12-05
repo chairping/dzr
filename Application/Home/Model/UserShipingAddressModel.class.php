@@ -20,7 +20,7 @@ class UserShipingAddressModel extends CommonModel {
                 'user_id' => $user_id,
                 'status' => 1,
             ))
-                ->order('update_time')
+                ->order('update_time desc')
                 ->find();
         }
         return $list;

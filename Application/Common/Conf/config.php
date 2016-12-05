@@ -87,10 +87,12 @@ return array(
         '__Public__' => __ROOT__.'/Public',
         '__UPLOADIMG__' => __ROOT__.'/Public/uploadimg',
 
+        '__HHome__' => __ROOT__.'/Public/Home',
         '__HCSS__' => __ROOT__.'/Public/Home/css',
         '__HIMG__' => __ROOT__.'/Public/Home/img',
         '__HIMGS__' => __ROOT__.'/Public/Home/images',
         '__HJS__' => __ROOT__.'/Public/Home/js',
+        '__Hiconfont__' => __ROOT__.'/Public/Home/iconfont',
 
         '__HSCSS__' => __ROOT__.'/Public/Home/Shop/css',
         '__HSIMG__' => __ROOT__.'/Public/Home/Shop/images',

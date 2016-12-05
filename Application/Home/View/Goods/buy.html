@@ -48,38 +48,56 @@
 			<h3>确认购买</h3>
 			<!--<a class="iconb" href="__APP__/index.php/Goods/shopcar">-->
 			<!--</a>-->
+			<!--</a>-->
 	</header>
 	
 	<div class="contaniner fixed-cont">
 		<section class="to-buy">
 			<header>
+				<div class="detail" style="margin-top: 15%;">
+					<div class="chose">
+						<ul>
+							<h3>请选择提货方式</h3>
+							<li value="1" class="chose-active">
+								自取
+							</li>
+							<li value="2" >
+								快递
+							</li>
 
-				<!--<div class="to-now" style="margin-top: 15%;">-->
+						</ul>
 
-					<!--<div class="tonow">-->
-							<!--&lt;!&ndash;<label for="tonow"  onselectstart="return false" ></label>&ndash;&gt;-->
-							<!--&lt;!&ndash;<input type="checkbox" id="tonow"/>&ndash;&gt;-->
-					<!--</div>-->
-					<!--<dl>-->
-						<!--<php>//if(!$address) {</php>-->
-						<!--<dt>-->
-							<!--<strong>暂无可硬地址信息，请点击右侧图标添加收货地址信息</strong>-->
-						<!--</dt>-->
-						<!--&lt;!&ndash;<dd>{$address.address}</dd>&ndash;&gt;-->
-						<!--<php>//}else{</php>-->
-						<!--<dt>-->
-							<!--<b>{$address.name}</b>-->
-							<!--<strong>{$address.phone}</strong>-->
-						<!--</dt>-->
+				</div>
+
+				</div>
+
+				<div class="to-now" style="display: none;">
+
+					<div class="tonow">
+							<!--<label for="tonow"  onselectstart="return false" ></label>-->
+							<!--<input type="checkbox" id="tonow"/>-->
+
+					</div>
+					<dl>
+						<php>if(!$address) {</php>
+						<dt>
+							<strong>暂无可用地址信息，请点击右侧图标添加收货地址信息</strong>
+						</dt>
 						<!--<dd>{$address.address}</dd>-->
-						<!--<php>//}</php>-->
+						<php>}else{</php>
+						<dt>
+							<b>{$address.name}</b>
+							<strong>{$address.phone}</strong>
+						</dt>
+						<dd>{$address.address}</dd>
+						<php>}</php>
 
 
-					<!--</dl>-->
-					<!--<h3><a href="__ROOT__/index.php/Address/edit"><img src="__HIMGS__/write.png"/></a></h3>-->
-				<!--</div>-->
+					</dl>
+					<h3><a href="__ROOT__/index.php/Address/edit?url={$url}"><img src="__HIMGS__/write.png"/></a></h3>
+				</div>
 			</header>
-			<div class="buy-list" style="margin-top: 15%;">
+			<div class="buy-list" >
 				<php>foreach($goods_info as $k => $v) {</php>
 				<ul>
 					<!--<a href="detail.html">-->
@@ -108,26 +126,42 @@
 						<span>产品总额</span>
 						<b  style="float: right;">￥<span id="all" style="float: right;">{$price.$k}</span></b>
 					</dd>
+
+
+
+
 					<!--<dt>-->
 						<!--<textarea rows="4" placeholder="给卖家留言（50字以内）"></textarea>-->
 					<!--</dt>-->
 				</dl>
 
 				<php>}</php>
+<dl>
+	<dd class="express_charge_show" style="display: none;">
+		<span>快递费</span>
+		<b style="float: right;">￥&nbsp;
+			<input name="express_charge" type="text" id="express_charge" width="50%" style="text-align: right;" value="10">
+		</b>
 
+
+	</dd>
+</dl>
 			</div>
 			<input type="hidden" class="scenic_spots_id" value="{$scenic_spots_id}">
 		</section>
 		<!--底部不够-->
-		<div style="margin-bottom: 9%;"></div>
+		<div style="margin-bottom: 9%;">
+
+		</div>
 	</div>
 	
 	<footer class="buy-footer fixed-footer">
-			<p> 
+
+				<p>
 				<small>总金额</small>
-				<b style="float: right;">￥<span id="all_price" >{$all_price}</span></b>
+				<b style="float: right;">￥<span id="all_price">{$all_price}</span></b>
 			</p>
-				
+
 
 				<a href="/index.php?s=Pay/jsApiCall"><input type="button" id="go_pay"  value="去付款"/></a>
 				<!--<a href="http://paysdk.weixin.qq.com/example/jsapi.php"><input type="button" value="去付款"/></a>-->
@@ -148,17 +182,17 @@
 	<script type="text/javascript">
 		$("#go_pay").click(function() {
 			var price = '';
-			$("input:text").filter(".price").each(function(element) {
+			$("input:hidden").filter(".price").each(function(element) {
 				price += this.value + ',';
 			});
 
 			var num = '';
-			$("input:text").filter(".num").each(function(element) {
+			$("input:hidden").filter(".num").each(function(element) {
 				num += this.value + ',';
 			});
 
 			var goods_id = '';
-			$("input:text").filter(".goods_id").each(function(element) {
+			$("input:hidden").filter(".goods_id").each(function(element) {
 				goods_id += this.value + ',';
 			});
 
@@ -173,6 +207,68 @@
 
 		});
 	</script>
+	<script type="text/javascript">
+		$(function(){
+			var all_price = Number($('#all_price').html());
+			var orial_price = all_price;
+			$('.chose li').click(function(){
+				$(this).addClass('chose-active').siblings().removeClass('chose-active');
+//				var orial_price = Number($('#all').text());
+				//获取快递的价格
+				var express_charge = $('#express_charge').val();
 
+//alert(express_charge);
+				if($(this).val() == 1) {
+					$('.to-now').hide();
+					$('.express_charge_show').hide();
+
+					var final_price = orial_price - Number(express_charge);
+					$('#all_price').text(final_price);
+
+				} else {
+					$('.to-now').show();
+					$('.express_charge_show').show();
+
+					var final_price = orial_price + Number(express_charge);
+					$('#all_price').text(final_price);
+				}
+//				var tags=document.getElementsByClassName('chose-active');//获取标签
+
+//				var tagArr = "";
+//				for(var i=0;i < tags.length; i++)
+//				{
+//					tagArr += tags[i].innerHTML;//保存满足条件的元素
+//
+//				}
+//
+//				$('#sss').html(tagArr);
+
+			});
+
+//			$("#express_charge").change(function(event){
+//				var val=$(this).val();
+//				alert(val);
+//			});
+			$("#express_charge").on("input propertychange", function () {
+				var express_charge=$(this).val();
+//				var orial_price = Number($('#all').text());
+				var final_price = orial_price + Number(express_charge);
+				$('#all_price').text(final_price);
+			});
+
+//			$('.article li').click(function(){
+//
+//				$(this).addClass('article-active').siblings().removeClass('article-active');
+//				if($(this).attr("id")=="talkbox1"){
+//					$('.talkbox1').show();
+//					$('.talkbox2').hide();
+//				}else{
+//					$('.talkbox2').show();
+//					$('.talkbox1').hide();
+//				}
+//
+//			});
+		});
+	</script>
 </body>
 </html>

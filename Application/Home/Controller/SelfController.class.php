@@ -10,28 +10,12 @@ class OrderController extends Controller {
 
     /*
    * @author 曹梦瑶
-   * 订单
+   * 个人中心
    */
     public function index() {
-        $deliver_status = I('get.deliver_status') ? I('get.deliver_status') : 0;
-//      dd($deliver_status);
-        switch ($deliver_status) {
-            case '1,4':
-                $title = '交易成功';break;
-             case '2':
-                $title = '待发货';break;
-             case '3':
-                $title = '待收货';break;
-             case '5':
-                $title = '待付款';break;
-            default:
-                $title = '全部订单';
-            
-        }
-
         //查找出对应的有效订单
         $order_info = array();
-        $order_info = D('Order')->getOrderInfo(explode(',', $deliver_status));
+        $order_info = D('Order')->getInfo();
         $goods_id_arr_all = array();
         //算出单价 以及修改价格
         foreach ($order_info as $k =>$v) {
@@ -56,13 +40,12 @@ class OrderController extends Controller {
         $goods_info = array();
         $goods_id_arr = array();
         $goods_id_arr = array_unique($goods_id_arr_all);
-        $goods_id_arr && $goods_info = D('Goods')->getInfoByIdArr1($goods_id_arr, 1);
+        $goods_id_arr && $goods_info = D('Goods')->getInfoByIdArr1($goods_id_arr);
 
         $this->assign('order_info', $order_info);
         $this->assign('goods_info', $goods_info);
         $this->assign('menu', 'order');
         $this->assign('deliver_status', C('DELIVER_STATUS'));
-        $this->assign('title', $title);
 //dd($order_info,$goods_info);
         $this->display('myOrder');
 
@@ -70,7 +53,7 @@ class OrderController extends Controller {
     }
 
     /*
-     * 添加付款订单信息(付款成功)
+     * 添加付款订单信息
      * @params array(
      * 'goods_id', (逗号分隔)
      * 'num', (逗号分隔)
@@ -99,16 +82,12 @@ class OrderController extends Controller {
         $add_params = array();
 //        $sales_price = $goods_info['price'] * 100 * $data['num'];
         $add_params['sales_price'] = $sales_price;
-        $add_params['scenic_spots_id'] = 4;     //测试
+        $add_params['scenic_spots_id'] = $data['scenic_spots_id'];
         $add_params['goods_id'] = $data['goods_id'];
         $add_params['num'] = $data['num'];
-//        $add_params['per_price'] = $per_price_str;
-        $add_params['express_charge'] = $data['express_charge'] * 100;
         $add_params['per_price'] = $per_price_str;
-        $add_params['is_integral'] = 1;
-        $add_params['deliver_status'] = 2;
         //添加订单 返回订单id
-        $order_id = D('Order')->addOrder($add_params);
+        $order_id = D('Order')->addOrder($data);
 
         if(!$order_id) {
             //订单添加失败
@@ -172,63 +151,7 @@ class OrderController extends Controller {
         }
         $this->ajaxReturn(array("statusCode" => C('ERROR_CODE'),  "message" =>'订单生成失败'));
     }
-
-    /*
-     * @author 曹梦瑶
-     * 兑换 生成订单
-     */
-    public function beIntegralOrder() {
-//        $data = I('post.');
-//        dd($data);
-        $is_real = false;
-        $data = I('post.');
-//        $data = array(
-//            'goods_id' => '',
-//            'num' => '',
-//            'num' => '',
-//        )
-        $goods_id_arr = array_filter(explode(',', $data['goods_id']));
-        $num_arr = array_filter(explode(',',$data['num']));
-
-        $goods_info = D('Goods')->getInfoByIdArr1( $goods_id_arr);
-
-        $per_price_str = '';
-        $sales_price = 0;
-
-        foreach($goods_id_arr as $k => $v) {
-            $sales_price += $goods_info[$v]['price'] * 100 * $num_arr[$k];
-            $per_price_str .= $goods_info[$v]['price'] * 100 .',';
-//            var_dump( $goods_info[$v]['price']);
-        }
-//        var_dump($goods_info);
-//exit;
-        $add_params = array();
-//        $sales_price = $goods_info['price'] * 100 * $data['num'];
-        $add_params['sales_price'] = $sales_price;
-//        $add_params['scenic_spots_id'] = $data['scenic_spots_id'];
-        $add_params['scenic_spots_id'] = 4;     //测试
-        $add_params['goods_id'] = $data['goods_id'];
-        $add_params['num'] = $data['num'];
-        $add_params['express_charge'] = $data['express_charge'] * 100;
-        $add_params['per_price'] = $per_price_str;
-        $add_params['is_integral'] = 1;
-        $add_params['deliver_status'] = 2;
-        //添加订单 返回订单id
-        $order_id = D('Order')->addOrder($add_params);
-
-        if(!$order_id) {
-            //订单添加失败
-            $this->ajaxReturn(array("statusCode" => C('ERROR_CODE'),  "message" =>'订单添加失败'));
-        } else {
-            $this->ajaxReturn(
-                array(
-                    "statusCode" => C( 'SUC_CODE' ),
-                    "message" => '操作成功',
-                ) );
-        }
-
-    }
-
+    
     /*
      * @author 曹梦瑶
      * 确认收货

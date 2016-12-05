@@ -37,6 +37,35 @@ class GoodsController extends Controller {
         }
     }
 
+   /*
+     * @author 曹梦瑶
+     * 积分商城 商品信息详情
+     * get array('goods_id','scenic_spots_id')
+     */
+    public function integral() {
+        $data = I('get.');
+//        dd($data);
+        $goods_id = $data['goods_id'];
+        $scenic_spots_id = $data['scenic_spots_id'];
+        if($goods_id) {
+            $goods_info = D('Goods')->getInfoById($goods_id);
+            if(!$goods_info) {
+                $this->display('notFind');
+            } else {
+                //通过景区id 查找景区图片
+                $spots_img_addr = D('ScenicSpots')->getInfoById($scenic_spots_id);
+//dd(D('Goods')->getLastSql(),$goods_info);
+                $this->assign('scenic_spots_id', $scenic_spots_id);
+                $this->assign('goods_info', $goods_info);
+                $this->assign('spots_img_addr', $spots_img_addr);
+                $this->display('integral');
+            }
+
+        } else {
+            $this->display('notFind');
+        }
+    }
+
     /*
      * @author 曹梦瑶
      * 点击购买商品
@@ -90,7 +119,7 @@ class GoodsController extends Controller {
            }
             
 //            //找出当前用户最新的一个收货地址
-//            $address = D('UserShipingAddress')->getInfo();
+            $address = D('UserShipingAddress')->getInfo();
 
             $this->assign('goods_info', $goods_info);
 //      dd(D('Goods')->getLastSql(),$goods_info,$num,$per_all_price,$price);
@@ -99,9 +128,81 @@ class GoodsController extends Controller {
             $this->assign('all_price', $price);
             $this->assign('scenic_spots_id', $scenic_spots_id);
             $this->assign('mark', $mark);
-//            $this->assign('address', $address);
+            $this->assign('address', $address);
+            $this->assign('url', urlencode($_SERVER['REQUEST_URI']));
 
             $this->display('buy');
+        }
+
+
+    }
+
+    /*
+     * @author 曹梦瑶
+     * 点击购买商品(积分)
+     * params array('id', 'num', 'scenic_spots_id')
+     */
+    public function buy_integral() {
+        if(IS_POST) {
+
+
+        } else {
+            session('id', 1);    //测试
+            $data = I('get.');
+
+            $id = array_filter(array_unique(explode(',', $data['id'])));
+            $num_or = array_filter(explode(',', $data['num']));
+            $scenic_spots_id = $data['scenic_spots_id'];
+            if(strpos($data['id'], ',') === false){     //使用绝对等于
+
+                //不包含
+                $num = $num_or;
+                $mark = 1;
+            }else{
+                $mark = 2;
+                //包含
+                $carts_info = D('Carts')->getInfo(2);
+                $id_arr = array_column($carts_info, 'id');
+                //整理数组
+                $new_arr = array();
+                $num = array();
+//                dd($id_arr);
+                foreach ($id_arr as $k => $v) {
+                    if(in_array($v, $id)) {
+//                        dd(43);
+                        $new_arr[$v] = $num_or[$k];
+                        $num[] = $num_or[$k];
+                    }
+
+                }
+
+            }
+//            dd($num,$num_or);
+
+            //查找商品信息
+            $price = 0;
+            $per_all_price = array();
+            $goods_info = D('Goods')->getInfoByIdArr($id);
+           foreach ($goods_info as $k => $v) {
+
+               $price += $num[$k] * $v['price'];
+               $per_all_price[$k] = $num[$k] * $v['price'];
+           }
+
+           //找出当前用户最新的一个收货地址
+            $address = D('UserShipingAddress')->getInfo();
+
+            $this->assign('goods_info', $goods_info);
+
+            $this->assign('num', $num);
+            $this->assign('price', $per_all_price);
+            $this->assign('all_price', $price);
+            $this->assign('scenic_spots_id', $scenic_spots_id);
+            $this->assign('mark', 1);
+            $this->assign('address', $address);
+            $this->assign('url', urlencode($_SERVER['REQUEST_URI']));
+
+            $this->display('buy_integral');
         }
 
 
@@ -119,5 +220,7 @@ class GoodsController extends Controller {
             $this->display('checkBuy');
         }
     }
+
+    
 
 }

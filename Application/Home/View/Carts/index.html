@@ -119,50 +119,7 @@
 	</div>
 </div>
 <!--删除弹窗 end-->
-<footer class="page-footer fixed-footer" id="footer">
-	<ul>
-		<php>if($menu == 'shop') {</php>
-		<li class="active">
-			<a href="__ROOT__/index.php/Shop/shop">
-				<img src="__HIMGS__/footer01.png"/>
-				<php>}else{</php>
-		<li>
-			<a href="__ROOT__/index.php/Shop/shop">
-				<img src="__HIMGS__/footer001.png"/>
-				<php>}</php>
-
-				<p>首页</p>
-			</a>
-		</li>
-		<php>if($menu == 'cart') {</php>
-		<li class="active">
-			<a href="__ROOT__/index.php/Carts/index">
-				<img src="__HIMGS__/footer03.png"/>
-				<php>}else{</php>
-		<li>
-			<a href="__ROOT__/index.php/Carts/index">
-				<img src="__HIMGS__/footer003.png"/>
-				<php>}</php>
-
-				<p>购物车</p>
-			</a>
-		</li>
-
-		<php>if($menu == 'order') {</php>
-		<li class="active">
-			<a href="__ROOT__/index.php/Order/index">
-				<img src="__HIMGS__/footer04.png"/>
-				<php>}else{</php>
-		<li>
-			<a href="__ROOT__/index.php/Order/index">
-				<img src="__HIMGS__/footer004.png"/>
-				<php>}</php>
-
-				<p>我的订单</p>
-			</a>
-		</li>
-	</ul>
-</footer>
+<include file="Common:footer" />
 
 
 <!--无商品页面 与 有商品模块切换，后台调用购物车list数据，如果购物车无数据，则显示该注释下方代码-->
